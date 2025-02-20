@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className='w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm'>
                   <div id='nav-left' className='flex gap-5 items-center font-semibold'>
                     <Link href={"/"} id='home-link'>
-                      Product Feedback Agent
+                      PFA
                     </Link>
                   </div>
                   <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>

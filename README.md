@@ -1,104 +1,113 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+to do:
+the route.js now has the code to make the demographic array for the product.
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+the next step is to build a simple function which takes the input from the form and gives a set of feedback in a structured format
+this needs to be passed to the front end and shown on the screen.
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+the step after getting this to work is to add in the details of one hardcoded profile (same structure as the json output of the demographics)
+to fine tune the model and output their feedback directly to the front end as before
+
+after this, i need to add each of the results to arrays rather than passing directly. quantitative results will be averaged (even if there is only one) and qualitative will be pushed through another gemini to collate. these again need to be passed through;
+
+# Product Feedback Bot
+
+An AI-powered application that provides instant feedback on product ideas, webpages, or concepts using digital avatars of real people. Built with Next.js, Supabase, and Google's Generative AI.
 
 ## Features
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- User authentication and protected routes
+- Feedback form submission with file attachments
+- AI-powered feedback generation
+- Result visualization with strengths and improvements
+- Dark/Light theme support
+- Responsive design
 
-## Demo
+## Tech Stack
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+- **Frontend**: Next.js (App Router), React, TailwindCSS
+- **Backend**: Supabase (Auth, Database)
+- **AI**: Google Generative AI (Gemini)
+- **Styling**: TailwindCSS, Shadcn UI components
+- **Authentication**: Supabase Auth with cookie-based sessions
+- **Deployment**: Vercel
 
-## Deploy to Vercel
+## Project Structure
 
-Vercel deployment will guide you through creating a Supabase account and project.
+├── app/ # Next.js app router pages
+│ ├── (auth-pages)/ # Authentication related pages
+│ ├── auth/ # Auth callback routes
+│ ├── protected/ # Protected routes after login
+│ ├── result/ # Feedback result page
+│ ├── actions.ts # Server actions for auth
+│ ├── layout.tsx # Root layout
+│ └── page.tsx # Home page
+├── components/ # Reusable components
+│ ├── my-components/ # Custom components
+│ ├── tutorial/ # Tutorial components
+│ ├── ui/ # Shadcn UI components
+│ └── ... # Other components
+├── lib/ # Utility functions
+├── middleware.ts # Authentication middleware
+├── public/ # Static assets
+├── styles/ # Global styles
+├── utils/ # Utility functions
+│ └── supabase/ # Supabase related utilities
+├── .env.example # Environment variables template
+├── next.config.ts # Next.js configuration
+├── package.json # Project dependencies
+├── tailwind.config.ts # Tailwind configuration
+└── tsconfig.json # TypeScript configuration
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+## Key Files
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+### Authentication
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+- `middleware.ts`: Handles session management and route protection
+- `utils/supabase/`: Contains Supabase client and server utilities
+- `app/auth/callback/route.ts`: Handles OAuth callbacks
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### AI Integration
 
-## Clone and run locally
+- `app/api/generate/route.ts`: API route for generating feedback using Google's Generative AI
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+### Components
 
-2. Create a Next.js app using the Supabase Starter template npx command
+- `components/my-components/FeedbackForm.tsx`: Main feedback form component
+- `components/ui/`: Shadcn UI components (buttons, inputs, etc.)
+- `components/theme-switcher.tsx`: Theme toggle component
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+### Pages
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+- `app/protected/page.tsx`: Main dashboard after login
+- `app/result/page.tsx`: Feedback results page
+- `app/layout.tsx`: Root layout with theme provider
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+## Environment Variables
 
-3. Use `cd` to change into the app's directory
+Create a `.env.local` file with the following variables:
+bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+GOOGLE_GENERATIVE_AI_API_KEY=
 
-   ```bash
-   cd with-supabase-app
-   ```
+## Getting Started
 
-4. Rename `.env.example` to `.env.local` and update the following:
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up environment variables
+4. Run development server: `npm run dev`
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+## Deployment
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+The project is configured for Vercel deployment. Use the included `DeployButton` component or deploy manually through Vercel's dashboard.
 
-5. You can now run the Next.js local development server:
+## Contributing
 
-   ```bash
-   npm run dev
-   ```
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+## License
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+MIT License

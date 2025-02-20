@@ -13,15 +13,31 @@ export default function FeedbackForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = {
+      name,
+      company,
+      ideaTitle,
+      ideaDescription,
+      files,
+    };
+    console.log(formData);
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/generate");
+      const response = await axios.post("/api/generate", formData, {
+        headers: {
+          "Content-Type": "object",
+        },
+      });
+
       const data = response.data;
 
       if (response.status === 200) {
+        console.log(data);
+        alert(data);
+
         // Redirect to results page with the data
-        window.location.href = `/result?data=${encodeURIComponent(JSON.stringify(data))}`;
+        // window.location.href = `/result?data=${encodeURIComponent(JSON.stringify(data))}`;
       } else {
         throw new Error(data.error || "Failed to get feedback");
       }
@@ -121,7 +137,8 @@ export default function FeedbackForm() {
       <div>
         <button
           type='submit'
-          className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+          style={{ backgroundColor: "indigo" }}
+          className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-700 !important focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
           {loading ? "Submitting..." : "Submit Idea"}
         </button>
       </div>
