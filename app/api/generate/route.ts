@@ -2,6 +2,8 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import env from "dotenv";
 import { init } from "next/dist/compiled/webpack/webpack";
 
+env.config({ path: ".env.local" });
+
 export async function GET() {
   return new Response(JSON.stringify({ message: "Success" }), {
     headers: { "Content-Type": "application/json" },
@@ -42,7 +44,7 @@ async function getInitialFeedback(name: string, description: string) {
 }
 
 async function getTargetMarket(name: String, description: String) {
-  const genAI = new GoogleGenerativeAI("AIzaSyBXZeaBIqZ_2JBZyIQf7c4-ioKA984WfMY");
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
   const schema = {
     description: "List of demographic profiles",
