@@ -29,7 +29,23 @@ export default function ResultPage() {
       <div className='space-y-4'>
         <div>
           <h2 className='font-semibold'>Summary:</h2>
-          <p className='text-white'>{result}</p>
+          <p>{result.summary}</p>
+        </div>
+        <div>
+          <h2 className='font-semibold'>Strengths:</h2>
+          <ul className='list-disc pl-5'>
+            {result.strengths.map((strength, i) => (
+              <li key={i}>{strength}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className='font-semibold'>Improvements:</h2>
+          <ul className='list-disc pl-5'>
+            {result.improvements.map((improvement, i) => (
+              <li key={i}>{improvement}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

@@ -33,8 +33,11 @@ export default function FeedbackForm() {
       const data = response.data;
 
       if (response.status === 200) {
+        console.log(data);
+        alert(data);
+
         // Redirect to results page with the data
-        window.location.href = `/result?data=${encodeURIComponent(JSON.stringify(data))}`;
+        // window.location.href = `/result?data=${encodeURIComponent(JSON.stringify(data))}`;
       } else {
         throw new Error(data.error || "Failed to get feedback");
       }
