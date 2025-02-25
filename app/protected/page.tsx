@@ -3,6 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import FeedbackForm from "../../my-components/FeedbackForm";
+import NewForm from "@/my-components/NewForm";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -16,11 +17,8 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center min-h-[calc(100vh-160px)]'>
-      <div className='max-w-2xl mx-auto'>
-        <h1 className='text-3xl font-bold text-white mb-6'>Get Feedback In Seconds, Not Months</h1>
-        <FeedbackForm />
-      </div>
+    <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-4rem)] bg-black pb-6 pl-6 pr-6 pt-3'>
+      <NewForm />
     </div>
   );
 }
