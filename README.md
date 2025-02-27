@@ -1,13 +1,40 @@
 to do:
-the route.js now has the code to make the demographic array for the product.
 
-the next step is to build a simple function which takes the input from the form and gives a set of feedback in a structured format
-this needs to be passed to the front end and shown on the screen.
+i have the code for the demographics now. this generates a list of people which would review the item etc
 
-the step after getting this to work is to add in the details of one hardcoded profile (same structure as the json output of the demographics)
-to fine tune the model and output their feedback directly to the front end as before
+the next bit is to generate the initial feedback. I have done 60% of this, but need to pass the info from the demographics into it and loop through the people in it.
 
-after this, i need to add each of the results to arrays rather than passing directly. quantitative results will be averaged (even if there is only one) and qualitative will be pushed through another gemini to collate. these again need to be passed through;
+the output should be:
+sentiment - positive, neutral or negative, - string
+does the demographic think they are a good fit for the market research - boolean
+what user likes about product / service / idea - string
+pain points - string
+pricing insights - willingness to pay (1-10) and would buy (boolean) and reason (string)
+barrier for adoption if would buy / use is false
+suggested improvements - string
+
+the results section itself should look like this:
+
+1. Summary
+   • Brief overview of key findings
+   • Overall market sentiment (positive, neutral, negative) (bar graph)
+
+2. Target Audience
+   • Demographics (age, location, industry) (if i can do a map then map)
+   • Customer personas (slider of each in a profile)
+
+3. Key Insights
+   • What users like (top positive feedback) (string)
+   • Pain points (common complaints & areas for improvement) (bulletpoints)
+   • Pricing insights (willingness to pay & perceived value) (graph of the number)
+
+4. Adoption & Interest
+   • Percentage of users likely to buy or adopt (graph?)
+   • Barriers to adoption (string)
+
+5. Recommendations
+   • Suggested improvements (bulletpoints)
+   • Next steps for product development & marketing (string)
 
 # Product Feedback Bot
 
