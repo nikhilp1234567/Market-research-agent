@@ -3,15 +3,21 @@ import env from "dotenv";
 
 env.config({ path: ".env.local" });
 
-export async function GET() {
-  return new Response(JSON.stringify({ message: "Success" }), {
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
 export async function POST(req: Request) {
-  console.log("the post method has been called successfully");
+  console.log("[POST] /api/generate endpoint called");
   const dataFromForm = await req.json();
+  console.log("[DEBUG] Received form data:", JSON.stringify(dataFromForm, null, 2));
+  let numberOfProfiles = 5;
+
+  let aggregatedSentiment = [];
+  let aggregatedgoodfitforMarket = [];
+  let aggregatedWhatUsersLike = [];
+  let aggregatedPainPoints = [];
+  let aggregatedWillingnessToPay = [];
+  let aggregatedWouldBuy: { wouldBuy: boolean; reason: string }[] = [];
+  let aggregatedBarrierForAdoption = [];
+  let aggregatedSuggestedImprovements = [];
+  let aggregatedAdditionalFeedback = [];
 
   try {
     const title = dataFromForm.name;
@@ -27,95 +33,112 @@ export async function POST(req: Request) {
     const maritalStatus = dataFromForm.maritalStatus;
     const links = dataFromForm.relevantLinks;
 
-    console.log(`the title: ${title} and description: ${description} have been extracted`);
+    console.log(`[DEBUG] Extracted fields: 
+      Title: ${title}
+      Description: ${description}
+      Category: ${category}
+      Employment: ${employment}
+      Gender: ${gender}
+      Income: ${income}
+      Interests: ${interests}
+      Locations: ${locations}
+      Marital Status: ${maritalStatus}
+      Links: ${links}`);
 
-    let demographics = await getTargetMarket(title, description, employment, gender, income, interests, locations, maritalStatus);
-    console.log(`the demographics are ${demographics}`);
+    console.log("[DEBUG] Starting target market generation...");
+    let demographics = await getTargetMarket(title, description, employment, gender, income, interests, locations, maritalStatus, numberOfProfiles);
+    console.log("[DEBUG] Received demographics:", demographics);
 
-    // let initialFeedback = await getInitialFeedback(
-    //   title,
-    //   description,
-    //   category,
-    //   employment,
-    //   files,
-    //   gender,
-    //   goal,
-    //   income,
-    //   interests,
-    //   locations,
-    //   maritalStatus,
-    //   links
-    // );
-    // console.log(initialFeedback);
+    const parsedDemographics = JSON.parse(demographics);
+    console.log(`[DEBUG] Parsed ${parsedDemographics.length} demographic profiles`);
 
+    for (let i of parsedDemographics) {
+      console.log(`[DEBUG] Processing demographic profile`, i);
+      let demoAge = i.age;
+      let demoGender = i.gender;
+      let demoLocation = i.location;
+      let demoEducationLevel = i.educationLevel;
+      let demoEmploymentStatus = i.employmentStatus;
+      let demoHouseholdIncome = i.householdIncome;
+      let demoMaritalStatus = i.maritalStatus;
+      let demoNumberOfDependents = i.numberOfDependents;
+      let demoEthnicity = i.ethnicity;
+      let demoIndustryAndJobRole = i.industryAndJobRole;
+
+      const feedback = await getInitialFeedback(
+        title,
+        description,
+        category,
+        goal,
+        links,
+        demoAge,
+        demoGender,
+        demoLocation,
+        demoEducationLevel,
+        demoEmploymentStatus,
+        demoHouseholdIncome,
+        demoMaritalStatus,
+        demoNumberOfDependents,
+        demoEthnicity,
+        demoIndustryAndJobRole,
+        files
+      );
+
+      console.log(`[DEBUG] Received feedback for demographic ${i}`);
+      const parsedFeedback = JSON.parse(feedback);
+
+      aggregatedSentiment.push(parsedFeedback.sentiment);
+      aggregatedgoodfitforMarket.push(parsedFeedback.goodFitForMarket);
+      aggregatedWhatUsersLike.push(parsedFeedback.whatUsersLike);
+      aggregatedPainPoints.push(parsedFeedback.painPoints);
+      aggregatedWillingnessToPay.push(parsedFeedback.pricingInsights.willingnessToPay);
+      aggregatedWouldBuy.push({ wouldBuy: parsedFeedback.pricingInsights.wouldBuy, reason: parsedFeedback.pricingInsights.reason });
+      aggregatedBarrierForAdoption.push(parsedFeedback.barrierForAdoption);
+      aggregatedSuggestedImprovements.push(parsedFeedback.suggestedImprovements);
+      aggregatedAdditionalFeedback.push(parsedFeedback.additionalFeedback);
+
+      //     {
+      //   "sentiment": "positive",
+      //   "goodFitForMarket": true,
+      //   "whatUsersLike": "The seamless integration with existing productivity tools and the intuitive user interface.",
+      //   "painPoints": "The mobile version is slightly laggy, and there are limited customization options for power users.",
+      //   "pricingInsights": {
+      //     "willingnessToPay": 8,
+      //     "wouldBuy": true,
+      //     "reason": "The product significantly improves workflow efficiency and saves time, making it worth the investment."
+      //   },
+      //   "barrierForAdoption": null,
+      //   "suggestedImprovements": "Improve mobile app performance and add more customization options for advanced users.",
+      //   "additionalFeedback": "The customer support seems responsive, which is a great plus. A free trial longer than 7 days would help users fully test its capabilities before purchasing."
+      // }
+    }
+
+    const finalAggregatedResults = {
+      sentiment: aggregatedSentiment,
+      goodFitForMarket: aggregatedgoodfitforMarket,
+      whatUsersLike: aggregatedWhatUsersLike,
+      painPoints: aggregatedPainPoints,
+      willingnessToPay: aggregatedWillingnessToPay,
+      wouldBuy: aggregatedWouldBuy,
+      barrierForAdoption: aggregatedBarrierForAdoption,
+      suggestedImprovements: aggregatedSuggestedImprovements,
+      additionalFeedback: aggregatedAdditionalFeedback,
+    };
     //generate synthetic demographic data
 
-    return new Response(JSON.stringify(demographics), {
+    return new Response(JSON.stringify(finalAggregatedResults), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e: unknown) {
-    console.error("Error processing request:", e);
+    console.error("[ERROR] Processing request failed:", e);
+    if (e instanceof Error) {
+      console.error("[ERROR] Stack trace:", e.stack);
+    }
     return new Response(JSON.stringify({ error: "An error occurred while processing your request" }), {
       status: e instanceof Error ? 500 : 400,
       headers: { "Content-Type": "application/json" },
     });
   }
-}
-
-async function getInitialFeedback(
-  title: string,
-  description: string,
-  category: string,
-  employment: string,
-  files: File[],
-  gender: string,
-  goal: string,
-  income: string,
-  interests: string,
-  locations: string,
-  maritalStatus: string[],
-  links: string
-) {
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-
-  const schema = {
-    description: "List of demographic profiles",
-    type: SchemaType.OBJECT,
-    properties: {
-      age: { type: SchemaType.STRING, description: "Age range", nullable: false },
-      gender: { type: SchemaType.STRING, description: "Gender identity", nullable: false },
-      location: { type: SchemaType.STRING, description: "City or country", nullable: false },
-      educationLevel: { type: SchemaType.STRING, description: "Highest education attained", nullable: false },
-      employmentStatus: { type: SchemaType.STRING, description: "Employment status", nullable: false },
-      householdIncome: { type: SchemaType.STRING, description: "Income range", nullable: false },
-      maritalStatus: { type: SchemaType.STRING, description: "Marital status", nullable: false },
-      numberOfDependents: { type: SchemaType.NUMBER, description: "Number of dependents", nullable: false },
-      ethnicity: { type: SchemaType.STRING, description: "Ethnic background", nullable: false },
-      industryAndJobRole: { type: SchemaType.STRING, description: "Industry and job role", nullable: false },
-    },
-    required: [
-      "age",
-      "gender",
-      "location",
-      "educationLevel",
-      "employmentStatus",
-      "householdIncome",
-      "maritalStatus",
-      "numberOfDependents",
-      "ethnicity",
-      "industryAndJobRole",
-    ],
-  };
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-      responseSchema: schema,
-    },
-  });
-
-  const result = await model.generateContent(``);
-  return result.response.text();
 }
 
 async function getTargetMarket(
@@ -126,8 +149,10 @@ async function getTargetMarket(
   income: string,
   interests: string,
   locations: string,
-  maritalStatus: string[]
+  maritalStatus: string[],
+  numberOfProfiles: number
 ) {
+  console.log("[DEBUG] Starting getTargetMarket function");
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
   const schema = {
@@ -171,7 +196,7 @@ async function getTargetMarket(
   });
 
   const result = await model.generateContent(
-    `Generate an array of 25 unique demographic profiles, each containing age, gender, location, education level, employment status, 
+    `Generate an array of ${numberOfProfiles} unique demographic profiles, each containing age, gender, location, education level, employment status, 
    household income, marital status, number of dependents, ethnicity, and industry/job role. 
    The demographics should be representative of those who would realistically be selected for market research based on the following product, 
    business, or service idea provided here: 
@@ -186,5 +211,132 @@ async function getTargetMarket(
   
   If any of these are unclear or not filled out, you are allowed to use the full range of that demographic.`
   );
+  console.log("[DEBUG] Generated target market data");
+  return result.response.text();
+}
+
+async function getInitialFeedback(
+  title: string,
+  description: string,
+  category: string,
+  goal: string,
+  links: string,
+  age: string,
+  gender: string,
+  location: string,
+  educationLevel: string,
+  employmentStatus: string,
+  householdIncome: string,
+  maritalStatus: string,
+  numberOfDependents: number,
+  ethnicity: string,
+  industryAndJobRole: string,
+  files: File[]
+) {
+  console.log("[DEBUG] Starting getInitialFeedback function");
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+  const schema = {
+    description: "Market feedback report from the perspective of the specified demographic profile",
+    type: SchemaType.OBJECT,
+    properties: {
+      sentiment: {
+        type: SchemaType.STRING,
+        description: "One word overall sentiment towards the product/service/idea (one from either positive, neutral, or negative)",
+        nullable: false,
+      },
+      goodFitForMarket: {
+        type: SchemaType.BOOLEAN,
+        description: "Does the demographic consider themselves a good fit for market research of this product/idea/service?",
+        nullable: false,
+      },
+      whatUsersLike: {
+        type: SchemaType.STRING,
+        description: "Key aspect users appreciates about the product/service/idea",
+        nullable: false,
+      },
+      painPoints: {
+        type: SchemaType.STRING,
+        description: "Any complaint or issue the user has with the product/service/idea",
+        nullable: false,
+      },
+      pricingInsights: {
+        type: SchemaType.OBJECT,
+        description: "User sentiment on pricing and purchase intent",
+        properties: {
+          willingnessToPay: {
+            type: SchemaType.NUMBER,
+            description:
+              "How much the user is willing to pay (if applicable) on a scale of 1-10. use 0 only if the product/service/idea does not have a paid aspect (eg is free) or if unwilling to pay.",
+            nullable: false,
+          },
+          wouldBuy: {
+            type: SchemaType.BOOLEAN,
+            description: "Would the user purchase the product/service? if free, would they use the product/service/idea",
+            nullable: false,
+          },
+          reason: {
+            type: SchemaType.STRING,
+            description: "Reason behind their purchase/use decision",
+            nullable: true,
+          },
+        },
+        required: ["willingnessToPay", "wouldBuy", "reason"],
+      },
+      barrierForAdoption: {
+        type: SchemaType.STRING,
+        description:
+          "If the user wouldn't buy/use, what is the main barrier preventing adoption? Do not talk about improvements, just state the barrier for adoption.",
+        nullable: true,
+      },
+      suggestedImprovements: {
+        type: SchemaType.STRING,
+        description: "A user-suggested change or feature that would improve the product/service",
+        nullable: false,
+      },
+      additionalFeedback: {
+        type: SchemaType.STRING,
+        description: "Any extra comments or qualitative insights provided by the demographic",
+        nullable: true,
+      },
+    },
+    required: ["sentiment", "goodFitForMarket", "whatUsersLike", "painPoints", "pricingInsights", "suggestedImprovements"],
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash",
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: schema,
+    },
+  });
+
+  const result = await model.generateContent(`
+    
+You are an AI market research analyst. Your task is to generate a structured market feedback report by fully adopting the 
+perspective of a given demographic. You will be provided with details about a product, service, or idea, along with demographic information 
+representing a potential target customer. Your response must be insightful, engaging, and representative of this specific demographic 
+personality, lifestyle, and preferences.
+
+Market Research Details:
+	•	Title: ${title}
+	•	Description: ${description}
+	•	Category: ${category} (e.g., product, service, idea)
+	•	Goal: ${goal}
+	•	Links: ${links} (if available)
+
+Your Persona (Demographic Profile):
+
+You are a ${age} ${gender} from ${location}.
+	•	Your highest education level is ${educationLevel}, and you are currently ${employmentStatus}.
+	•	Your household income falls within ${householdIncome}, and you are ${maritalStatus} with ${numberOfDependents} dependents.
+	•	You identify as ${ethnicity} and work in ${industryAndJobRole}.
+
+Instructions:
+	•	Think and respond as if you are this person. consider their priorities, lifestyle, financial situation, and personal preferences.
+	•	Be specific and realistic about their motivations, concerns, and buying behavior.
+	•	If this persona would not buy or use the ${category}, explain why in a way that reflects their personal and financial circumstances.
+	•	Provide both quantitative and qualitative insights where specified in the schema.
+	•	Keep responses concise yet engaging, following the provided schema.`);
+  console.log("[DEBUG] Generated initial feedback");
   return result.response.text();
 }

@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import FeedbackForm from "../../my-components/FeedbackForm";
 import NewForm from "@/my-components/NewForm";
 
 export default async function ProtectedPage() {

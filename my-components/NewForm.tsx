@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -26,10 +27,11 @@ export default function NewForm() {
         const responseData = response.data;
 
         if (response.status === 200) {
-          alert(responseData);
+          console.log(responseData);
           setVisible(true);
           // Redirect to results page with the data
-          // window.location.href = `/result?data=${encodeURIComponent(JSON.stringify(data))}`;
+          localStorage.setItem("searchData", JSON.stringify(responseData));
+          window.location.href = `/result`;
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
