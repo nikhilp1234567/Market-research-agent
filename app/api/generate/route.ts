@@ -101,6 +101,7 @@ export async function POST(req: Request) {
     }
 
     const finalAggregatedResults = {
+      demographicProfiles: parsedDemographics,
       sentiment: aggregatedSentiment,
       goodFitForMarket: aggregatedgoodfitforMarket,
       whatUsersLike: aggregatedWhatUsersLike,

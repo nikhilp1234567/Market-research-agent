@@ -1,5 +1,6 @@
 "use client";
 
+import DemoSlider from "@/my-components/DemoSlider";
 import { useEffect, useState } from "react";
 
 // want to get user profiles as a slider on this page
@@ -8,6 +9,19 @@ import { useEffect, useState } from "react";
 // want to separate out the different responses, aggregate the numericals and parse the qualitiative through another gemini model
 
 interface Result {
+  demographicProfiles: {
+    id: number; //need to actually code this in
+    age: string;
+    educationLevel: string;
+    employmentStatus: string;
+    ethnicity: string;
+    gender: string;
+    householdIncome: string;
+    industryAndJobRole: string;
+    location: string;
+    maritalStatus: string;
+    numberOfDependents: number;
+  }[];
   sentiment: string[];
   goodFitForMarket: boolean[];
   whatUsersLike: string[];
@@ -38,6 +52,9 @@ export default function ResultPage() {
     <div className='max-w-2xl mx-auto p-4 bg-black'>
       <h1 className='text-2xl font-bold mb-4'>Feedback Results</h1>
       <div className='space-y-6'>
+        <div>
+          <DemoSlider data={result.demographicProfiles} />
+        </div>
         <div>
           <h2 className='text-xl font-semibold'>Overall Sentiment</h2>
           <ul className='list-disc pl-5 mt-2'>
