@@ -14,7 +14,8 @@ export async function POST(req: Request) {
   let aggregatedWhatUsersLike = [];
   let aggregatedPainPoints = [];
   let aggregatedWillingnessToPay = [];
-  let aggregatedWouldBuy: { wouldBuy: boolean; reason: string }[] = [];
+  let aggregatedWouldBuy = [];
+  let aggregatedReason = [];
   let aggregatedBarrierForAdoption = [];
   let aggregatedSuggestedImprovements = [];
   let aggregatedAdditionalFeedback = [];
@@ -91,26 +92,12 @@ export async function POST(req: Request) {
       aggregatedgoodfitforMarket.push(parsedFeedback.goodFitForMarket);
       aggregatedWhatUsersLike.push(parsedFeedback.whatUsersLike);
       aggregatedPainPoints.push(parsedFeedback.painPoints);
-      aggregatedWillingnessToPay.push(parsedFeedback.pricingInsights.willingnessToPay);
-      aggregatedWouldBuy.push({ wouldBuy: parsedFeedback.pricingInsights.wouldBuy, reason: parsedFeedback.pricingInsights.reason });
+      aggregatedWillingnessToPay.push(parsedFeedback.willingnessToPay);
+      aggregatedWouldBuy.push(parsedFeedback.wouldBuy);
+      aggregatedReason.push(parsedFeedback.reason);
       aggregatedBarrierForAdoption.push(parsedFeedback.barrierForAdoption);
       aggregatedSuggestedImprovements.push(parsedFeedback.suggestedImprovements);
       aggregatedAdditionalFeedback.push(parsedFeedback.additionalFeedback);
-
-      //     {
-      //   "sentiment": "positive",
-      //   "goodFitForMarket": true,
-      //   "whatUsersLike": "The seamless integration with existing productivity tools and the intuitive user interface.",
-      //   "painPoints": "The mobile version is slightly laggy, and there are limited customization options for power users.",
-      //   "pricingInsights": {
-      //     "willingnessToPay": 8,
-      //     "wouldBuy": true,
-      //     "reason": "The product significantly improves workflow efficiency and saves time, making it worth the investment."
-      //   },
-      //   "barrierForAdoption": null,
-      //   "suggestedImprovements": "Improve mobile app performance and add more customization options for advanced users.",
-      //   "additionalFeedback": "The customer support seems responsive, which is a great plus. A free trial longer than 7 days would help users fully test its capabilities before purchasing."
-      // }
     }
 
     const finalAggregatedResults = {
@@ -120,12 +107,13 @@ export async function POST(req: Request) {
       painPoints: aggregatedPainPoints,
       willingnessToPay: aggregatedWillingnessToPay,
       wouldBuy: aggregatedWouldBuy,
+      reason: aggregatedReason,
       barrierForAdoption: aggregatedBarrierForAdoption,
       suggestedImprovements: aggregatedSuggestedImprovements,
       additionalFeedback: aggregatedAdditionalFeedback,
     };
-    //generate synthetic demographic data
 
+    //generate synthetic demographic data
     return new Response(JSON.stringify(finalAggregatedResults), {
       headers: { "Content-Type": "application/json" },
     });
@@ -259,28 +247,21 @@ async function getInitialFeedback(
         description: "Any complaint or issue the user has with the product/service/idea",
         nullable: false,
       },
-      pricingInsights: {
-        type: SchemaType.OBJECT,
-        description: "User sentiment on pricing and purchase intent",
-        properties: {
-          willingnessToPay: {
-            type: SchemaType.NUMBER,
-            description:
-              "How much the user is willing to pay (if applicable) on a scale of 1-10. use 0 only if the product/service/idea does not have a paid aspect (eg is free) or if unwilling to pay.",
-            nullable: false,
-          },
-          wouldBuy: {
-            type: SchemaType.BOOLEAN,
-            description: "Would the user purchase the product/service? if free, would they use the product/service/idea",
-            nullable: false,
-          },
-          reason: {
-            type: SchemaType.STRING,
-            description: "Reason behind their purchase/use decision",
-            nullable: true,
-          },
-        },
-        required: ["willingnessToPay", "wouldBuy", "reason"],
+      willingnessToPay: {
+        type: SchemaType.NUMBER,
+        description:
+          "How much the user is willing to pay (if applicable) on a scale of 1-10. use 0 only if the product/service/idea does not have a paid aspect (eg is free) or if unwilling to pay.",
+        nullable: false,
+      },
+      wouldBuy: {
+        type: SchemaType.BOOLEAN,
+        description: "Would the user purchase the product/service? if free, would they use the product/service/idea",
+        nullable: false,
+      },
+      reason: {
+        type: SchemaType.STRING,
+        description: "Reason behind their purchase/use decision",
+        nullable: true,
       },
       barrierForAdoption: {
         type: SchemaType.STRING,
@@ -299,7 +280,7 @@ async function getInitialFeedback(
         nullable: true,
       },
     },
-    required: ["sentiment", "goodFitForMarket", "whatUsersLike", "painPoints", "pricingInsights", "suggestedImprovements"],
+    required: ["sentiment", "goodFitForMarket", "whatUsersLike", "painPoints", "willingnessToPay", "wouldBuy", "reason", "suggestedImprovements"],
   };
 
   const model = genAI.getGenerativeModel({

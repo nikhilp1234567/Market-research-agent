@@ -2,16 +2,22 @@
 
 import { useEffect, useState } from "react";
 
+// want to get user profiles as a slider on this page
+// want to get their individual responses within their slides
+// guess this bit should be an array of objects which have all the user details and the user answers all in one
+// want to separate out the different responses, aggregate the numericals and parse the qualitiative through another gemini model
+
 interface Result {
-  sentiment: string;
-  goodFitForMarket: string;
+  sentiment: string[];
+  goodFitForMarket: boolean[];
   whatUsersLike: string[];
   painPoints: string[];
-  willingnessToPay: string;
-  wouldBuy: string;
+  willingnessToPay: number[];
+  wouldBuy: boolean[];
+  reason: string[];
   barrierForAdoption: string[];
   suggestedImprovements: string[];
-  additionalFeedback: string;
+  additionalFeedback: string[];
 }
 
 export default function ResultPage() {
@@ -34,12 +40,20 @@ export default function ResultPage() {
       <div className='space-y-6'>
         <div>
           <h2 className='text-xl font-semibold'>Overall Sentiment</h2>
-          <p className='mt-2'>{result.sentiment}</p>
+          <ul className='list-disc pl-5 mt-2'>
+            {result.sentiment.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
         </div>
 
         <div>
           <h2 className='text-xl font-semibold'>Market Fit</h2>
-          <p className='mt-2'>{result.goodFitForMarket}</p>
+          <ul className='list-disc pl-5 mt-2'>
+            {result.goodFitForMarket.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
         </div>
 
         <div>
@@ -64,11 +78,29 @@ export default function ResultPage() {
           <h2 className='text-xl font-semibold'>Pricing Insights</h2>
           <div className='mt-2'>
             <p>
-              <strong>Willingness to Pay:</strong> {result.willingnessToPay}
+              <strong>Willingness to Pay:</strong>
             </p>
+            <ul className='list-disc pl-5 mt-2'>
+              {result.willingnessToPay.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
             <p>
-              <strong>Would Buy:</strong> {result.wouldBuy}
+              <strong>Would Buy:</strong>
             </p>
+            <ul className='list-disc pl-5 mt-2'>
+              {result.wouldBuy.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+            <p>
+              <strong>reason:</strong>
+            </p>
+            <ul className='list-disc pl-5 mt-2'>
+              {result.reason.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -92,7 +124,11 @@ export default function ResultPage() {
 
         <div>
           <h2 className='text-xl font-semibold'>Additional Feedback</h2>
-          <p className='mt-2'>{result.additionalFeedback}</p>
+          <ul className='list-disc pl-5 mt-2'>
+            {result.additionalFeedback.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
