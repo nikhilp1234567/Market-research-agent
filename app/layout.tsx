@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en' className={geistSans.className} suppressHydrationWarning>
       <body className='bg-background text-foreground w-screen h-screen'>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
           <main className='min-h-screen max-h-screen flex flex-1 flex-col items-center' id='main-content'>
             <div className='flex-1 w-full flex h-full bg-white flex-col items-center'>
               <Nav />

@@ -150,6 +150,7 @@ async function getTargetMarket(
     items: {
       type: SchemaType.OBJECT,
       properties: {
+        id: { type: SchemaType.NUMBER, description: "serial id, should be unique", nullable: false },
         age: { type: SchemaType.STRING, description: "Age range", nullable: false },
         gender: { type: SchemaType.STRING, description: "Gender identity", nullable: false },
         location: { type: SchemaType.STRING, description: "City or country", nullable: false },
@@ -162,6 +163,7 @@ async function getTargetMarket(
         industryAndJobRole: { type: SchemaType.STRING, description: "Industry and job role", nullable: false },
       },
       required: [
+        "id",
         "age",
         "gender",
         "location",
@@ -185,7 +187,7 @@ async function getTargetMarket(
   });
 
   const result = await model.generateContent(
-    `Generate an array of ${numberOfProfiles} unique demographic profiles, each containing age, gender, location, education level, employment status, 
+    `Generate an array of ${numberOfProfiles} unique demographic profiles, each containing id, age, gender, location, education level, employment status, 
    household income, marital status, number of dependents, ethnicity, and industry/job role. 
    The demographics should be representative of those who would realistically be selected for market research based on the following product, 
    business, or service idea provided here: 

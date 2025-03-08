@@ -3,14 +3,13 @@
 import DemoSlider from "@/my-components/DemoSlider";
 import { useEffect, useState } from "react";
 
-// want to get user profiles as a slider on this page
 // want to get their individual responses within their slides
 // guess this bit should be an array of objects which have all the user details and the user answers all in one
 // want to separate out the different responses, aggregate the numericals and parse the qualitiative through another gemini model
 
 interface Result {
   demographicProfiles: {
-    id: number; //need to actually code this in
+    id: number;
     age: string;
     educationLevel: string;
     employmentStatus: string;
@@ -53,7 +52,21 @@ export default function ResultPage() {
       <h1 className='text-2xl font-bold mb-4'>Feedback Results</h1>
       <div className='space-y-6'>
         <div>
-          <DemoSlider data={result.demographicProfiles} />
+          <DemoSlider
+            demographicData={result.demographicProfiles}
+            responseData={{
+              sentiment: result.sentiment,
+              goodFitForMarket: result.goodFitForMarket,
+              whatUsersLike: result.whatUsersLike,
+              painPoints: result.painPoints,
+              willingnessToPay: result.willingnessToPay,
+              wouldBuy: result.wouldBuy,
+              reason: result.reason,
+              barrierForAdoption: result.barrierForAdoption,
+              suggestedImprovements: result.suggestedImprovements,
+              additionalFeedback: result.additionalFeedback,
+            }}
+          />
         </div>
         <div>
           <h2 className='text-xl font-semibold'>Overall Sentiment</h2>
@@ -103,6 +116,7 @@ export default function ResultPage() {
               ))}
             </ul>
             <p>
+              <div></div>
               <strong>Would Buy:</strong>
             </p>
             <ul className='list-disc pl-5 mt-2'>
