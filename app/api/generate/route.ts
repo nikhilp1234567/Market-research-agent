@@ -191,7 +191,7 @@ async function getTargetMarket(
    household income, marital status, number of dependents, ethnicity, and industry/job role. 
    The demographics should be representative of those who would realistically be selected for market research based on the following product, 
    business, or service idea provided here: 
-   name is ${title}, description is ${description}. Take into account the following demographic constraints which have been inputted: 
+   the name is ${title} and the description of this product/service/idea is as follows: ${description}. Take into account the following demographic constraints which have been input: 
   
   employment industries, roles, sectors etc: ${employment}
   gender / genders: ${gender}
@@ -296,10 +296,11 @@ async function getInitialFeedback(
 
   const result = await model.generateContent(`
     
-You are an AI market research analyst. Your task is to generate a structured market feedback report by fully adopting the 
+Your task is to generate a structured market feedback report by fully adopting the 
 perspective of a given demographic. You will be provided with details about a product, service, or idea, along with demographic information 
 representing a potential target customer. Your response must be insightful, engaging, and representative of this specific demographic 
-personality, lifestyle, and preferences.
+personality, lifestyle, and preferences. Answers must be realistic, not conflict with each other and be representative of your demographic.
+It is important to not act as if you have already used the product, service or idea, but to act as if you are seeing or hearing about it for the first time in this market research. 
 
 Market Research Details:
 	•	Title: ${title}

@@ -44,6 +44,10 @@ export default function ResultPage() {
   }, []);
 
   if (!result) {
+    setTimeout(() => {
+      const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
+      setResult(processedData as Result);
+    }, 1000);
     return <div>Loading results...</div>;
   }
 
@@ -81,7 +85,7 @@ export default function ResultPage() {
           <h2 className='text-xl font-semibold'>Market Fit</h2>
           <ul className='list-disc pl-5 mt-2'>
             {result.goodFitForMarket.map((item, i) => (
-              <li key={i}>{item}</li>
+              <li key={i}>{String(item)}</li>
             ))}
           </ul>
         </div>
@@ -121,7 +125,7 @@ export default function ResultPage() {
             </p>
             <ul className='list-disc pl-5 mt-2'>
               {result.wouldBuy.map((item, i) => (
-                <li key={i}>{item}</li>
+                <li key={i}>{String(item)}</li>
               ))}
             </ul>
             <p>
@@ -139,7 +143,7 @@ export default function ResultPage() {
           <h2 className='text-xl font-semibold'>Barriers for Adoption</h2>
           <ul className='list-disc pl-5 mt-2'>
             {result.barrierForAdoption.map((barrier, i) => (
-              <li key={i}>{barrier}</li>
+              <li key={i}>{`${barrier}`}</li>
             ))}
           </ul>
         </div>
