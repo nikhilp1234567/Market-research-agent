@@ -150,7 +150,7 @@ async function getTargetMarket(
     items: {
       type: SchemaType.OBJECT,
       properties: {
-        id: { type: SchemaType.NUMBER, description: "serial id, should be unique", nullable: false },
+        id: { type: SchemaType.NUMBER, description: "serial id, should be unique, incrementing by 1 and start from 1", nullable: false },
         age: { type: SchemaType.STRING, description: "Age range", nullable: false },
         gender: { type: SchemaType.STRING, description: "Gender identity", nullable: false },
         location: { type: SchemaType.STRING, description: "City or country", nullable: false },

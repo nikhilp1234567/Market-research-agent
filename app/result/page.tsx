@@ -2,6 +2,7 @@
 
 import DemoSlider from "@/my-components/DemoSlider";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 // want to get their individual responses within their slides
 // guess this bit should be an array of objects which have all the user details and the user answers all in one
@@ -35,6 +36,7 @@ interface Result {
 
 export default function ResultPage() {
   const [result, setResult] = useState<Result | null>(null);
+  const [summarisedPainPoints, setSummarisedPainPoints] = useState("");
 
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
@@ -101,11 +103,24 @@ export default function ResultPage() {
 
         <div>
           <h2 className='text-xl font-semibold'>Pain Points</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.painPoints.map((point, i) => (
-              <li key={i}>{point}</li>
-            ))}
-          </ul>
+          {summarisedPainPoints ? (
+            summarisedPainPoints
+          ) : (
+            <button
+              onClick={async () => {
+                try {
+                  const response = await axios.post("/api/summarise", {
+                    data: result.painPoints,
+                  });
+                  setSummarisedPainPoints(String(response.data));
+                } catch (error) {
+                  console.error("Error aggregating data:", error);
+                }
+              }}
+              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+              Click to summarise the generated pain points.
+            </button>
+          )}
         </div>
 
         <div>
