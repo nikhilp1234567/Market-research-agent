@@ -37,6 +37,10 @@ interface Result {
 export default function ResultPage() {
   const [result, setResult] = useState<Result | null>(null);
   const [summarisedPainPoints, setSummarisedPainPoints] = useState("");
+  const [summarisedWhatUsersLike, setSummarisedwhatUsersLike] = useState("");
+  const [summarisedReason, setSummarisedReason] = useState("");
+  const [summarisedSuggestedImprovements, setSummarisedSuggestedImprovements] = useState("");
+  const [summarisedAdditionalFeedback, setSummarisedAdditionalFeedback] = useState("");
 
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
@@ -94,11 +98,24 @@ export default function ResultPage() {
 
         <div>
           <h2 className='text-xl font-semibold'>What Users Like</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.whatUsersLike.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
+          {summarisedWhatUsersLike ? (
+            summarisedWhatUsersLike
+          ) : (
+            <button
+              onClick={async () => {
+                try {
+                  const response = await axios.post("/api/summarise", {
+                    data: result.whatUsersLike,
+                  });
+                  setSummarisedwhatUsersLike(String(response.data));
+                } catch (error) {
+                  console.error("Error aggregating data:", error);
+                }
+              }}
+              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+              Click to summarise what the users liked.
+            </button>
+          )}
         </div>
 
         <div>
@@ -146,11 +163,24 @@ export default function ResultPage() {
             <p>
               <strong>reason:</strong>
             </p>
-            <ul className='list-disc pl-5 mt-2'>
-              {result.reason.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
+            {summarisedReason ? (
+              summarisedReason
+            ) : (
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await axios.post("/api/summarise", {
+                      data: result.whatUsersLike,
+                    });
+                    setSummarisedReason(String(response.data));
+                  } catch (error) {
+                    console.error("Error aggregating data:", error);
+                  }
+                }}
+                className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                Click to summarise what the users liked.
+              </button>
+            )}
           </div>
         </div>
 
@@ -165,20 +195,46 @@ export default function ResultPage() {
 
         <div>
           <h2 className='text-xl font-semibold'>Suggested Improvements</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.suggestedImprovements.map((improvement, i) => (
-              <li key={i}>{improvement}</li>
-            ))}
-          </ul>
+          {summarisedSuggestedImprovements ? (
+            summarisedSuggestedImprovements
+          ) : (
+            <button
+              onClick={async () => {
+                try {
+                  const response = await axios.post("/api/summarise", {
+                    data: result.suggestedImprovements,
+                  });
+                  setSummarisedSuggestedImprovements(String(response.data));
+                } catch (error) {
+                  console.error("Error aggregating data:", error);
+                }
+              }}
+              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+              Click to summarise suggested improvements
+            </button>
+          )}
         </div>
 
         <div>
           <h2 className='text-xl font-semibold'>Additional Feedback</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.additionalFeedback.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
+          {summarisedAdditionalFeedback ? (
+            summarisedAdditionalFeedback
+          ) : (
+            <button
+              onClick={async () => {
+                try {
+                  const response = await axios.post("/api/summarise", {
+                    data: result.additionalFeedback,
+                  });
+                  setSummarisedAdditionalFeedback(String(response.data));
+                } catch (error) {
+                  console.error("Error aggregating data:", error);
+                }
+              }}
+              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+              Click to summarise additional feedback
+            </button>
+          )}
         </div>
       </div>
     </div>
