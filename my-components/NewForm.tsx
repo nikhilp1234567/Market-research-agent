@@ -63,6 +63,50 @@ export default function NewForm() {
             className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
             Next
           </button>
+
+          {/* this is the demo button which needs to be removed after coding is finished */}
+          <button
+            onClick={() => {
+              const demoData = {
+                name: "EcoWater Bottle",
+                campaignDescription: "A reusable water bottle with built-in filtration system",
+                campaignCategory: "Eco-friendly products",
+                employmentSituation: "Office workers, Students, Outdoor enthusiasts",
+                gender: "All",
+                goal: "validatePMF",
+                householdIncome: "40,000 - 59,999",
+                interests: "Sustainability, Health, Fitness",
+                locations: "London, New York, Sydney",
+                maritalStatus: "Single",
+                relevantLinks: "https://ecowater.com, https://sustainability.org",
+                files: [],
+              };
+              handleSubmit(async () => {
+                try {
+                  const response = await fetch("/api/generate", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(demoData),
+                  });
+
+                  if (response.ok) {
+                    const responseData = await response.json();
+                    localStorage.setItem("searchData", JSON.stringify(responseData));
+                    window.location.href = `/result`;
+                  } else {
+                    throw new Error("Failed to process demo data");
+                  }
+                } catch (error) {
+                  console.error("Demo submission failed:", error);
+                  setVisible(true);
+                }
+              })();
+            }}
+            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
+            Demo
+          </button>
         </div>
       );
     case 2:
