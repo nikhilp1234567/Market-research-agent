@@ -3,6 +3,8 @@
 import DemoSlider from "@/my-components/DemoSlider";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SentimentGraph from "@/my-components/SentimentGraph";
+import PricingLineGraph from "@/my-components/PricingLineGraph";
 
 // want to get their individual responses within their slides
 // guess this bit should be an array of objects which have all the user details and the user answers all in one
@@ -50,10 +52,6 @@ export default function ResultPage() {
   }, []);
 
   if (!result) {
-    setTimeout(() => {
-      const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
-      setResult(processedData as Result);
-    }, 1000);
     return <div>Loading results...</div>;
   }
 
@@ -80,11 +78,7 @@ export default function ResultPage() {
         </div>
         <div>
           <h2 className='text-xl font-semibold'>Overall Sentiment</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.sentiment.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
+          <SentimentGraph data={result.sentiment} />
         </div>
 
         <div>
@@ -146,6 +140,7 @@ export default function ResultPage() {
             <p>
               <strong>Willingness to Pay:</strong>
             </p>
+            <PricingLineGraph data={result.willingnessToPay} />
             <ul className='list-disc pl-5 mt-2'>
               {result.willingnessToPay.map((item, i) => (
                 <li key={i}>{item}</li>
