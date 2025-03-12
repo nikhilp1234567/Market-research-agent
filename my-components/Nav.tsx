@@ -13,6 +13,9 @@ export default function Nav() {
           <Link href={"/"} id='home-link'>
             <h1 className='bg-white text-black px-3 py-2 hover:text-white duration-500  hover:bg-black rounded-md'>MarketMind</h1>
           </Link>
+          <Link href={"/checkout-page"} id='checkout-link'>
+            <h1 className='bg-white text-black px-3 py-2 hover:text-white duration-500  hover:bg-black rounded-md'>Checkout</h1>
+          </Link>
         </div>
         <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>
       </div>
