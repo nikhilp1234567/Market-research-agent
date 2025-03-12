@@ -1,19 +1,11 @@
 to do:
-
-i have the code for the demographics now. this generates a list of people which would review the item etc
-
-the next bit is to generate the initial feedback. I have done 60% of this, but need to pass the info from the demographics into it and loop through the people in it.
-
-the output should be:
-sentiment - positive, neutral or negative, - string
-does the demographic think they are a good fit for the market research - boolean
-what user likes about product / service / idea - string
-pain points - string
-pricing insights - willingness to pay (1-10) and would buy (boolean) and reason (string)
-barrier for adoption if would buy / use is false
-suggested improvements - string
-
-the results section itself should look like this:
+add some forward and back buttons on the form in the bottom right corner (like a typeform )
+fix the results page ui
+add in some animations for page changes button clicks (eg like typeform)
+do the home page before authenitcation, make it a nice landing page
+maybe add oauth for google and apple etc for signin
+make sure the stripe payment thing is set up peoperly and redirects to an actual payment page
+fix that bug where the link textbox keeps getting filled with the value from locations
 
 1. Summary
    • Brief overview of key findings

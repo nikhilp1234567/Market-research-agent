@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SentimentGraph from "@/my-components/SentimentGraph";
 import PricingLineGraph from "@/my-components/PricingLineGraph";
+import WouldBuyPieChart from "@/my-components/WouldBuyPieChart";
 
 // want to get their individual responses within their slides
 // guess this bit should be an array of objects which have all the user details and the user answers all in one
@@ -141,15 +142,11 @@ export default function ResultPage() {
               <strong>Willingness to Pay:</strong>
             </p>
             <PricingLineGraph data={result.willingnessToPay} />
-            <ul className='list-disc pl-5 mt-2'>
-              {result.willingnessToPay.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
             <p>
               <div></div>
               <strong>Would Buy:</strong>
             </p>
+            <WouldBuyPieChart data={result.wouldBuy} />
             <ul className='list-disc pl-5 mt-2'>
               {result.wouldBuy.map((item, i) => (
                 <li key={i}>{String(item)}</li>
