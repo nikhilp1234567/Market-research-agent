@@ -6,10 +6,7 @@ import axios from "axios";
 import SentimentGraph from "@/my-components/SentimentGraph";
 import PricingLineGraph from "@/my-components/PricingLineGraph";
 import WouldBuyPieChart from "@/my-components/WouldBuyPieChart";
-
-// want to get their individual responses within their slides
-// guess this bit should be an array of objects which have all the user details and the user answers all in one
-// want to separate out the different responses, aggregate the numericals and parse the qualitiative through another gemini model
+import MarketFitRadialPieChart from "@/my-components/MarketFitRadialPieChart";
 
 interface Result {
   demographicProfiles: {
@@ -57,178 +54,177 @@ export default function ResultPage() {
   }
 
   return (
-    <div className='max-w-2xl mx-auto p-4 bg-black'>
-      <h1 className='text-2xl font-bold mb-4'>Feedback Results</h1>
-      <div className='space-y-6'>
-        <div>
-          <DemoSlider
-            demographicData={result.demographicProfiles}
-            responseData={{
-              sentiment: result.sentiment,
-              goodFitForMarket: result.goodFitForMarket,
-              whatUsersLike: result.whatUsersLike,
-              painPoints: result.painPoints,
-              willingnessToPay: result.willingnessToPay,
-              wouldBuy: result.wouldBuy,
-              reason: result.reason,
-              barrierForAdoption: result.barrierForAdoption,
-              suggestedImprovements: result.suggestedImprovements,
-              additionalFeedback: result.additionalFeedback,
-            }}
-          />
-        </div>
-        <div>
-          <h2 className='text-xl font-semibold'>Overall Sentiment</h2>
-          <SentimentGraph data={result.sentiment} />
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Market Fit</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.goodFitForMarket.map((item, i) => (
-              <li key={i}>{String(item)}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>What Users Like</h2>
-          {summarisedWhatUsersLike ? (
-            summarisedWhatUsersLike
-          ) : (
-            <button
-              onClick={async () => {
-                try {
-                  const response = await axios.post("/api/summarise", {
-                    data: result.whatUsersLike,
-                  });
-                  setSummarisedwhatUsersLike(String(response.data));
-                } catch (error) {
-                  console.error("Error aggregating data:", error);
-                }
+    <div id='black-background' className='flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden bg-black pb-6 px-6 pt-3'>
+      <div id='blue-holder' style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }} className='p-6 flex gap-6 overflow-hidden flex-col w-full h-full'>
+        <h1 className='text-2xl text-center font-bold'>Feedback Results</h1>
+        <div id='content-holder' className='flex gap-3 flex-row w-full h-[calc(100%-3rem)]'>
+          <div id='left' className='w-[50%] h-full overflow-auto border border-white rounded-[2rem]'>
+            <DemoSlider
+              demographicData={result.demographicProfiles}
+              responseData={{
+                sentiment: result.sentiment,
+                goodFitForMarket: result.goodFitForMarket,
+                whatUsersLike: result.whatUsersLike,
+                painPoints: result.painPoints,
+                willingnessToPay: result.willingnessToPay,
+                wouldBuy: result.wouldBuy,
+                reason: result.reason,
+                barrierForAdoption: result.barrierForAdoption,
+                suggestedImprovements: result.suggestedImprovements,
+                additionalFeedback: result.additionalFeedback,
               }}
-              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
-              Click to summarise what the users liked.
-            </button>
-          )}
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Pain Points</h2>
-          {summarisedPainPoints ? (
-            summarisedPainPoints
-          ) : (
-            <button
-              onClick={async () => {
-                try {
-                  const response = await axios.post("/api/summarise", {
-                    data: result.painPoints,
-                  });
-                  setSummarisedPainPoints(String(response.data));
-                } catch (error) {
-                  console.error("Error aggregating data:", error);
-                }
-              }}
-              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
-              Click to summarise the generated pain points.
-            </button>
-          )}
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Pricing Insights</h2>
-          <div className='mt-2'>
-            <p>
-              <strong>Willingness to Pay:</strong>
-            </p>
-            <PricingLineGraph data={result.willingnessToPay} />
-            <p>
-              <div></div>
-              <strong>Would Buy:</strong>
-            </p>
-            <WouldBuyPieChart data={result.wouldBuy} />
-            <ul className='list-disc pl-5 mt-2'>
-              {result.wouldBuy.map((item, i) => (
-                <li key={i}>{String(item)}</li>
-              ))}
-            </ul>
-            <p>
-              <strong>reason:</strong>
-            </p>
-            {summarisedReason ? (
-              summarisedReason
-            ) : (
-              <button
-                onClick={async () => {
-                  try {
-                    const response = await axios.post("/api/summarise", {
-                      data: result.whatUsersLike,
-                    });
-                    setSummarisedReason(String(response.data));
-                  } catch (error) {
-                    console.error("Error aggregating data:", error);
-                  }
-                }}
-                className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
-                Click to summarise what the users liked.
-              </button>
-            )}
+            />
           </div>
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Barriers for Adoption</h2>
-          <ul className='list-disc pl-5 mt-2'>
-            {result.barrierForAdoption.map((barrier, i) => (
-              <li key={i}>{`${barrier}`}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Suggested Improvements</h2>
-          {summarisedSuggestedImprovements ? (
-            summarisedSuggestedImprovements
-          ) : (
-            <button
-              onClick={async () => {
-                try {
-                  const response = await axios.post("/api/summarise", {
-                    data: result.suggestedImprovements,
-                  });
-                  setSummarisedSuggestedImprovements(String(response.data));
-                } catch (error) {
-                  console.error("Error aggregating data:", error);
-                }
-              }}
-              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
-              Click to summarise suggested improvements
-            </button>
-          )}
-        </div>
-
-        <div>
-          <h2 className='text-xl font-semibold'>Additional Feedback</h2>
-          {summarisedAdditionalFeedback ? (
-            summarisedAdditionalFeedback
-          ) : (
-            <button
-              onClick={async () => {
-                try {
-                  const response = await axios.post("/api/summarise", {
-                    data: result.additionalFeedback,
-                  });
-                  setSummarisedAdditionalFeedback(String(response.data));
-                } catch (error) {
-                  console.error("Error aggregating data:", error);
-                }
-              }}
-              className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
-              Click to summarise additional feedback
-            </button>
-          )}
+          <div id='right' className='flex flex-col gap-6 rounded-[2rem] h-full overflow-auto border border-white items-center w-[50%]'>
+            <h1 className='text-xl font-semibold'>Aggregated results</h1>
+            <div className='flex gap-3 flex-col w-[90%] items-center'>
+              <h2 className='text-xl text-left font-semibold'>Overall Sentiment</h2>
+              <SentimentGraph data={result.sentiment} />
+            </div>
+            <div className='flex gap-3 flex-col items-center w-[90%]'>
+              {/* need to sort out the styling for this one in the acutal component */}
+              <h2 className='text-xl font-semibold'>Market Fit</h2>
+              <MarketFitRadialPieChart data={result.goodFitForMarket} />
+            </div>
+            <div className='flex gap-3 flex-col items-center'>
+              <h2 className='text-xl font-semibold'>What Users Like</h2>
+              {summarisedWhatUsersLike ? (
+                summarisedWhatUsersLike
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await axios.post("/api/summarise", {
+                        data: result.whatUsersLike,
+                      });
+                      setSummarisedwhatUsersLike(String(response.data));
+                    } catch (error) {
+                      console.error("Error aggregating data:", error);
+                    }
+                  }}
+                  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                  Click to summarise what the users liked.
+                </button>
+              )}
+            </div>
+            <div className='flex gap-3 flex-col items-center'>
+              <h2 className='text-xl font-semibold'>Pain Points</h2>
+              {summarisedPainPoints ? (
+                summarisedPainPoints
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await axios.post("/api/summarise", {
+                        data: result.painPoints,
+                      });
+                      setSummarisedPainPoints(String(response.data));
+                    } catch (error) {
+                      console.error("Error aggregating data:", error);
+                    }
+                  }}
+                  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                  Click to summarise the generated pain points.
+                </button>
+              )}
+            </div>
+            <div>
+              <h2 className='text-xl font-semibold'>Pricing Insights</h2>
+            </div>
+            <div className='w-[90%]'>
+              <p>
+                <strong>Willingness to Pay:</strong>
+              </p>
+              <PricingLineGraph data={result.willingnessToPay} />
+            </div>
+            <div className='w-[90%]'>
+              <p>
+                <strong>Would Use:</strong>
+              </p>
+              <WouldBuyPieChart data={result.wouldBuy} />
+            </div>
+            <div className='w-[90%]'>
+              <p>
+                <strong>reason:</strong>
+              </p>
+              {summarisedReason ? (
+                summarisedReason
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await axios.post("/api/summarise", {
+                        data: result.whatUsersLike,
+                      });
+                      setSummarisedReason(String(response.data));
+                    } catch (error) {
+                      console.error("Error aggregating data:", error);
+                    }
+                  }}
+                  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                  Click to summarise what the users liked.
+                </button>
+              )}
+            </div>
+            <div>
+              <h1>Further Feedback</h1>
+            </div>
+            <div>
+              {" "}
+              <h2 className='text-xl font-semibold'>Suggested Improvements</h2>
+              {summarisedSuggestedImprovements ? (
+                summarisedSuggestedImprovements
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await axios.post("/api/summarise", {
+                        data: result.suggestedImprovements,
+                      });
+                      setSummarisedSuggestedImprovements(String(response.data));
+                    } catch (error) {
+                      console.error("Error aggregating data:", error);
+                    }
+                  }}
+                  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                  Click to summarise suggested improvements
+                </button>
+              )}
+            </div>
+            <div>
+              <h2 className='text-xl font-semibold'>Additional Feedback</h2>
+              {summarisedAdditionalFeedback ? (
+                summarisedAdditionalFeedback
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await axios.post("/api/summarise", {
+                        data: result.additionalFeedback,
+                      });
+                      setSummarisedAdditionalFeedback(String(response.data));
+                    } catch (error) {
+                      console.error("Error aggregating data:", error);
+                    }
+                  }}
+                  className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4'>
+                  Click to summarise additional feedback
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+// <div className='space-y-6'>
+//   <div>
+//     <h2 className='text-xl font-semibold'>Barriers for Adoption</h2>
+//     <ul className='list-disc pl-5 mt-2'>
+//       {result.barrierForAdoption.map((barrier, i) => (
+//         <li key={i}>{`${barrier}`}</li>
+//       ))}
+//     </ul>
+//   </div>
+// </div>

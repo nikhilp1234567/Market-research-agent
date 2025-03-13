@@ -18,7 +18,7 @@ function PricingLineGraph({ data }: PricingGraphProps) {
       <LineChart width={500} height={500} margin={{ top: 30, bottom: 30, right: 30 }} data={processedWillingnessToPay}>
         <XAxis label={{ value: "Willingness to pay (normalised)", position: "insideBottom", offset: -10 }} />
         <YAxis label={{ value: "quantity", angle: -90 }} />
-        <Line dataKey='count'></Line>
+        <Line type='monotone' dataKey='count'></Line>
       </LineChart>
     </ResponsiveContainer>
   );

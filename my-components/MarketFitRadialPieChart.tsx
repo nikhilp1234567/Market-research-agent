@@ -1,29 +1,32 @@
 import React from "react";
-import { PieChart, Pie, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-interface WouldBuyPieChartProps {
+interface MarketFitRadialPieChartProps {
   data: boolean[] | undefined;
 }
-function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
-  const numWouldBuy = data!.filter((i) => String(i) == "true").length;
-  const numWouldntBuy = data!.filter((i) => String(i) == "false").length;
 
-  const processedSentimentData = [
-    { name: "Would Use", value: numWouldBuy },
-    { name: "Wouldn't Use", value: numWouldntBuy },
-  ];
+const COLORS = ["#0088FE", "#00C49F"];
+
+export default function MarketFitRadialPieChart({ data }: MarketFitRadialPieChartProps) {
+  const processedData = data
+    ? [
+        { name: "Good Fit", value: data.filter((val) => val === true).length },
+        { name: "Poor Fit", value: data.filter((val) => val === false).length },
+      ]
+    : [];
 
   return (
     <ResponsiveContainer width='100%' height={500} style={{ outline: "1px solid white", borderRadius: "2rem" }}>
-      <PieChart width={500} height={500} data={processedSentimentData} margin={{ top: 30, bottom: 30, right: 30 }}>
+      <PieChart width={500} height={500} margin={{ top: 30, bottom: 30, right: 30 }}>
         <Pie
-          dataKey='value'
-          data={processedSentimentData}
+          data={processedData}
           cx='50%'
           cy='50%'
           innerRadius={60}
           outerRadius={120}
           fill='#8884d8'
+          paddingAngle={5}
+          dataKey='value'
           label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
             const RADIAN = Math.PI / 180;
             const radius = 25 + innerRadius + (outerRadius - innerRadius);
@@ -32,14 +35,15 @@ function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
 
             return (
               <text x={x} y={y} fill='#fff' textAnchor={x > cx ? "start" : "end"} dominantBaseline='central'>
-                {processedSentimentData[index].name} ({value})
+                {processedData[index].name} ({value})
               </text>
             );
-          }}
-        />
+          }}>
+          {processedData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
       </PieChart>
     </ResponsiveContainer>
   );
 }
-
-export default WouldBuyPieChart;

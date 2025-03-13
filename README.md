@@ -1,4 +1,5 @@
 to do:
+
 add some forward and back buttons on the form in the bottom right corner (like a typeform )
 fix the results page ui
 add in some animations for page changes button clicks (eg like typeform)
@@ -6,6 +7,7 @@ do the home page before authenitcation, make it a nice landing page
 maybe add oauth for google and apple etc for signin
 make sure the stripe payment thing is set up peoperly and redirects to an actual payment page
 fix that bug where the link textbox keeps getting filled with the value from locations
+fix barriers for adoption being null
 
 1. Summary
    • Brief overview of key findings
