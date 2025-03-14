@@ -1,11 +1,9 @@
 'use client'
 
-import { FormEvent } from "react"
 import { getStripe } from "@/utils/get-stripe"
 
 export const CheckoutForm = () => {
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleCheckout = async () => {
     try {
       const response = await fetch('/api/checkout_sessions', {
         method: 'GET',
@@ -36,8 +34,11 @@ export const CheckoutForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <button type="submit">Checkout</button>
-    </form>
+    <button 
+      onClick={handleCheckout}
+      type="button"
+    >
+      Checkout
+    </button>
   );
 }
