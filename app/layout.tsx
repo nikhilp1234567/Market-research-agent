@@ -1,4 +1,4 @@
-import { Geist } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
 import Nav from "@/my-components/Nav";
@@ -11,9 +11,9 @@ export const metadata = {
   description: "An AI agent to gain feedback for your product, idea or webpage based on digital avatars of real people",
 };
 
-const geistSans = Geist({
-  display: "swap",
+const geistSans = Montserrat({
   subsets: ["latin"],
+  variable: "--font-montserrat",
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -21,11 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en' className={geistSans.className} suppressHydrationWarning>
       <body className='bg-background text-foreground w-screen h-screen'>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
-          <main className='min-h-screen max-h-screen flex flex-1 flex-col items-center' id='main-content'>
-            <div className='flex-1 w-full flex h-full bg-white flex-col items-center'>
-              <Nav />
-              {children}
-            </div>
+          <main className='h-full w-screen flex flex-1  bg-black  flex-col' id='main-content'>
+            <Nav />
+            {children}
           </main>
         </ThemeProvider>
       </body>

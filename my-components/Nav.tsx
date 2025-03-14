@@ -7,7 +7,7 @@ import { redirect } from "next/dist/server/api-utils";
 
 export default function Nav() {
   return (
-    <nav id='main-navigation' className='w-full bg-black flex justify-center items-center shadow-lg h-16'>
+    <nav id='main-navigation' className='w-full bg-black flex justify-center items-center shadow-lg sticky top-0 z-50 h-16'>
       <div className='w-full flex justify-between items-center p-6 px-10 text-s'>
         <div id='nav-left' className='flex gap-5 items-center font-semibold !border-white hover:!border-white duration-500 rounded-md'>
           <Link href={"/"} id='home-link'>

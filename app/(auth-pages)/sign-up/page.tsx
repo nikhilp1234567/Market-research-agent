@@ -17,11 +17,12 @@ export default async function Signup(props: { searchParams: Record<string, strin
   }
 
   return (
-    <>
-      <form className='flex flex-col min-w-64 max-w-64 mx-auto'>
+    <div className='flex items-center flex-col justify-center min-h-[calc(100vh-4rem)] w-full border-t'>
+      <form className='flex flex-col bg-blue-900 py-6 px-8 rounded-md w-[30%] mx-4'>
         <h1 className='text-2xl font-medium'>Sign up</h1>
+        <br />
         <p className='text-sm text text-foreground'>
-          Already have an account?{" "}
+          Already have an account? <br />
           <Link className='text-primary font-medium underline' href='/sign-in'>
             Sign in
           </Link>
@@ -37,7 +38,6 @@ export default async function Signup(props: { searchParams: Record<string, strin
           <FormMessage message={{ message: searchParams.message || "" }} />
         </div>
       </form>
-      <SmtpMessage />
-    </>
+    </div>
   );
 }
