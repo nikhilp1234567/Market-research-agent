@@ -4,6 +4,7 @@ import HeaderAuth from "@/components/header-auth";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import { redirect } from "next/dist/server/api-utils";
+import { CheckoutForm } from "./CheckoutForm";
 
 export default function Nav() {
   return (
@@ -13,9 +14,9 @@ export default function Nav() {
           <Link href={"/"} id='home-link'>
             <h1 className='bg-white text-black px-3 py-2 hover:text-white duration-500  hover:bg-black rounded-md'>MarketMind</h1>
           </Link>
-          <Link href={"/checkout-page"} id='checkout-link'>
-            <h1 className='bg-white text-black px-3 py-2 hover:text-white duration-500  hover:bg-black rounded-md'>Checkout</h1>
-          </Link>
+          <div className='bg-white text-black px-3 py-2 hover:text-white duration-500 hover:bg-black rounded-md'>
+            <CheckoutForm />
+          </div>
         </div>
         <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>
       </div>
