@@ -1,10 +1,9 @@
-import { signUpAction } from "@/app/actions";
+import { signInWithGoogleAction, signUpAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
 
 export default async function Signup(props: { searchParams: Record<string, string> }) {
   const searchParams = await props.searchParams;
@@ -34,6 +33,17 @@ export default async function Signup(props: { searchParams: Record<string, strin
           <Input type='password' name='password' placeholder='Your password' minLength={6} required />
           <SubmitButton formAction={signUpAction} pendingText='Signing up...'>
             Sign up
+          </SubmitButton>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-blue-900 px-2 text-gray-300">Or continue with</span>
+            </div>
+          </div>
+          <SubmitButton formAction={signInWithGoogleAction} pendingText="Continuing with Google..." formNoValidate>
+            Log in with Google
           </SubmitButton>
           <FormMessage message={{ message: searchParams.message || "" }} />
         </div>

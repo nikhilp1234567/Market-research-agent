@@ -48,6 +48,25 @@ export const signInAction = async (formData: FormData) => {
   return redirect("/protected");
 };
 
+export const signInWithGoogleAction = async() => {
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${origin}/auth/callback?redirect_to=/protected`,
+    }
+  });
+
+  if (error) {
+    return encodedRedirect("error", "/sign-in", error.message);
+  }
+
+  // Redirect to the Google OAuth URL
+  return redirect(data.url);
+}
+
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const supabase = await createClient();
@@ -81,11 +100,11 @@ export const resetPasswordAction = async (formData: FormData) => {
   const confirmPassword = formData.get("confirmPassword") as string;
 
   if (!password || !confirmPassword) {
-    encodedRedirect("error", "/protected/reset-password", "Password and confirm password are required");
+    return encodedRedirect("error", "/protected/reset-password", "Password and confirm password are required");
   }
 
   if (password !== confirmPassword) {
-    encodedRedirect("error", "/protected/reset-password", "Passwords do not match");
+    return encodedRedirect("error", "/protected/reset-password", "Passwords do not match");
   }
 
   const { error } = await supabase.auth.updateUser({
@@ -93,14 +112,33 @@ export const resetPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    encodedRedirect("error", "/protected/reset-password", "Password update failed");
+    return encodedRedirect("error", "/protected/reset-password", "Password update failed");
   }
 
-  encodedRedirect("success", "/protected/reset-password", "Password updated");
+  // Sign out the user after successful password reset
+  await supabase.auth.signOut();
+  
+  return redirect("/sign-in?message=" + encodeURIComponent("Password updated successfully. Please sign in with your new password."));
 };
 
 export const signOutAction = async () => {
   const supabase = await createClient();
-  await supabase.auth.signOut();
-  return redirect("/sign-in");
-};
+  const { error } = await supabase.auth.signOut();
+  
+  if (error) {
+    return encodedRedirect("error", "/sign-in", "Error signing out");
+  }
+
+  const response = new Response(null, {
+    status: 302,
+    headers: new Headers({
+      'Location': '/sign-in',
+      'Set-Cookie': [
+        'sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax',
+        'sb-refresh-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax'
+      ].join(', ')
+    })
+  });
+
+  return response;
+}

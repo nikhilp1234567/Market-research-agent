@@ -1,4 +1,4 @@
-import { signInAction } from "@/app/actions";
+import { signInAction, signInWithGoogleAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,17 @@ export default async function Login(props: { searchParams: Record<string, string
           <Input type='password' name='password' placeholder='Your password' required />
           <SubmitButton pendingText='Signing In...' formAction={signInAction}>
             Sign in
+          </SubmitButton>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-blue-900 px-2 text-gray-300">Or continue with</span>
+            </div>
+          </div>
+          <SubmitButton formAction={signInWithGoogleAction} pendingText="Continuing with Google..." formNoValidate>
+            Log in with Google
           </SubmitButton>
           <FormMessage message={{ message: searchParams.message || "" }} />
         </div>
