@@ -51,7 +51,12 @@ export default function NewForm() {
           className='p-32 justify-center flex flex-1 gap-6 flex-col w-full h-full'>
           <h1 className='flex w-fit text-4xl'>Market Research Campaign Name:</h1>
           <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-            <textarea {...register("name")} placeholder='Enter Name Here...' autoFocus className='w-full outline-none bg-transparent' id=''></textarea>
+            <textarea
+              {...register("name")}
+              placeholder='Enter Name of Product/Service/Idea Here, Alongside a Tagline or Brief Overview...'
+              autoFocus
+              className='w-full outline-none bg-transparent'
+              id=''></textarea>
           </div>
           <button
             onClick={() => {
@@ -355,7 +360,7 @@ export default function NewForm() {
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
           className='px-32 py-16 flex flex-1 gap-6 justify-center items-center overflow-hidden flex-col w-full max-h-full h-full'>
           {visible ? (
-            <div>
+            <div className='flex flex-col text-center gap-6'>
               <h1 className='text-5xl duration-1000'>Ok, You're all set</h1>
               <h3 className='text-2xl'>Hit the submit button below to get your personalised feedback report:</h3>
             </div>

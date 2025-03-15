@@ -14,13 +14,13 @@ function PricingLineGraph({ data }: PricingGraphProps) {
     : [];
 
   return (
-    <ResponsiveContainer width='100%' height={500} style={{ outline: "1px solid white", borderRadius: "2rem" }}>
+    <div className='flex flex-1 bg-black flex-col min-w-full border max-h-full rounded-[2rem] justify-between p-3 items-center'>
       <LineChart width={500} height={500} margin={{ top: 30, bottom: 30, right: 30 }} data={processedWillingnessToPay}>
         <XAxis label={{ value: "Willingness to pay (normalised)", position: "insideBottom", offset: -10 }} />
         <YAxis label={{ value: "quantity", angle: -90 }} />
         <Line type='monotone' dataKey='count'></Line>
       </LineChart>
-    </ResponsiveContainer>
+    </div>
   );
 }
 

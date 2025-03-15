@@ -1,3 +1,4 @@
+import { dividerClasses } from "@mui/material";
 import React from "react";
 import { PieChart, Pie, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 
@@ -14,8 +15,8 @@ function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
   ];
 
   return (
-    <ResponsiveContainer width='100%' height={500} style={{ outline: "1px solid white", borderRadius: "2rem" }}>
-      <PieChart width={500} height={500} data={processedSentimentData} margin={{ top: 30, bottom: 30, right: 30 }}>
+    <div className='flex flex-1 bg-black flex-col min-w-full border max-h-full rounded-[2rem] justify-between p-3 items-center'>
+      <PieChart width={500} height={500} data={processedSentimentData}>
         <Pie
           dataKey='value'
           data={processedSentimentData}
@@ -38,7 +39,7 @@ function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
           }}
         />
       </PieChart>
-    </ResponsiveContainer>
+    </div>
   );
 }
 

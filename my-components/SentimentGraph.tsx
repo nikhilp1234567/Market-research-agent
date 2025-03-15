@@ -18,14 +18,13 @@ function SentimentGraph({ data }: sentimentGraphProps) {
     { name: "positive", value: numPositive },
   ];
   return (
-    <ResponsiveContainer width='100%' height={500} style={{ outline: "1px solid white", borderRadius: "2rem" }}>
-      <BarChart width={500} height={500} data={processedSentimentData} margin={{ top: 30, bottom: 30, right: 30 }}>
-        {/* <CartesianGrid strokeDasharray='3 3' /> */}
-        <XAxis dataKey='name' label={{ value: "sentiment", position: "insideBottom", offset: -10 }} />
+    <div className='flex flex-1 bg-black flex-col min-w-full border max-h-full rounded-[2rem] justify-between p-3 items-center'>
+      <BarChart width={500} height={500} data={processedSentimentData}>
+        <XAxis dataKey='name' label={{ value: "", position: "insideBottom", offset: -10 }} />
         <YAxis label={{ value: "quantity", angle: -90 }} />
         <Bar dataKey='value' fill='#8884d8' />
       </BarChart>
-    </ResponsiveContainer>
+    </div>
   );
 }
 
