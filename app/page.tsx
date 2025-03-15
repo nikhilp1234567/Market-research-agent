@@ -38,7 +38,11 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div id='slider-holder' className='w-full py-20 bg-[#070F2B]'></div>
+      <div id='slider-holder' className='w-full py-20 bg-[#070F2B]'>
+        <Swiper>
+          <SwiperSlide></SwiperSlide>
+        </Swiper>
+      </div>
     </>
   );
 }
