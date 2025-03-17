@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-export default async function Signup(props: { searchParams: Record<string, string> }) {
+export default async function Signup(props: { searchParams: any }) {
   const searchParams = await props.searchParams;
   if ("message" in searchParams) {
     return (
@@ -34,15 +34,15 @@ export default async function Signup(props: { searchParams: Record<string, strin
           <SubmitButton formAction={signUpAction} pendingText='Signing up...'>
             Sign up
           </SubmitButton>
-          <div className="relative my-4">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+          <div className='relative my-4'>
+            <div className='absolute inset-0 flex items-center'>
+              <div className='w-full border-t border-gray-300'></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-blue-900 px-2 text-gray-300">Or continue with</span>
+            <div className='relative flex justify-center text-sm'>
+              <span className='bg-blue-900 px-2 text-gray-300'>Or continue with</span>
             </div>
           </div>
-          <SubmitButton formAction={signInWithGoogleAction} pendingText="Continuing with Google..." formNoValidate>
+          <SubmitButton formAction={signInWithGoogleAction} pendingText='Continuing with Google...' formNoValidate>
             Log in with Google
           </SubmitButton>
           <FormMessage message={{ message: searchParams.message || "" }} />
