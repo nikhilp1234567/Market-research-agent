@@ -78,7 +78,9 @@ export default function ResultPage() {
                 }}
               />
             </div>
-            <div className='bg-black flex h-full max-w-full mt-3 border justify-center items-center rounded-[2rem]'>results box</div>
+            <div className='bg-black flex h-full max-w-full mt-3 border justify-center items-center rounded-[2rem]'>
+              Results should appear here on button click above
+            </div>
           </div>
 
           <div id='right' className='flex flex-col rounded-[2rem] h-full p-3 border border-white w-[50%]'>
@@ -91,11 +93,15 @@ export default function ResultPage() {
                 <h2 className='text-xl text-center font-semibold mb-4'>Overall Market Fit</h2>
                 <MarketFitRadialPieChart data={result.goodFitForMarket} />
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>What Users Like</h2>
-                <div className='w-full h-full flex items-center justify-center'>
+              <SwiperSlide className='max-w-full h-full flex flex-col justify-center items-center'>
+                <h2 className='text-xl text-center h-6 font-semibold mb-4'>What Users Like</h2>
+                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
                   {summarisedWhatUsersLike ? (
-                    <p className='text-center'>{summarisedWhatUsersLike}</p>
+                    <div className=' w-full px-16 justify-center'>
+                      <p className='text-2xl font-bold'>What Users Liked:</p>
+                      <br />
+                      {summarisedWhatUsersLike}
+                    </div>
                   ) : (
                     <button
                       onClick={async () => {
@@ -108,7 +114,7 @@ export default function ResultPage() {
                           console.error("Error aggregating data:", error);
                         }
                       }}
-                      className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
                       Click to summarise what the users liked.
                     </button>
                   )}
@@ -116,9 +122,13 @@ export default function ResultPage() {
               </SwiperSlide>
               <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
                 <h2 className='text-xl text-center font-semibold mb-4'>Pain Points</h2>
-                <div className='w-full h-full flex items-center justify-center'>
+                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
                   {summarisedPainPoints ? (
-                    <p className='text-center'>{summarisedPainPoints}</p>
+                    <div className='w-full px-16 justify-center'>
+                      <p className='text-2xl font-bold'>Pain Points:</p>
+                      <br />
+                      {summarisedPainPoints}
+                    </div>
                   ) : (
                     <button
                       onClick={async () => {
@@ -131,7 +141,7 @@ export default function ResultPage() {
                           console.error("Error aggregating data:", error);
                         }
                       }}
-                      className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
                       Click to summarise the generated pain points.
                     </button>
                   )}
@@ -151,32 +161,40 @@ export default function ResultPage() {
               </SwiperSlide>
               <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
                 <h2 className='text-xl text-center font-semibold mb-4'>Reason for Buying Decision</h2>
-                <div className='w-full h-full flex items-center justify-center'>
+                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
                   {summarisedReason ? (
-                    <p className='text-center'>{summarisedReason}</p>
+                    <div className='w-full px-16 justify-center'>
+                      <p className='text-2xl font-bold'>Reasons:</p>
+                      <br />
+                      {summarisedReason}
+                    </div>
                   ) : (
                     <button
                       onClick={async () => {
                         try {
                           const response = await axios.post("/api/summarise", {
-                            data: result.whatUsersLike,
+                            data: result.reason,
                           });
                           setSummarisedReason(String(response.data));
                         } catch (error) {
                           console.error("Error aggregating data:", error);
                         }
                       }}
-                      className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
-                      Click to summarise what the users liked.
+                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                      Click to summarise the reasons.
                     </button>
                   )}
                 </div>
               </SwiperSlide>
               <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
                 <h2 className='text-xl text-center font-semibold mb-4'>Suggested Improvements</h2>
-                <div className='w-full h-full flex items-center justify-center'>
+                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
                   {summarisedSuggestedImprovements ? (
-                    <p className='text-center'>{summarisedSuggestedImprovements}</p>
+                    <div className='w-full px-16 justify-center'>
+                      <p className='text-2xl font-bold'>Suggested Improvements:</p>
+                      <br />
+                      {summarisedSuggestedImprovements}
+                    </div>
                   ) : (
                     <button
                       onClick={async () => {
@@ -189,7 +207,7 @@ export default function ResultPage() {
                           console.error("Error aggregating data:", error);
                         }
                       }}
-                      className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
                       Click to summarise suggested improvements
                     </button>
                   )}
@@ -197,9 +215,13 @@ export default function ResultPage() {
               </SwiperSlide>
               <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
                 <h2 className='text-xl text-center font-semibold mb-4'>Additional Feedback</h2>
-                <div className='w-full h-full flex items-center justify-center'>
+                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
                   {summarisedAdditionalFeedback ? (
-                    <p className='text-center'>{summarisedAdditionalFeedback}</p>
+                    <div className='w-full px-16 justify-center'>
+                      <p className='text-2xl font-bold'>Additional Feedback:</p>
+                      <br />
+                      {summarisedAdditionalFeedback}
+                    </div>
                   ) : (
                     <button
                       onClick={async () => {
@@ -212,7 +234,7 @@ export default function ResultPage() {
                           console.error("Error aggregating data:", error);
                         }
                       }}
-                      className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
                       Click to summarise additional feedback
                     </button>
                   )}
