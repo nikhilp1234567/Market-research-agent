@@ -43,6 +43,7 @@ export default function ResultPage() {
   const [summarisedReason, setSummarisedReason] = useState("");
   const [summarisedSuggestedImprovements, setSummarisedSuggestedImprovements] = useState("");
   const [summarisedAdditionalFeedback, setSummarisedAdditionalFeedback] = useState("");
+  const [selectedData, setSelectedData] = useState<string | null>(null);
 
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
@@ -76,10 +77,18 @@ export default function ResultPage() {
                   suggestedImprovements: result.suggestedImprovements,
                   additionalFeedback: result.additionalFeedback,
                 }}
+                onDataSelect={setSelectedData}
               />
             </div>
-            <div className='bg-black flex h-full max-w-full mt-3 border justify-center items-center rounded-[2rem]'>
-              Results should appear here on button click above
+            <div className='bg-black flex h-full max-w-full mt-3 border justify-center items-center rounded-[2rem] p-4'>
+              {selectedData ? (
+                <div className='text-white text-center'>
+                  <p className='text-lg font-semibold mb-2'>Selected Data:</p>
+                  <p className='text-xl'>{selectedData}</p>
+                </div>
+              ) : (
+                <p className='text-white text-center'>Click any button above to view the data</p>
+              )}
             </div>
           </div>
 
