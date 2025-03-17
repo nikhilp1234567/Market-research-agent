@@ -62,7 +62,7 @@ export default function ResultPage() {
         <h1 className='text-2xl text-center font-bold'>Feedback Results</h1>
         <div id='content-holder' className='flex gap-3 flex-row w-full h-[calc(100%-3rem)]'>
           <div id='left' className='flex flex-col p-3 w-[50%] h-full border border-white rounded-[2rem]'>
-            <div className='w-full h-[50%]'>
+            <div className='w-full h-1/2'>
               <DemoSlider
                 demographicData={result.demographicProfiles}
                 responseData={{
@@ -80,7 +80,7 @@ export default function ResultPage() {
                 onDataSelect={setSelectedData}
               />
             </div>
-            <div className='bg-black flex h-full max-w-full mt-3 border justify-center items-center rounded-[2rem] p-4'>
+            <div className='flex-1 w-full bg-black mt-3 border rounded-[2rem] p-4 flex items-center justify-center'>
               {selectedData ? (
                 <div className='text-white text-center'>
                   <p className='text-lg font-semibold mb-2'>Selected Data:</p>
@@ -93,160 +93,186 @@ export default function ResultPage() {
           </div>
 
           <div id='right' className='flex flex-col rounded-[2rem] h-full p-3 border border-white w-[50%]'>
-            <Swiper slidesPerView={1} navigation className='w-full h-full' loop={true} modules={[Navigation, Pagination]}>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Overall Sentiment</h2>
-                <SentimentGraph data={result.sentiment} />
-              </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Overall Market Fit</h2>
-                <MarketFitRadialPieChart data={result.goodFitForMarket} />
-              </SwiperSlide>
-              <SwiperSlide className='max-w-full h-full flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center h-6 font-semibold mb-4'>What Users Like</h2>
-                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
-                  {summarisedWhatUsersLike ? (
-                    <div className=' w-full px-16 justify-center'>
-                      <p className='text-2xl font-bold'>What Users Liked:</p>
-                      <br />
-                      {summarisedWhatUsersLike}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post("/api/summarise", {
-                            data: result.whatUsersLike,
-                          });
-                          setSummarisedwhatUsersLike(String(response.data));
-                        } catch (error) {
-                          console.error("Error aggregating data:", error);
-                        }
-                      }}
-                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
-                      Click to summarise what the users liked.
-                    </button>
-                  )}
+            <Swiper slidesPerView={1} navigation className='w-full h-full flex' loop={true} modules={[Navigation, Pagination]}>
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Overall Sentiment</h2>
+                  <SentimentGraph data={result.sentiment} />
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Pain Points</h2>
-                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
-                  {summarisedPainPoints ? (
-                    <div className='w-full px-16 justify-center'>
-                      <p className='text-2xl font-bold'>Pain Points:</p>
-                      <br />
-                      {summarisedPainPoints}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post("/api/summarise", {
-                            data: result.painPoints,
-                          });
-                          setSummarisedPainPoints(String(response.data));
-                        } catch (error) {
-                          console.error("Error aggregating data:", error);
-                        }
-                      }}
-                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
-                      Click to summarise the generated pain points.
-                    </button>
-                  )}
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Overall Market Fit</h2>
+                  <MarketFitRadialPieChart data={result.goodFitForMarket} />
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Willingness to Pay</h2>
-                <div className='w-full h-full'>
-                  <PricingLineGraph data={result.willingnessToPay} />
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>What Users Like</h2>
+                  <div className='w-full bg-black border rounded-[2rem] flex flex-col items-center justify-center p-6'>
+                    {summarisedWhatUsersLike ? (
+                      <div className='w-full px-16'>
+                        <p className='text-2xl font-bold'>What Users Liked:</p>
+                        <br />
+                        {summarisedWhatUsersLike}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.post("/api/summarise", {
+                              data: result.whatUsersLike,
+                            });
+                            setSummarisedwhatUsersLike(String(response.data));
+                          } catch (error) {
+                            console.error("Error aggregating data:", error);
+                          }
+                        }}
+                        className='bg-black text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                        Click to summarise what the users liked.
+                      </button>
+                    )}
+                  </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Would Use</h2>
-                <div className='w-full h-full'>
-                  <WouldBuyPieChart data={result.wouldBuy} />
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Pain Points</h2>
+                  <div className='w-full bg-black border rounded-[2rem] flex flex-col items-center justify-center p-6'>
+                    {summarisedPainPoints ? (
+                      <div className='w-full px-16'>
+                        <p className='text-2xl font-bold'>Pain Points:</p>
+                        <br />
+                        {summarisedPainPoints}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.post("/api/summarise", {
+                              data: result.painPoints,
+                            });
+                            setSummarisedPainPoints(String(response.data));
+                          } catch (error) {
+                            console.error("Error aggregating data:", error);
+                          }
+                        }}
+                        className='bg-black text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                        Click to summarise the generated pain points.
+                      </button>
+                    )}
+                  </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Reason for Buying Decision</h2>
-                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
-                  {summarisedReason ? (
-                    <div className='w-full px-16 justify-center'>
-                      <p className='text-2xl font-bold'>Reasons:</p>
-                      <br />
-                      {summarisedReason}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post("/api/summarise", {
-                            data: result.reason,
-                          });
-                          setSummarisedReason(String(response.data));
-                        } catch (error) {
-                          console.error("Error aggregating data:", error);
-                        }
-                      }}
-                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
-                      Click to summarise the reasons.
-                    </button>
-                  )}
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Willingness to Pay</h2>
+                  <div className='w-full'>
+                    <PricingLineGraph data={result.willingnessToPay} />
+                  </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Suggested Improvements</h2>
-                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
-                  {summarisedSuggestedImprovements ? (
-                    <div className='w-full px-16 justify-center'>
-                      <p className='text-2xl font-bold'>Suggested Improvements:</p>
-                      <br />
-                      {summarisedSuggestedImprovements}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post("/api/summarise", {
-                            data: result.suggestedImprovements,
-                          });
-                          setSummarisedSuggestedImprovements(String(response.data));
-                        } catch (error) {
-                          console.error("Error aggregating data:", error);
-                        }
-                      }}
-                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
-                      Click to summarise suggested improvements
-                    </button>
-                  )}
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Would Use</h2>
+                  <div className='w-full'>
+                    <WouldBuyPieChart data={result.wouldBuy} />
+                  </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide className='max-w-full max-h-full  flex flex-col justify-center items-center'>
-                <h2 className='text-xl text-center font-semibold mb-4'>Additional Feedback</h2>
-                <div className='w-full h-[calc(100%-2.5rem)] flex-1 bg-black border rounded-[2rem] flex flex-col !items-center !justify-center'>
-                  {summarisedAdditionalFeedback ? (
-                    <div className='w-full px-16 justify-center'>
-                      <p className='text-2xl font-bold'>Additional Feedback:</p>
-                      <br />
-                      {summarisedAdditionalFeedback}
-                    </div>
-                  ) : (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post("/api/summarise", {
-                            data: result.additionalFeedback,
-                          });
-                          setSummarisedAdditionalFeedback(String(response.data));
-                        } catch (error) {
-                          console.error("Error aggregating data:", error);
-                        }
-                      }}
-                      className='bg-black h-full text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
-                      Click to summarise additional feedback
-                    </button>
-                  )}
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Reason for Buying Decision</h2>
+                  <div className='w-full bg-black border rounded-[2rem] flex flex-col items-center justify-center p-6'>
+                    {summarisedReason ? (
+                      <div className='w-full px-16'>
+                        <p className='text-2xl font-bold'>Reasons:</p>
+                        <br />
+                        {summarisedReason}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.post("/api/summarise", {
+                              data: result.reason,
+                            });
+                            setSummarisedReason(String(response.data));
+                          } catch (error) {
+                            console.error("Error aggregating data:", error);
+                          }
+                        }}
+                        className='bg-black text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                        Click to summarise the reasons.
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Suggested Improvements</h2>
+                  <div className='w-full bg-black border rounded-[2rem] flex flex-col items-center justify-center p-6'>
+                    {summarisedSuggestedImprovements ? (
+                      <div className='w-full px-16'>
+                        <p className='text-2xl font-bold'>Suggested Improvements:</p>
+                        <br />
+                        {summarisedSuggestedImprovements}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.post("/api/summarise", {
+                              data: result.suggestedImprovements,
+                            });
+                            setSummarisedSuggestedImprovements(String(response.data));
+                          } catch (error) {
+                            console.error("Error aggregating data:", error);
+                          }
+                        }}
+                        className='bg-black text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                        Click to summarise suggested improvements
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide className='flex items-center justify-center'>
+                <div className='flex flex-col items-center w-full'>
+                  <h2 className='text-xl text-center font-semibold mb-4'>Additional Feedback</h2>
+                  <div className='w-full bg-black border rounded-[2rem] flex flex-col items-center justify-center p-6'>
+                    {summarisedAdditionalFeedback ? (
+                      <div className='w-full px-16'>
+                        <p className='text-2xl font-bold'>Additional Feedback:</p>
+                        <br />
+                        {summarisedAdditionalFeedback}
+                      </div>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.post("/api/summarise", {
+                              data: result.additionalFeedback,
+                            });
+                            setSummarisedAdditionalFeedback(String(response.data));
+                          } catch (error) {
+                            console.error("Error aggregating data:", error);
+                          }
+                        }}
+                        className='bg-black text-white w-full rounded-[2rem] px-4 py-2 border duration-300 hover:bg-gray-600'>
+                        Click to summarise additional feedback
+                      </button>
+                    )}
+                  </div>
                 </div>
               </SwiperSlide>
             </Swiper>
