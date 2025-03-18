@@ -5,7 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-export default async function Login(props: { searchParams: Record<string, string> }) {
+export default async function Login(props: {
+  searchParams: Promise<Message>;
+}) {
   const searchParams = await props.searchParams;
   return (
     <div className='flex items-center justify-center min-h-[calc(100vh-4rem)] w-full border-t'>
@@ -42,7 +44,7 @@ export default async function Login(props: { searchParams: Record<string, string
           <SubmitButton formAction={signInWithGoogleAction} pendingText="Continuing with Google..." formNoValidate>
             Log in with Google
           </SubmitButton>
-          <FormMessage message={{ message: searchParams.message || "" }} />
+          <FormMessage message={searchParams} />
         </div>
       </form>
     </div>

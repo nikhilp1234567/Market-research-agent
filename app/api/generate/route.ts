@@ -138,7 +138,7 @@ async function getTargetMarket(
   income: string,
   interests: string,
   locations: string,
-  maritalStatus: string[],
+  maritalStatus: string,
   numberOfProfiles: number
 ) {
   console.log("[DEBUG] Starting getTargetMarket function");
@@ -222,7 +222,7 @@ async function getInitialFeedback(
   numberOfDependents: number,
   ethnicity: string,
   industryAndJobRole: string,
-  files: File[]
+  files: any[]
 ) {
   console.log("[DEBUG] Starting getInitialFeedback function");
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);

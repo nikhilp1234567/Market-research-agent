@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-export default async function Signup(props: { searchParams: Record<string, string> }) {
+export default async function Signup(props: {
+  searchParams: Promise<Message>;
+}) {
   const searchParams = await props.searchParams;
   if ("message" in searchParams) {
     return (
       <div className='w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4'>
-        <FormMessage message={{ message: searchParams.message || "" }} />
+        <FormMessage message={searchParams} />
       </div>
     );
   }
@@ -45,7 +47,7 @@ export default async function Signup(props: { searchParams: Record<string, strin
           <SubmitButton formAction={signInWithGoogleAction} pendingText="Continuing with Google..." formNoValidate>
             Log in with Google
           </SubmitButton>
-          <FormMessage message={{ message: searchParams.message || "" }} />
+          <FormMessage message={searchParams} />
         </div>
       </form>
     </div>

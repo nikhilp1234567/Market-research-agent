@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import env from "dotenv";
-import { data } from "react-router-dom";
 
 env.config({ path: ".env.local" });
 
@@ -17,11 +16,11 @@ export async function POST(req: Request) {
   });
 }
 
-async function getSummaries(data: any) {
+async function getSummaries(data: { data: string[] }) {
   console.log("[DEBUG] Starting summarization process...");
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-  const dataToBePassedIn = JSON.stringify(data);
+  const dataToBePassedIn = JSON.stringify(data.data);
   const prompt = `summarise the following as a single paragraph of prose. Make it as concise as possible, preferably one or two short sentences: ${dataToBePassedIn}`;
   console.log("[DEBUG] Prompt being sent to Gemini:", prompt);
   const result = await model.generateContent(prompt);
