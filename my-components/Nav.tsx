@@ -5,7 +5,7 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import { redirect } from "next/dist/server/api-utils";
 import { CheckoutForm } from "./CheckoutForm";
-import DeployButton from "@/components/deploy-button";
+
 export default function Nav() {
   return (
     <nav id='main-navigation' className='w-full bg-black flex justify-center items-center shadow-lg sticky top-0 z-50 h-16'>
@@ -16,9 +16,6 @@ export default function Nav() {
           </Link>
           <div className='bg-white text-black px-3 py-2 hover:text-white duration-500 hover:bg-black rounded-md'>
             <CheckoutForm />
-          </div>
-          <div>
-            <DeployButton />
           </div>
         </div>
         <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>
