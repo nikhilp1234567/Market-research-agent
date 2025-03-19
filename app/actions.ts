@@ -121,7 +121,7 @@ export const resetPasswordAction = async (formData: FormData) => {
   return redirect("/sign-in?message=" + encodeURIComponent("Password updated successfully. Please sign in with your new password."));
 };
 
-export const signOutAction = async () => {
+export const signOutAction: any = async () => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
 
