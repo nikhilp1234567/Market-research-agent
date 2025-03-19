@@ -3,6 +3,7 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function AuthButton() {

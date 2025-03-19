@@ -48,15 +48,15 @@ export const signInAction = async (formData: FormData) => {
   return redirect("/protected");
 };
 
-export const signInWithGoogleAction = async() => {
+export const signInWithGoogleAction = async () => {
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider: "google",
     options: {
       redirectTo: `${origin}/auth/callback?redirect_to=/protected`,
-    }
+    },
   });
 
   if (error) {
@@ -65,7 +65,7 @@ export const signInWithGoogleAction = async() => {
 
   // Redirect to the Google OAuth URL
   return redirect(data.url);
-}
+};
 
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -117,14 +117,14 @@ export const resetPasswordAction = async (formData: FormData) => {
 
   // Sign out the user after successful password reset
   await supabase.auth.signOut();
-  
+
   return redirect("/sign-in?message=" + encodeURIComponent("Password updated successfully. Please sign in with your new password."));
 };
 
-export const signOutAction = async () => {
+export const signOutAction = async (x) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
-  
+
   if (error) {
     return encodedRedirect("error", "/sign-in", "Error signing out");
   }
@@ -132,13 +132,13 @@ export const signOutAction = async () => {
   const response = new Response(null, {
     status: 302,
     headers: new Headers({
-      'Location': '/sign-in',
-      'Set-Cookie': [
-        'sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax',
-        'sb-refresh-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax'
-      ].join(', ')
-    })
+      Location: "/sign-in",
+      "Set-Cookie": [
+        "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax",
+        "sb-refresh-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly; secure; samesite=lax",
+      ].join(", "),
+    }),
   });
 
   return response;
-}
+};
