@@ -94,15 +94,15 @@ export default function ResultPage() {
 
           <div id='right' className='flex flex-col rounded-[2rem] h-full p-3 border border-white w-[50%]'>
             <Swiper slidesPerView={1} navigation className='w-full h-full flex' loop={true} modules={[Navigation, Pagination]}>
-              <SwiperSlide className='flex items-center justify-center'>
-                <div className='flex flex-col items-center w-full'>
+              <SwiperSlide className='flex w-full h-full items-center justify-center'>
+                <div className='flex flex-col h-full items-center px-6 w-full'>
                   <h2 className='text-xl text-center font-semibold mb-4'>Overall Sentiment</h2>
                   <SentimentGraph data={result.sentiment} />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className='flex items-center justify-center'>
-                <div className='flex flex-col items-center w-full'>
+                <div className='flex flex-col h-full items-center px-6 w-full'>
                   <h2 className='text-xl text-center font-semibold mb-4'>Overall Market Fit</h2>
                   <MarketFitRadialPieChart data={result.goodFitForMarket} />
                 </div>
@@ -169,20 +169,16 @@ export default function ResultPage() {
               </SwiperSlide>
 
               <SwiperSlide className='flex items-center justify-center'>
-                <div className='flex flex-col items-center w-full'>
+                <div className='flex flex-col h-full items-center px-6 w-full'>
                   <h2 className='text-xl text-center font-semibold mb-4'>Willingness to Pay</h2>
-                  <div className='w-full'>
-                    <PricingLineGraph data={result.willingnessToPay} />
-                  </div>
+                  <PricingLineGraph data={result.willingnessToPay} />
                 </div>
               </SwiperSlide>
 
               <SwiperSlide className='flex items-center justify-center'>
-                <div className='flex flex-col items-center w-full'>
+                <div className='flex flex-col h-full items-center px-6 w-full'>
                   <h2 className='text-xl text-center font-semibold mb-4'>Would Use</h2>
-                  <div className='w-full'>
-                    <WouldBuyPieChart data={result.wouldBuy} />
-                  </div>
+                  <WouldBuyPieChart data={result.wouldBuy} />
                 </div>
               </SwiperSlide>
 

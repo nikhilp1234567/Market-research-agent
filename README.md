@@ -1,34 +1,7 @@
 to do:
-
-add some forward and back buttons on the form in the bottom right corner (like a typeform )
-fix the results page ui
-add in some animations for page changes button clicks (eg like typeform)
-do the home page before authenitcation, make it a nice landing page
-maybe add oauth for google and apple etc for signin
-make sure the stripe payment thing is set up peoperly and redirects to an actual payment page
-fix that bug where the link textbox keeps getting filled with the value from locations
-fix barriers for adoption being null
-
-1. Summary
-   • Brief overview of key findings
-   • Overall market sentiment (positive, neutral, negative) (bar graph)
-
-2. Target Audience
-   • Demographics (age, location, industry) (if i can do a map then map)
-   • Customer personas (slider of each in a profile)
-
-3. Key Insights
-   • What users like (top positive feedback) (string)
-   • Pain points (common complaints & areas for improvement) (bulletpoints)
-   • Pricing insights (willingness to pay & perceived value) (graph of the number)
-
-4. Adoption & Interest
-   • Percentage of users likely to buy or adopt (graph?)
-   • Barriers to adoption (string)
-
-5. Recommendations
-   • Suggested improvements (bulletpoints)
-   • Next steps for product development & marketing (string)
+remove any bits of the results schema not being used
+fix responsivity for mobile
+go and talk to people and make edits based on responses
 
 # Product Feedback Bot
 

@@ -8,13 +8,17 @@ import { CheckoutForm } from "./CheckoutForm";
 
 export default function Nav() {
   return (
-    <nav id='main-navigation' className='w-full bg-black flex justify-center items-center shadow-lg sticky top-0 z-50 h-16'>
-      <div className='w-full flex justify-between items-center p-6 px-10 text-s'>
-        <div id='nav-left' className='flex gap-5 items-center font-semibold !border-white hover:!border-white duration-500 rounded-md'>
-          <Link href={"/"} id='home-link'>
-            <h1 className='bg-white text-black px-3 py-2 hover:text-white duration-500  hover:bg-black rounded-md'>MarketMind</h1>
+    <nav id='main-navigation' className='w-full bg-gray-900 flex justify-center items-center shadow-lg sticky top-0 z-50 h-20 border-b border-gray-700'>
+      <div className='w-full max-w-7xl flex justify-between items-center'>
+        <div id='nav-left' className='flex gap-8 items-center'>
+          <Link href={"/"} id='home-link' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
+            <img src='/icon.ico' alt='MarketMind Logo' className='h-10 w-10' />
+            <h1 className='text-2xl font-bold text-white tracking-tight'>
+              <span className='text-blue-400'>Market</span>
+              <span className='text-white'>Mind</span>
+            </h1>
           </Link>
-          <div className='bg-white text-black px-3 py-2 hover:text-white duration-500 hover:bg-black rounded-md'>
+          <div className='bg-black border px-4 py-2 rounded-md hover:bg-gray-600 transition-colors'>
             <CheckoutForm />
           </div>
         </div>

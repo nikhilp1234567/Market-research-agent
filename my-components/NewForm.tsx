@@ -48,333 +48,234 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='p-32 justify-center flex flex-1 gap-6 flex-col w-full h-full'>
-          <h1 className='flex w-fit text-4xl'>Market Research Campaign Name:</h1>
-          <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-            <textarea
-              {...register("name")}
-              placeholder='Enter Name of Product/Service/Idea Here, Alongside a Tagline or Brief Overview...'
-              autoFocus
-              className='w-full outline-none bg-transparent'
-              id=''></textarea>
+          className='px-32 py-16 flex flex-1 gap-8 justify-between overflow-auto flex-col w-full max-h-full h-full'>
+          <div className='border-b border-gray-600 pb-4'>
+            <h1 className='text-4xl font-semibold text-blue-400'>Campaign Overview</h1>
+            <p className='text-gray-400 mt-2 text-sm'>Step 1 of 3: Basic Information</p>
           </div>
-          <button
-            onClick={() => {
-              handleSubmit((data) => {
-                console.log(data || "nothing");
-                setCurrentStep(currentStep + 1);
-              })();
-            }}
-            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
-            Next
-          </button>
 
-          {/* this is the demo button which needs to be removed after coding is finished */}
-          <button
-            onClick={() => {
-              const demoData = {
-                name: "EcoWater Bottle",
-                campaignDescription: "A reusable water bottle with built-in filtration system",
-                campaignCategory: "Eco-friendly products",
-                employmentSituation: "Office workers, Students, Outdoor enthusiasts",
-                gender: "All",
-                goal: "validatePMF",
-                householdIncome: "40,000 - 59,999",
-                interests: "Sustainability, Health, Fitness",
-                locations: "London, New York, Sydney",
-                maritalStatus: "Single",
-                relevantLinks: "https://ecowater.com, https://sustainability.org",
-                files: [],
-              };
-              handleSubmit(async () => {
-                try {
-                  const response = await fetch("/api/generate", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(demoData),
-                  });
+          <div className='space-y-6'>
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Campaign Name</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("name")}
+                  placeholder='Enter your product name and a brief tagline'
+                  autoFocus
+                  className='w-full outline-none bg-transparent min-h-[50px]'
+                  id=''></textarea>
+              </div>
+            </div>
 
-                  if (response.ok) {
-                    const responseData = await response.json();
-                    localStorage.setItem("searchData", JSON.stringify(responseData));
-                    window.location.href = `/result`;
-                  } else {
-                    throw new Error("Failed to process demo data");
-                  }
-                } catch (error) {
-                  console.error("Demo submission failed:", error);
-                  setVisible(true);
-                }
-              })();
-            }}
-            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
-            Demo
-          </button>
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Type of Campaign</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <select {...register("campaignCategory")} className='bg-transparent w-full outline-none cursor-pointer'>
+                  <option value=' '>Choose your campaign type</option>
+                  <option value='product'>Product</option>
+                  <option value='idea'>Idea</option>
+                  <option value='service'>Service</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Detailed Description</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("campaignDescription")}
+                  className='w-full outline-none bg-transparent min-h-[100px]'
+                  placeholder='Describe your offering, including pricing and key features'
+                  name=''
+                  id=''></textarea>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Supporting Media</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <input type='file' {...register("files")} multiple className='w-full outline-none bg-transparent cursor-pointer' />
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Related Links</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("relevantLinks")}
+                  className='w-full outline-none bg-transparent min-h-[50px]'
+                  placeholder='Add website URLs, social media links, or relevant articles'
+                  name='relevantLinks'
+                  id=''></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div className='pt-4 border-t border-gray-600'>
+            <button
+              onClick={() => {
+                handleSubmit((data) => {
+                  console.log(data || "nothing");
+                  setCurrentStep(currentStep + 1);
+                })();
+              }}
+              className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-fit font-medium'>
+              Next Step
+            </button>
+          </div>
         </div>
       );
+
     case 2:
       return (
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='p-32 justify-center flex flex-1 gap-6 flex-col w-full h-full'>
-          <h1 className='flex w-fit text-4xl'>Market Research Campaign Goal:</h1>
-          <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-            <select {...register("goal")} className='outline-none bg-transparent rounded-xl w-full'>
-              <option value=' '>Select Campaign Goal</option>
-              <option value='validatePMF'>Validate product-market fit</option>
-              <option value='digitalAd'>Test a digital ad</option>
-              <option value='customerInsights'>Gather customer insights</option>
-            </select>
+          className='px-32 py-16 flex flex-1 gap-8 justify-between overflow-auto flex-col w-full max-h-full h-full'>
+          <div className='border-b border-gray-600 pb-4'>
+            <h1 className='text-4xl font-semibold text-blue-400'>Target Demographics</h1>
+            <p className='text-gray-400 mt-2 text-sm'>Step 2 of 3: Audience Definition</p>
           </div>
 
-          <button
-            onClick={() => {
-              handleSubmit((data) => {
-                console.log(data);
-                setCurrentStep(currentStep + 1);
-              })();
-            }}
-            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
-            Next
-          </button>
+          <div className='space-y-6'>
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Age Range</label>
+              <div className='w-[70%]'>
+                <AgeSlider />
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Gender</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <select {...register("gender")} className='bg-transparent w-full outline-none cursor-pointer'>
+                  <option value=' '>Select Gender</option>
+                  <option value='Male'>Male</option>
+                  <option value='Female'>Female</option>
+                  <option value='Male, Female'>Both</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Interests and Behaviors</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("interests")}
+                  className='w-full outline-none bg-transparent min-h-[50px]'
+                  placeholder='Enter interests separated by commas (e.g., backpacking, web development)'
+                  name='interests'
+                  id=''></textarea>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Locations</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("locations")}
+                  className='w-full outline-none bg-transparent min-h-[50px]'
+                  placeholder='Enter locations separated by commas (cities, regions, countries)'
+                  name='locations'
+                  id=''></textarea>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Employment and Industry</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <textarea
+                  {...register("employmentSituation")}
+                  className='w-full outline-none bg-transparent min-h-[50px]'
+                  placeholder='Enter employment types and industries separated by commas'
+                  name='employmentSituation'
+                  id=''></textarea>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Household Income</label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
+                <select {...register("householdIncome")} className='bg-transparent w-full outline-none cursor-pointer'>
+                  <option value=' '>Select Income Range</option>
+                  <option value='0 - 19,999'>$0 - $19,999</option>
+                  <option value='20,000 - 39,999'>$20,000 - $39,999</option>
+                  <option value='40,000 - 59,999'>$40,000 - $59,999</option>
+                  <option value='60,000 - 79,999'>$60,000 - $79,999</option>
+                  <option value='80,000 - 99,999'>$80,000 - $99,999</option>
+                  <option value='100,000+'>$100,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Marital Status</label>
+              <div className='flex flex-row gap-6 w-[70%] p-3'>
+                {["Single", "Married", "Widowed", "Divorced"].map((status) => (
+                  <FormControlLabel
+                    key={status}
+                    control={
+                      <Checkbox
+                        {...register("maritalStatus")}
+                        value={status}
+                        defaultChecked
+                        sx={{
+                          color: blue[800],
+                          "&.Mui-checked": {
+                            color: blue[600],
+                          },
+                        }}
+                      />
+                    }
+                    label={status}
+                    className='text-blue-300'
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className='pt-4 border-t border-gray-600 flex gap-3'>
+            <button
+              onClick={() => setCurrentStep(currentStep - 1)}
+              className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-fit font-medium'>
+              Previous Step
+            </button>
+            <button
+              onClick={() => {
+                handleSubmit((data) => {
+                  console.log(data);
+                  setCurrentStep(currentStep + 1);
+                })();
+              }}
+              className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-fit font-medium'>
+              Next Step
+            </button>
+          </div>
         </div>
       );
+
     case 3:
       return (
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-6 justify-between overflow-auto flex-col w-full max-h-full h-full'>
-          <h1 className='flex w-fit text-4xl'>Campaign Demographic Controls:</h1>
-          <div className='w-[70%]'>
-            <label htmlFor='age'>Age Range:</label>
-            <div className='mt-3'>
-              <AgeSlider />
-            </div>
+          className='px-32 py-16 flex flex-1 gap-8 justify-center items-center overflow-hidden flex-col w-full max-h-full h-full'>
+          <div className='border-b border-gray-600 pb-4 w-full text-center'>
+            <h1 className='text-4xl font-semibold text-blue-400'>Review & Submit</h1>
+            <p className='text-gray-400 mt-2 text-sm'>Step 3 of 3: Final Confirmation</p>
           </div>
-          <div>
-            <label htmlFor=''>Gender:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <select {...register("gender")} className='bg-transparent w-full outline-none'>
-                <option value=' '>Select Gender</option>
-                <option value='Male'>Male</option>
-                <option value='Female'>Female</option>
-                <option value='Male, Female'>Both</option>
-              </select>
-            </div>
+          <div className='flex flex-col text-center gap-6 my-12'>
+            <h1 className='text-5xl duration-1000 font-bold text-blue-300'>Your Campaign is Ready for Analysis</h1>
+            <h3 className='text-2xl font-light text-gray-300'>Click submit to generate your market research report with actionable insights</h3>
           </div>
-          <div>
-            <label htmlFor=''>Interests and Behaviours:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <textarea
-                {...register("interests")}
-                className='w-full h-full outline-none bg-transparent'
-                placeholder='Enter interests as a comma separated list (eg backpacking, web-app development)'
-                name='interests'
-                id=''></textarea>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Locations:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <textarea
-                {...register("locations")}
-                className='w-full h-full outline-none bg-transparent'
-                placeholder='Enter locations as a comma separated list. Cities, regions, countries and areas accepted.'
-                name='locations'
-                id=''></textarea>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Employment and Industry:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <textarea
-                {...register("employmentSituation")}
-                className='w-full h-full outline-none bg-transparent'
-                placeholder='Enter employment situation as a comma separated list. Categories, industries and specific roles accepted.'
-                name='employmentSituation'
-                id=''></textarea>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Household Income:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <select {...register("householdIncome")} className='bg-transparent w-full outline-none'>
-                <option value=' '>Select Household Income:</option>
-                <option value='0 - 19,999'>0 - 19,999</option>
-                <option value='20,000 - 39,999'>20,000 - 39,999</option>
-                <option value='40,000 - 59,999'>40,000 - 59,999</option>
-                <option value='60,000 - 79,999'>60,000 - 79,999</option>
-                <option value='80,000 - 99,999'>80,000 - 99,999</option>
-                <option value='100,000+'>100,000+</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Marital Status:</label>
-
-            <div className='flex flex-row w-[70%]'>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...register("maritalStatus")}
-                    value='Single'
-                    defaultChecked
-                    sx={{
-                      color: blue[800],
-                      "&.Mui-checked": {
-                        color: blue[600],
-                      },
-                    }}
-                  />
-                }
-                label='Single'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...register("maritalStatus")}
-                    value='Married'
-                    defaultChecked
-                    sx={{
-                      color: blue[800],
-                      "&.Mui-checked": {
-                        color: blue[600],
-                      },
-                    }}
-                  />
-                }
-                label='Married'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...register("maritalStatus")}
-                    value='Widowed'
-                    defaultChecked
-                    sx={{
-                      color: blue[800],
-                      "&.Mui-checked": {
-                        color: blue[600],
-                      },
-                    }}
-                  />
-                }
-                label='Widowed'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...register("maritalStatus")}
-                    value='Divorced'
-                    defaultChecked
-                    sx={{
-                      color: blue[800],
-                      "&.Mui-checked": {
-                        color: blue[600],
-                      },
-                    }}
-                  />
-                }
-                label='Divorced'
-              />
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              handleSubmit((data) => {
-                console.log(data);
-                setCurrentStep(currentStep + 1);
-              })();
-            }}
-            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
-            Next
-          </button>
-        </div>
-      );
-    case 4:
-      return (
-        <div
-          id='blue-background-holder'
-          style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-6 justify-between overflow-auto flex-col w-full max-h-full h-full'>
-          <h1 className='flex w-fit text-4xl'>Campaign Details:</h1>
-          <div>
-            <label htmlFor=''>Campaign Category:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <select {...register("campaignCategory")} className='bg-transparent w-full outline-none'>
-                <option value=' '>Select Category</option>
-                <option value='product'>Product</option>
-                <option value='idea'>Idea</option>
-                <option value='service'>Service</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Campaign Description:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <textarea
-                {...register("campaignDescription")}
-                className='w-full h-full outline-none bg-transparent'
-                placeholder='Write a detailed description of your product/service/idea. Include associated prices (if any), use cases and more.'
-                name=''
-                id=''></textarea>
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Add relevant media:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <input type='file' {...register("files")} multiple className='w-full outline-none bg-transparent' />
-            </div>
-          </div>
-          <div>
-            <label htmlFor=''>Connect existing links:</label>
-            <div className='flex justify-center items-center p-2 !border-solid !border-white border-[3px] w-[70%] rounded-xl'>
-              <textarea
-                {...register("relevantLinks")}
-                className='w-full h-full outline-none bg-transparent'
-                placeholder='Add in any relevant links to websites, socials or articles.'
-                name='relevantLinks'
-                id=''></textarea>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              handleSubmit((data) => {
-                console.log(data);
-                setCurrentStep(currentStep + 1);
-              })();
-            }}
-            className='bg-slate-700 px-6 transition-all hover:bg-white hover:text-black py-3 rounded-md w-fit'>
-            Next
-          </button>
-        </div>
-      );
-    case 5:
-      return (
-        <div
-          id='blue-background-holder'
-          style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-6 justify-center items-center overflow-hidden flex-col w-full max-h-full h-full'>
-          {visible ? (
-            <div className='flex flex-col text-center gap-6'>
-              <h1 className='text-5xl duration-1000'>Ok, You're all set</h1>
-              <h3 className='text-2xl'>Hit the submit button below to get your personalised feedback report:</h3>
-            </div>
-          ) : (
-            <div></div>
-          )}
-
           <button
             onClick={async () => {
               setVisible(false);
               await finalSubmit();
             }}
-            className='bg-slate-700 px-8 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:px-12 py-6 rounded-2xl w-fit'>
-            {visible ? "Submit" : <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-white'></div>}
+            className='bg-blue-600 px-12 transition-all duration-500 hover:bg-blue-500 hover:px-16 py-4 rounded-xl w-fit font-medium text-lg'>
+            {visible ? "Generate Report" : <div className='animate-spin duration-500 rounded-full h-6 w-6 border-b-2 border-white'></div>}
           </button>
         </div>
       );
