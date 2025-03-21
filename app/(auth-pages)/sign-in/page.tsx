@@ -20,7 +20,7 @@ export default async function Login(props: { searchParams: any }) {
           </p>
         </div>
 
-        <div className='flex flex-col gap-6 mt-8'>
+        <form className='flex flex-col gap-6 mt-8'>
           <div className='space-y-2'>
             <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
               Email
@@ -87,7 +87,7 @@ export default async function Login(props: { searchParams: any }) {
             </SubmitButton>
           </div>
           <FormMessage message={{ message: searchParams.message || "" }} />
-        </div>
+        </form>
       </div>
     </div>
   );
