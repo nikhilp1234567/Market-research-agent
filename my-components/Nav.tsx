@@ -18,9 +18,7 @@ export default function Nav() {
               <span className='text-white'>Mind</span>
             </h1>
           </Link>
-          <div className='bg-black border px-4 py-2 rounded-md hover:bg-gray-600 transition-colors'>
-            <CheckoutForm />
-          </div>
+          <CheckoutForm />
         </div>
         <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>
       </div>

@@ -34,7 +34,10 @@ export const CheckoutForm = () => {
   };
 
   return (
-    <button onClick={handleCheckout} type='button'>
+    <button
+      className='flex flex-col justify-center items-center bg-black border px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors'
+      onClick={handleCheckout}
+      type='button'>
       Buy us a coffee!
     </button>
   );
