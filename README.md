@@ -1,8 +1,3 @@
-to do:
-remove any bits of the results schema not being used
-fix responsivity for mobile
-go and talk to people and make edits based on responses
-
 # Product Feedback Bot
 
 An AI-powered application that provides instant feedback on product ideas, webpages, or concepts using digital avatars of real people. Built with Next.js, Supabase, and Google's Generative AI.
