@@ -151,9 +151,27 @@ export default function Home() {
             }}
             navigation
             modules={[Pagination, EffectCoverflow, Navigation, Autoplay]}>
-            {Array.from({ length: 4 }).map((_, index) => (
+            {[
+              {
+                name: "Alex Martinez",
+                reference:
+                  "As a bootstrapped startup, MarketMind gave us the insights we needed without breaking the bank. It's like having a full research team!",
+              },
+              {
+                name: "Priya Kapoor",
+                reference: "We pivoted our product based on MarketMind's analysis and saw 3x more engagement. Essential for early-stage startups!",
+              },
+              {
+                name: "Jordan Lee",
+                reference: "The competitor analysis helped us find our niche in a crowded market. Couldn't have done it without MarketMind.",
+              },
+              {
+                name: "Taylor Nguyen",
+                reference: "We used MarketMind to validate our MVP concept. The detailed reports helped us secure our first round of funding!",
+              },
+            ].map((review, index) => (
               <SwiperSlide key={index} className='bg-black border rounded-[2rem] flex flex-col text-left p-6 hover:bg-gray-900 transition-colors duration-200'>
-                <ReferenceCard name='John Doe' reference='This platform revolutionized our market research process!' />
+                <ReferenceCard name={review.name} reference={review.reference} />
               </SwiperSlide>
             ))}
           </Swiper>

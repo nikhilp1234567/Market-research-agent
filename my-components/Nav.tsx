@@ -8,7 +8,7 @@ import { CheckoutForm } from "./CheckoutForm";
 
 export default function Nav() {
   return (
-    <nav id='main-navigation' className='w-full bg-gray-900 flex justify-center items-center shadow-lg sticky top-0 z-50 h-20 border-b border-gray-700'>
+    <nav id='main-navigation' className='w-full bg-gray-900 flex justify-center items-center shadow-lg sticky py-4 top-0 z-50 h-20 border-b border-gray-700'>
       <div className='w-full max-w-7xl flex justify-between items-center'>
         <div id='nav-left' className='flex gap-8 items-center'>
           <Link href={"/"} id='home-link' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
