@@ -5,52 +5,90 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-<<<<<<< HEAD
-export default async function Login(props: {
-  searchParams: Promise<Message>;
-}) {
-=======
 export default async function Login(props: { searchParams: any }) {
->>>>>>> 2ce96e54671ed38272d384ee0eb54e778babfa28
   const searchParams = await props.searchParams;
   return (
-    <div className='flex items-center justify-center min-h-[calc(100vh-4rem)] w-full border-t'>
-      <form className='flex flex-col bg-blue-900 py-6 px-8 rounded-md w-[30%] mx-4'>
-        <h1 className='text-2xl font-medium'>Sign in</h1>
-        <br />
-        <p className='text-sm text-foreground'>
-          Don't have an account? <br />
-          <Link className='text-foreground font-medium underline' href='/sign-up'>
-            Sign up
-          </Link>
-        </p>
-        <div className='flex flex-col gap-2 [&>input]:mb-3 mt-8'>
-          <Label htmlFor='email'>Email</Label>
-          <Input name='email' placeholder='you@example.com' required />
-          <div className='flex justify-between items-center'>
-            <Label htmlFor='password'>Password</Label>
-            <Link className='text-xs text-foreground underline' href='/forgot-password'>
-              Forgot Password?
+    <div className='flex items-center justify-center min-h-[calc(100vh-6rem)] h-auto w-full bg-black'>
+      <div id='blue-background-holder' style={{ backgroundColor: "#070F2B" }} className='flex flex-col py-8 px-12 rounded-xl w-[35%] min-w-[400px] mx-4'>
+        <div className='border-b border-gray-600 pb-4'>
+          <h1 className='text-4xl font-semibold text-blue-400'>Sign In</h1>
+          <p className='text-gray-400 mt-2 text-sm'>
+            Don't have an account?{" "}
+            <Link className='text-blue-400 hover:text-blue-300 transition-colors' href='/sign-up'>
+              Sign up
             </Link>
+          </p>
+        </div>
+
+        <div className='flex flex-col gap-6 mt-8'>
+          <div className='space-y-2'>
+            <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
+              Email
+            </Label>
+            <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
+              <Input
+                name='email'
+                placeholder='you@example.com'
+                required
+                className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
+              />
+            </div>
           </div>
-          <Input type='password' name='password' placeholder='Your password' required />
-          <SubmitButton pendingText='Signing In...' formAction={signInAction}>
+
+          <div className='space-y-2'>
+            <div className='flex justify-between items-center'>
+              <Label htmlFor='password' className='text-lg font-medium text-blue-300'>
+                Password
+              </Label>
+              <Link className='text-sm text-blue-400 hover:text-blue-300 transition-colors' href='/forgot-password'>
+                Forgot Password?
+              </Link>
+            </div>
+            <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
+              <Input
+                type='password'
+                name='password'
+                placeholder='Your password'
+                required
+                className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
+              />
+            </div>
+          </div>
+
+          <SubmitButton
+            pendingText='Signing In...'
+            formAction={signInAction}
+            className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-full font-medium'>
             Sign in
           </SubmitButton>
-          <div className='relative my-4'>
+
+          <div className='relative'>
             <div className='absolute inset-0 flex items-center'>
-              <div className='w-full border-t border-gray-300'></div>
+              <div className='w-full border-t border-gray-600'></div>
             </div>
             <div className='relative flex justify-center text-sm'>
-              <span className='bg-blue-900 px-2 text-gray-300'>Or continue with</span>
+              <span className='bg-[#070F2B] px-4 text-gray-400'>Or continue with</span>
             </div>
           </div>
-          <SubmitButton formAction={signInWithGoogleAction} pendingText='Continuing with Google...' formNoValidate>
-            Log in with Google
-          </SubmitButton>
-          <FormMessage message={searchParams} />
+          <div className='flex flex-row gap-3'>
+            <SubmitButton
+              formAction={signInWithGoogleAction}
+              pendingText='Continuing with Google...'
+              formNoValidate
+              className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-full font-medium'>
+              Google
+            </SubmitButton>
+            <SubmitButton
+              formAction={signInWithGoogleAction}
+              pendingText='Continuing with Google...'
+              formNoValidate
+              className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-full font-medium'>
+              Apple (need to add this in)
+            </SubmitButton>
+          </div>
+          <FormMessage message={{ message: searchParams.message || "" }} />
         </div>
-      </form>
+      </div>
     </div>
   );
 }

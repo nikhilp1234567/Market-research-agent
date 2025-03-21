@@ -16,8 +16,8 @@ export default function MarketFitRadialPieChart({ data }: MarketFitRadialPieChar
     : [];
 
   return (
-    <div className='flex flex-1 bg-black flex-col min-w-full border max-h-full rounded-[2rem] justify-between p-3 items-center'>
-      <PieChart width={500} height={500}>
+    <ResponsiveContainer width='100%' height='100%'>
+      <PieChart>
         <Pie
           data={processedData}
           cx='50%'
@@ -44,6 +44,6 @@ export default function MarketFitRadialPieChart({ data }: MarketFitRadialPieChar
           ))}
         </Pie>
       </PieChart>
-    </div>
+    </ResponsiveContainer>
   );
 }

@@ -8,31 +8,38 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import ReferenceCard from "@/my-components/ReferenceCard";
+import { CheckoutForm } from "@/my-components/CheckoutForm";
 
 export default function Home() {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-black'>
       {/* Hero Section */}
       <section
         id='hero-section'
-        className='flex flex-1 flex-col bg-[#070F2B] w-full min-h-[calc(100vh-4rem)] items-center justify-center text-center px-4 hover:bg-[#0a1a40] transition-colors duration-300'>
-        <h1 className='w-full md:w-[80%] text-4xl md:text-6xl lg:text-7xl font-bold text-white hover:text-gray-200 transition-colors duration-200'>
-          Market Research In Minutes, Not Months.
+        style={{ backgroundColor: "#070F2B" }}
+        className='flex flex-1 flex-col w-full min-h-[calc(100vh-4rem)] items-center justify-center text-center px-4'>
+        <h1 className='w-full md:w-[80%] text-4xl md:text-6xl lg:text-7xl font-semibold text-white hover:text-gray-200 transition-colors duration-300'>
+          Market Research In{" "}
+          <span className='animate-gradient-fast bg-gradient-to-r from-blue-400 via-purple-500 to-red-400 bg-clip-text text-transparent animate-duration-[1s] animate-iteration-count-infinite animate-ease-linear animate-alternate-reverse'>
+            Minutes
+          </span>
+          , Not Months.
         </h1>
-        <p className='text-lg md:text-xl mt-6 text-white font-extralight max-w-2xl hover:text-gray-200 transition-colors duration-200'>
-          Get instant, AI-powered feedback from digital avatars of real people.
-        </p>
-        <button className='mt-8 bg-black hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg text-lg md:text-xl transition-all duration-200 hover:scale-105'>
-          <Link href='/sign-in'>Try It Now</Link>
-        </button>
+        <p className='text-lg md:text-xl mt-6 text-gray-300 font-light max-w-2xl'>Get instant, AI-powered feedback from digital avatars of real people.</p>
+        <div className='flex my-8 flex-row gap-6'>
+          <Link
+            href='/sign-in'
+            className='bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-8 rounded-lg text-lg md:text-xl transition-all duration-200 hover:scale-105'>
+            Try It Now
+          </Link>
+          <CheckoutForm />
+        </div>
       </section>
 
       {/* About Section */}
-      <section id='about-section' className='w-full py-16 md:py-24 bg-[#070F2B] hover:bg-[#0a1a40] transition-colors duration-300'>
+      <section id='about-section' style={{ backgroundColor: "#070F2B" }} className='w-full py-16 md:py-24'>
         <div className='max-w-6xl mx-auto px-4'>
-          <h2 className='text-3xl md:text-4xl font-bold text-center mb-12 text-white hover:text-gray-200 transition-colors duration-200'>
-            Your Agentic Market Research Platform
-          </h2>
+          <h2 className='text-3xl md:text-4xl font-semibold text-center mb-12 text-white'>Your Agentic Market Research Platform</h2>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
             {[
               {
@@ -48,9 +55,9 @@ export default function Home() {
                 description: "Make informed business decisions with comprehensive analytics and insights derived from real consumer behavior patterns.",
               },
             ].map((item, index) => (
-              <div key={index} className='text-center p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-200 hover:scale-105 cursor-pointer'>
+              <div key={index} className='p-8 bg-gray-900 rounded-xl hover:bg-gray-800 transition-all duration-200 cursor-pointer hover:scale-105'>
                 <h3 className='text-2xl font-semibold mb-4 text-white'>{item.title}</h3>
-                <p className='text-gray-300'>{item.description}</p>
+                <p className='text-gray-400'>{item.description}</p>
               </div>
             ))}
           </div>
@@ -58,9 +65,9 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id='features-section' className='w-full py-16 bg-[#070F2B] hover:bg-[#0a1a40] transition-colors duration-300'>
+      <section id='features-section' style={{ backgroundColor: "#070F2B" }} className='w-full py-16'>
         <div className='max-w-6xl mx-auto px-4'>
-          <h3 className='text-3xl text-center font-semibold text-white mb-12 hover:text-gray-200 transition-colors duration-200'>Features</h3>
+          <h3 className='text-3xl text-center font-semibold text-white mb-12'>Features</h3>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
             <div className='space-y-8'>
               {[
@@ -77,23 +84,21 @@ export default function Home() {
                   description: "Receive clear, data-driven recommendations to inform your business strategy.",
                 },
               ].map((feature, index) => (
-                <div key={index} className='hover:bg-gray-800 p-4 rounded-lg transition-all duration-200 cursor-pointer'>
+                <div key={index} className='p-6 bg-gray-900 rounded-xl hover:bg-gray-800 transition-all duration-200 cursor-pointer'>
                   <h3 className='text-2xl font-semibold text-white mb-4'>{feature.title}</h3>
-                  <p className='text-gray-300'>{feature.description}</p>
+                  <p className='text-gray-400'>{feature.description}</p>
                 </div>
               ))}
             </div>
-            <div className='lg:col-span-2 bg-gray-800 rounded-lg h-96 md:h-[500px] hover:bg-gray-700 transition-colors duration-200'></div>
+            <div className='lg:col-span-2 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors duration-200 h-96 md:h-[500px]'></div>
           </div>
         </div>
       </section>
 
       {/* Use Cases Section */}
-      <section id='use-cases-section' className='w-full py-16 bg-[#070F2B] hover:bg-[#0a1a40] transition-colors duration-300'>
+      <section id='use-cases-section' style={{ backgroundColor: "#070F2B" }} className='w-full py-16'>
         <div className='max-w-6xl mx-auto px-4'>
-          <h3 className='text-3xl text-center font-semibold text-white mb-12 hover:text-gray-200 transition-colors duration-200'>
-            How MarketMind Helps Businesses
-          </h3>
+          <h3 className='text-3xl text-center font-semibold text-white mb-12'>How MarketMind Helps Businesses</h3>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
             {[
               {
@@ -114,11 +119,11 @@ export default function Home() {
             ].map((useCase, index) => (
               <div
                 key={index}
-                className='bg-gray-800 rounded-lg p-8 flex flex-col justify-between text-center hover:bg-gray-700 transition-all duration-200 hover:scale-105 cursor-pointer'>
+                className='bg-gray-900 rounded-xl p-8 flex flex-col justify-between text-center hover:bg-gray-800 transition-all duration-200 hover:scale-105 cursor-pointer'>
                 <div className='text-4xl mb-4 hover:scale-110 transition-transform duration-200'>{useCase.icon}</div>
-                <h4 className='text-2xl font-bold text-white mb-4'>{useCase.title}</h4>
-                <p className='text-gray-300'>{useCase.description}</p>
-                <button className='mt-6 w-full bg-black hover:bg-gray-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 hover:scale-105'>
+                <h4 className='text-2xl font-semibold text-white mb-4'>{useCase.title}</h4>
+                <p className='text-gray-400'>{useCase.description}</p>
+                <button className='mt-6 w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg transition-all duration-200 hover:scale-105'>
                   Learn More
                 </button>
               </div>
@@ -128,12 +133,12 @@ export default function Home() {
       </section>
 
       {/* Reviews Section */}
-      <section id='reviews-section' className='w-full py-16 bg-[#070F2B] hover:bg-[#0a1a40] transition-colors duration-300'>
-        <div className=' mx-auto px-4'>
-          <h3 className='text-3xl text-center font-semibold text-white mb-8 hover:text-gray-200 transition-colors duration-200'>What Our Users Say</h3>
+      <section id='reviews-section' style={{ backgroundColor: "#070F2B" }} className='w-full py-16'>
+        <div className='mx-auto px-4'>
+          <h3 className='text-3xl text-center font-semibold text-white mb-8'>What Our Users Say</h3>
           <Swiper
             effect={"coverflow"}
-            className='!p-6 h-[300px] md:h-[400px]'
+            className='!p-6 max-h-[300px] md:h-[400px]'
             loop={true}
             spaceBetween={20}
             slidesPerView={1}
@@ -151,9 +156,27 @@ export default function Home() {
             }}
             navigation
             modules={[Pagination, EffectCoverflow, Navigation, Autoplay]}>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <SwiperSlide key={index} className='bg-black border rounded-[2rem] flex flex-col text-left p-6 hover:bg-gray-900 transition-colors duration-200'>
-                <ReferenceCard name='John Doe' reference='This platform revolutionized our market research process!' />
+            {[
+              {
+                name: "Alex Martinez",
+                reference:
+                  "As a bootstrapped startup, MarketMind gave us the insights we needed without breaking the bank. It's like having a full research team!",
+              },
+              {
+                name: "Priya Kapoor",
+                reference: "We pivoted our product based on MarketMind's analysis and saw 3x more engagement. Essential for early-stage startups!",
+              },
+              {
+                name: "Jordan Lee",
+                reference: "The competitor analysis helped us find our niche in a crowded market. Couldn't have done it without MarketMind.",
+              },
+              {
+                name: "Taylor Nguyen",
+                reference: "We used MarketMind to validate our MVP concept. The detailed reports helped us secure our first round of funding!",
+              },
+            ].map((review, index) => (
+              <SwiperSlide key={index} className='bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors duration-200 h-full'>
+                <ReferenceCard name={review.name} reference={review.reference} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -161,9 +184,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id='footer' className='w-full bg-[#070F2B] pb-8 hover:bg-[#0a1a40] transition-colors duration-300'>
+      <footer id='footer' style={{ backgroundColor: "#070F2B" }} className='w-full pb-8'>
         <div className='border-t border-gray-700 pt-8 text-center'>
-          <p className='text-gray-300 text-sm hover:text-gray-200 transition-colors duration-200'>&copy; 2025 MarketMind. All rights reserved.</p>
+          <p className='text-gray-400'>&copy; 2025 MarketMind. All rights reserved.</p>
         </div>
       </footer>
     </div>
