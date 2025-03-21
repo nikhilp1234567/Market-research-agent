@@ -8,11 +8,13 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { blue } from "@mui/material/colors";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 
 export default function NewForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const { register, handleSubmit } = useForm();
   const [visible, setVisible] = useState(true);
+  const router = useRouter();
 
   async function finalSubmit() {
     handleSubmit(async (data) => {
@@ -29,9 +31,7 @@ export default function NewForm() {
         if (response.status === 200) {
           console.log(responseData);
           setVisible(true);
-          // Redirect to results page with the data
           localStorage.setItem("searchData", JSON.stringify(responseData));
-          window.location.href = `/result`;
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
@@ -273,6 +273,7 @@ export default function NewForm() {
             onClick={async () => {
               setVisible(false);
               await finalSubmit();
+              router.push('/result');
             }}
             className='bg-blue-600 px-12 transition-all duration-500 hover:bg-blue-500 hover:px-16 py-4 rounded-xl w-fit font-medium text-lg'>
             {visible ? "Generate Report" : <div className='animate-spin duration-500 rounded-full h-6 w-6 border-b-2 border-white'></div>}
