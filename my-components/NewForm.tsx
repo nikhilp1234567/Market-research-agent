@@ -271,9 +271,9 @@ export default function NewForm() {
           </div>
           <button
             onClick={async () => {
+              router.push('/result');
               setVisible(false);
               await finalSubmit();
-              router.push('/result');
             }}
             className='bg-blue-600 px-12 transition-all duration-500 hover:bg-blue-500 hover:px-16 py-4 rounded-xl w-fit font-medium text-lg'>
             {visible ? "Generate Report" : <div className='animate-spin duration-500 rounded-full h-6 w-6 border-b-2 border-white'></div>}
