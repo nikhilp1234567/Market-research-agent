@@ -49,6 +49,24 @@ export default function ResultPage() {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
     if (processedData != "null") {
       setResult(processedData as Result);
+
+      // Make POST request for all summaries
+      const summaryFields = [
+        {data: processedData.whatUsersLike, setter: setSummarisedwhatUsersLike},
+        {data: processedData.painPoints, setter: setSummarisedPainPoints},
+        {data: processedData.reason, setter: setSummarisedReason},
+        {data: processedData.suggestedImprovements, setter: setSummarisedSuggestedImprovements},
+        {data: processedData.additionalFeedback, setter: setSummarisedAdditionalFeedback}
+      ];
+
+      summaryFields.forEach(async (field) => {
+        try {
+          const response = await axios.post("/api/summarise", {data: field.data});
+          field.setter(String(response.data));
+        } catch(error) {
+          console.error("Error aggregating data:", error);
+        }
+      })
     }
   }, []);
 
@@ -122,8 +140,8 @@ export default function ResultPage() {
                       <button
                         onClick={async () => {
                           try {
-                            const response = await axios.post("/api/summarise", {
-                              data: result.whatUsersLike,
+                            const response = await axios.get("/api/summarise", {
+                              params: {data: JSON.stringify(result.whatUsersLike)}
                             });
                             setSummarisedwhatUsersLike(String(response.data));
                           } catch (error) {
@@ -152,8 +170,8 @@ export default function ResultPage() {
                       <button
                         onClick={async () => {
                           try {
-                            const response = await axios.post("/api/summarise", {
-                              data: result.painPoints,
+                            const response = await axios.get("/api/summarise", {
+                              params: {data: JSON.stringify(result.painPoints)}
                             });
                             setSummarisedPainPoints(String(response.data));
                           } catch (error) {
@@ -196,8 +214,8 @@ export default function ResultPage() {
                       <button
                         onClick={async () => {
                           try {
-                            const response = await axios.post("/api/summarise", {
-                              data: result.reason,
+                            const response = await axios.get("/api/summarise", {
+                              params: {data: JSON.stringify(result.reason)}
                             });
                             setSummarisedReason(String(response.data));
                           } catch (error) {
@@ -226,8 +244,8 @@ export default function ResultPage() {
                       <button
                         onClick={async () => {
                           try {
-                            const response = await axios.post("/api/summarise", {
-                              data: result.suggestedImprovements,
+                            const response = await axios.get("/api/summarise", {
+                              params: {data: JSON.stringify(result.suggestedImprovements)}
                             });
                             setSummarisedSuggestedImprovements(String(response.data));
                           } catch (error) {
@@ -256,8 +274,8 @@ export default function ResultPage() {
                       <button
                         onClick={async () => {
                           try {
-                            const response = await axios.post("/api/summarise", {
-                              data: result.additionalFeedback,
+                            const response = await axios.get("/api/summarise", {
+                              params: {data: JSON.stringify(result.additionalFeedback)}
                             });
                             setSummarisedAdditionalFeedback(String(response.data));
                           } catch (error) {
