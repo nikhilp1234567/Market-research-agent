@@ -78,13 +78,6 @@ export default async function Login(props: { searchParams: any }) {
               className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-full font-medium'>
               Google
             </SubmitButton>
-            <SubmitButton
-              formAction={signInWithGoogleAction}
-              pendingText='Continuing with Google...'
-              formNoValidate
-              className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-full font-medium'>
-              Apple (need to add this in)
-            </SubmitButton>
           </div>
           <FormMessage message={{ message: searchParams.message || "" }} />
         </form>
