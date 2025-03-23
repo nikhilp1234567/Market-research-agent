@@ -20,31 +20,31 @@ export default async function ForgotPassword(props: { searchParams: Promise<Mess
             </Link>
           </p>
         </div>
-
-        <div className='flex flex-col gap-6 mt-8'>
-          <div className='space-y-2'>
-            <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
-              Email
-            </Label>
-            <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
-              <Input
-                name='email'
-                placeholder='you@example.com'
-                required
-                className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
-              />
+        <form>
+          <div className='flex flex-col gap-6 mt-8'>
+            <div className='space-y-2'>
+              <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
+                Email
+              </Label>
+              <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
+                <Input
+                  name='email'
+                  placeholder='you@example.com'
+                  required
+                  className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
+                />
+              </div>
             </div>
+
+            <SubmitButton
+              formAction={forgotPasswordAction}
+              pendingText='Sending Reset Link...'
+              className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-full font-medium'>
+              Reset Password
+            </SubmitButton>
+            <FormMessage message={searchParams as any} />
           </div>
-
-          <SubmitButton
-            formAction={forgotPasswordAction}
-            pendingText='Sending Reset Link...'
-            className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-full font-medium'>
-            Reset Password
-          </SubmitButton>
-
-          <FormMessage message={searchParams as any} />
-        </div>
+        </form>
       </div>
     </div>
   );
