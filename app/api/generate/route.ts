@@ -67,12 +67,17 @@ export async function POST(req: Request) {
 
     return new Response(stream, { headers: { "Content-Type": "application/json" } });
 
-  } catch (e: unknown) {
+  } catch (e: any) {
     console.error("[ERROR] Processing request failed:", e);
     if (e instanceof Error) {
       console.error("[ERROR] Stack trace:", e.stack);
+    } else {
+      console.error("[ERROR] Unexpected error:", JSON.stringify(e));
     }
-    return new Response(JSON.stringify({ error: "An error occurred while processing your request" }), {
+    return new Response(JSON.stringify({ 
+      error: "An error occurred while processing your request",
+      details: e.message || "Unknown error"
+     }), {
       status: e instanceof Error ? 500 : 400,
       headers: { "Content-Type": "application/json" },
     });
