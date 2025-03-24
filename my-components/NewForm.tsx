@@ -35,8 +35,15 @@ export default function NewForm() {
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Submission failed:", error);
+        if (error.response) {
+          console.error("Server Error: ", error.response.status, error.response.data); 
+        } else if (error.request) {
+          console.error("No response from server: ", error.request);
+        } else {
+          console.error("Error in request setup: ", error.message);
+        }
         setVisible(true);
       }
     })();
