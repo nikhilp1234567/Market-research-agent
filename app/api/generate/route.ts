@@ -1,5 +1,6 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType} from "@google/generative-ai";
 import env from "dotenv";
+
 
 env.config({ path: ".env.local" });
 
@@ -186,7 +187,7 @@ async function getTargetMarket(
     },
   });
 
-  const result = await model.generateContent(
+  const result = await model.generateContentStream(
     `Generate an array of ${numberOfProfiles} unique demographic profiles, each containing id, age, gender, location, education level, employment status, 
    household income, marital status, number of dependents, ethnicity, and industry/job role. 
    The demographics should be representative of those who would realistically be selected for market research based on the following product, 
@@ -203,7 +204,14 @@ async function getTargetMarket(
   If any of these are unclear or not filled out, you are allowed to use the full range of that demographic.`
   );
   console.log("[DEBUG] Generated target market data");
-  return result.response.text();
+  
+  // Allow for streaming output (Text Generation) for faster interactions with the API
+  let response = ""
+  for await (const chunk of result.stream) {
+    response += chunk.text();
+    console.log("[STREAM] Chunk received: ", chunk.text());
+  }
+  return response;
 }
 
 async function getInitialFeedback(
@@ -294,7 +302,7 @@ async function getInitialFeedback(
     },
   });
 
-  const result = await model.generateContent(`
+  const result = await model.generateContentStream(`
     
 Your task is to generate a structured market feedback report by fully adopting the 
 perspective of a given demographic. You will be provided with details about a product, service, or idea, along with demographic information 
@@ -323,5 +331,12 @@ Instructions:
 	•	Provide both quantitative and qualitative insights where specified in the schema.
 	•	Keep responses concise yet engaging, following the provided schema.`);
   console.log("[DEBUG] Generated initial feedback");
-  return result.response.text();
+  
+  // Allow for streaming output (Text Generation) for faster interactions with the API
+  let response = ""
+  for await (const chunk of result.stream) {
+    response += chunk.text();
+    console.log("[STREAM] Chunk received: ", chunk.text());
+  }
+  return response;
 }
