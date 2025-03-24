@@ -27,6 +27,9 @@ export default function NewForm() {
         });
 
         const responseData = response.data;
+        
+        console.log("Raw API Response:", response);
+        console.log("parsed API Response", responseData);
 
         if (response.status === 200) {
           console.log(responseData);
