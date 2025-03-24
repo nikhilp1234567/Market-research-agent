@@ -47,6 +47,17 @@ export default function ResultPage() {
 
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
+    
+    if (!processedData || typeof processedData !== "object"){
+      console.warn("Invalid or missing data in localStorage:", processedData);
+      return;
+    }
+
+    if (!processedData.whatUsersLike) {
+      console.warn("Missing 'whatUsersLike' field in data:", processedData);
+      return;
+    }
+    
     if (processedData != "null") {
       setResult(processedData as Result);
 
