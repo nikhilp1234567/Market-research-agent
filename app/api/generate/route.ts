@@ -173,11 +173,12 @@ async function getTargetMarket(
   console.log("[DEBUG] Generated target market data");
   
   // Allow for streaming output (Text Generation) for faster interactions with the API
-  let response = ""
+  let response = "";
   for await (const chunk of result.stream) {
     response += chunk.text();
     console.log("[STREAM] Chunk received: ", chunk.text());
   }
+  console.log("[DEBUG] Full demographics response:", response);
   return response;
 }
 
