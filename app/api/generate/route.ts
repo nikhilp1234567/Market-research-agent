@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI, SchemaType} from "@google/generative-ai";
 import env from "dotenv";
 
-
 env.config({ path: ".env.local" });
 
 export async function POST(req: Request) {
@@ -9,17 +8,6 @@ export async function POST(req: Request) {
   const dataFromForm = await req.json();
   console.log("[DEBUG] Received form data:", JSON.stringify(dataFromForm, null, 2));
   let numberOfProfiles = 5;
-
-  let aggregatedSentiment = [];
-  let aggregatedgoodfitforMarket = [];
-  let aggregatedWhatUsersLike = [];
-  let aggregatedPainPoints = [];
-  let aggregatedWillingnessToPay = [];
-  let aggregatedWouldBuy = [];
-  let aggregatedReason = [];
-  let aggregatedBarrierForAdoption = [];
-  let aggregatedSuggestedImprovements = [];
-  let aggregatedAdditionalFeedback = [];
 
   try {
     const title = dataFromForm.name;
@@ -54,71 +42,31 @@ export async function POST(req: Request) {
     const parsedDemographics = JSON.parse(demographics);
     console.log(`[DEBUG] Parsed ${parsedDemographics.length} demographic profiles`);
 
-    for (let i of parsedDemographics) {
-      console.log(`[DEBUG] Processing demographic profile`, i);
-      let demoAge = i.age;
-      let demoGender = i.gender;
-      let demoLocation = i.location;
-      let demoEducationLevel = i.educationLevel;
-      let demoEmploymentStatus = i.employmentStatus;
-      let demoHouseholdIncome = i.householdIncome;
-      let demoMaritalStatus = i.maritalStatus;
-      let demoNumberOfDependents = i.numberOfDependents;
-      let demoEthnicity = i.ethnicity;
-      let demoIndustryAndJobRole = i.industryAndJobRole;
+    // Streaming API Response
+    const stream = new ReadableStream({
+      async start (controller) {
+        try {
+          // Send demographics first
+          controller.enqueue(JSON.stringify({ demographicProfiles: parsedDemographics}));
 
-      const feedback = await getInitialFeedback(
-        title,
-        description,
-        category,
-        goal,
-        links,
-        demoAge,
-        demoGender,
-        demoLocation,
-        demoEducationLevel,
-        demoEmploymentStatus,
-        demoHouseholdIncome,
-        demoMaritalStatus,
-        demoNumberOfDependents,
-        demoEthnicity,
-        demoIndustryAndJobRole,
-        files
-      );
+          console.log("[DEBUG] Fetching feedback in parallel...");
+          const feedbackPromises = parsedDemographics.map((i: any) => {
+            getInitialFeedback(title, description, category, goal, links, i.age, gender, i.location, i.educationLevel, i.employmentStatus, i.householdIncome, maritalStatus, i.numberOfDependents, i.ethnicity, i.industryAndJobRole, files)
+          });
 
-      console.log(`[DEBUG] Received feedback for demographic ${i}`);
-      const parsedFeedback = JSON.parse(feedback);
-
-      aggregatedSentiment.push(parsedFeedback.sentiment);
-      aggregatedgoodfitforMarket.push(parsedFeedback.goodFitForMarket);
-      aggregatedWhatUsersLike.push(parsedFeedback.whatUsersLike);
-      aggregatedPainPoints.push(parsedFeedback.painPoints);
-      aggregatedWillingnessToPay.push(parsedFeedback.willingnessToPay);
-      aggregatedWouldBuy.push(parsedFeedback.wouldBuy);
-      aggregatedReason.push(parsedFeedback.reason);
-      aggregatedBarrierForAdoption.push(parsedFeedback.barrierForAdoption);
-      aggregatedSuggestedImprovements.push(parsedFeedback.suggestedImprovements);
-      aggregatedAdditionalFeedback.push(parsedFeedback.additionalFeedback);
-    }
-
-    const finalAggregatedResults = {
-      demographicProfiles: parsedDemographics,
-      sentiment: aggregatedSentiment,
-      goodFitForMarket: aggregatedgoodfitforMarket,
-      whatUsersLike: aggregatedWhatUsersLike,
-      painPoints: aggregatedPainPoints,
-      willingnessToPay: aggregatedWillingnessToPay,
-      wouldBuy: aggregatedWouldBuy,
-      reason: aggregatedReason,
-      barrierForAdoption: aggregatedBarrierForAdoption,
-      suggestedImprovements: aggregatedSuggestedImprovements,
-      additionalFeedback: aggregatedAdditionalFeedback,
-    };
-
-    //generate synthetic demographic data
-    return new Response(JSON.stringify(finalAggregatedResults), {
-      headers: { "Content-Type": "application/json" },
+          // Send feedback promises incrementally
+          for await (const feedback of feedbackPromises) {
+            controller.enqueue(JSON.stringify({ feedback: JSON.parse(feedback) }));
+          }
+          controller.close()
+        } catch(error) {
+          controller.error(error);
+        }
+      },
     });
+
+    return new Response(stream, { headers: { "Content-Type": "application/json" } });
+
   } catch (e: unknown) {
     console.error("[ERROR] Processing request failed:", e);
     if (e instanceof Error) {
@@ -184,6 +132,7 @@ async function getTargetMarket(
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
+      maxOutputTokens: 100,
     },
   });
 
@@ -299,6 +248,7 @@ async function getInitialFeedback(
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
+      maxOutputTokens: 100,
     },
   });
 
