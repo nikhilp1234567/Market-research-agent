@@ -39,9 +39,19 @@ export async function POST(req: Request) {
     let demographics = await getTargetMarket(title, description, employment, gender, income, interests, locations, maritalStatus, numberOfProfiles);
     console.log("[DEBUG] Received demographics:", demographics);
 
-    const parsedDemographics = JSON.parse(demographics);
+    let parsedDemographics;
+    try {
+      parsedDemographics = JSON.parse(demographics);
     console.log(`[DEBUG] Parsed ${parsedDemographics.length} demographic profiles`);
-
+    } catch(error: any) {
+      console.error("[ERROR] JSON Parsing Failed:", error);
+      console.error("[ERROR] Raw Response", demographics);
+      return new Response(JSON.stringify({
+        error: "Invalid JSON from getTargetMarket",
+        details: error.message
+      }), {status: 500, headers: {"Content-Type": "application/json"}})
+    }
+    
     // Streaming API Response
     const stream = new ReadableStream({
       async start (controller) {
@@ -50,17 +60,20 @@ export async function POST(req: Request) {
           controller.enqueue(JSON.stringify({ demographicProfiles: parsedDemographics}));
 
           console.log("[DEBUG] Fetching feedback in parallel...");
-          const feedbackPromises = parsedDemographics.map((i: any) => {
-            getInitialFeedback(title, description, category, goal, links, i.age, gender, i.location, i.educationLevel, i.employmentStatus, i.householdIncome, maritalStatus, i.numberOfDependents, i.ethnicity, i.industryAndJobRole, files)
+          const feedbackPromises = parsedDemographics.map(async(i: any) => {
+            try {
+              const feedback = await getInitialFeedback(title, description, category, goal, links, i.age, gender, i.location, i.educationLevel, i.employmentStatus, i.householdIncome, maritalStatus, i.numberOfDependents, i.ethnicity, i.industryAndJobRole, files);
+              controller.enqueue(JSON.stringify({ feedback: JSON.parse(feedback) }));
+            } catch(error) {
+              console.error("[ERROR] Failed to fetch feedbak for:", i, error);
+              controller.enqueue(JSON.stringify({ feedback: { error: "Failed to generate feedback" } }));
+            }  
           });
 
-          // Send feedback promises incrementally
-          for await (const feedback of feedbackPromises) {
-            controller.enqueue(JSON.stringify({ feedback: JSON.parse(feedback) }));
-          }
-          controller.close()
+          await Promise.all(feedbackPromises);
+          controller.close();
         } catch(error) {
-          controller.error(error);
+          controller.error();
         }
       },
     });
