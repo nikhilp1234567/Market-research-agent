@@ -39,6 +39,12 @@ export async function POST(req: Request) {
     let demographics = await getTargetMarket(title, description, employment, gender, income, interests, locations, maritalStatus, numberOfProfiles);
     console.log("[DEBUG] Received demographics:", demographics);
 
+    // JSON debugging
+    if (!demographics.trim().startsWith("{") && !demographics.trim().startsWith("[")){
+      console.error("[ERROR] Invalid JSON response from Gemini API:", demographics);
+      return JSON.stringify({error: "Invalid response format from Gemini API"});
+    }
+
     let parsedDemographics;
     try {
       parsedDemographics = JSON.parse(demographics);
