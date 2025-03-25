@@ -1,10 +1,21 @@
 import { GoogleGenerativeAI, SchemaType} from "@google/generative-ai";
-import env from "dotenv";
-
-env.config({ path: ".env.local" });
 
 export async function POST(req: Request) {
   console.log("[POST] /api/generate endpoint called");
+
+  // Validate Gemini API Key
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_API_KEY) {
+    console.error("[ERROR] Gemini API key is not configured");
+    return new Response(JSON.stringify({ 
+      error: "Server configuration error", 
+      details: "API key is missing" 
+    }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
   const dataFromForm = await req.json();
   console.log("[DEBUG] Received form data:", JSON.stringify(dataFromForm, null, 2));
   let numberOfProfiles = 5;
