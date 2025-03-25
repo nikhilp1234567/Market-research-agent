@@ -42,7 +42,10 @@ export async function POST(req: Request) {
     // JSON debugging
     if (!demographics.trim().startsWith("{") && !demographics.trim().startsWith("[")){
       console.error("[ERROR] Invalid JSON response from Gemini API:", demographics);
-      return JSON.stringify({error: "Invalid response format from Gemini API"});
+      return new Response(JSON.stringify({error: "Invalid response format from Gemini API"}), {
+        status: 500,
+        headers: {"Content-Type": "application/json"}
+      });
     }
 
     let parsedDemographics;
