@@ -30,7 +30,11 @@ export default function NewForm() {
 
         if (response.status === 200) {
           console.log(responseData);
-          setVisible(true);
+            if (responseData.profilesProcessed >= 5) {
+            console.log("All profiles have been processed.");
+            return;
+            }
+            setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
         } else {
           throw new Error(data.error || "Failed to get feedback");
