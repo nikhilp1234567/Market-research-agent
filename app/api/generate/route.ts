@@ -1,24 +1,24 @@
-import { GoogleGenerativeAI, SchemaType} from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import env from "dotenv";
+
+env.config({ path: ".env.local" });
 
 export async function POST(req: Request) {
   console.log("[POST] /api/generate endpoint called");
-
-  // Validate Gemini API Key
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_API_KEY) {
-    console.error("[ERROR] Gemini API key is not configured");
-    return new Response(JSON.stringify({ 
-      error: "Server configuration error", 
-      details: "API key is missing" 
-    }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-
   const dataFromForm = await req.json();
   console.log("[DEBUG] Received form data:", JSON.stringify(dataFromForm, null, 2));
   let numberOfProfiles = 5;
+
+  let aggregatedSentiment = [];
+  let aggregatedgoodfitforMarket = [];
+  let aggregatedWhatUsersLike = [];
+  let aggregatedPainPoints = [];
+  let aggregatedWillingnessToPay = [];
+  let aggregatedWouldBuy = [];
+  let aggregatedReason = [];
+  let aggregatedBarrierForAdoption = [];
+  let aggregatedSuggestedImprovements = [];
+  let aggregatedAdditionalFeedback = [];
 
   try {
     const title = dataFromForm.name;
@@ -50,67 +50,80 @@ export async function POST(req: Request) {
     let demographics = await getTargetMarket(title, description, employment, gender, income, interests, locations, maritalStatus, numberOfProfiles);
     console.log("[DEBUG] Received demographics:", demographics);
 
-    // JSON debugging
-    if (!demographics.trim().startsWith("{") && !demographics.trim().startsWith("[")){
-      console.error("[ERROR] Invalid JSON response from Gemini API:", demographics);
-      return new Response(JSON.stringify({error: "Invalid response format from Gemini API"}), {
-        status: 500,
-        headers: {"Content-Type": "application/json"}
-      });
-    }
-
-    let parsedDemographics;
-    try {
-      parsedDemographics = JSON.parse(demographics);
+    const parsedDemographics = JSON.parse(demographics);
     console.log(`[DEBUG] Parsed ${parsedDemographics.length} demographic profiles`);
-    } catch(error: any) {
-      console.error("[ERROR] JSON Parsing Failed:", error);
-      console.error("[ERROR] Raw Response", demographics);
-      return new Response(JSON.stringify({
-        error: "Invalid JSON from getTargetMarket",
-        details: error.message
-      }), {status: 500, headers: {"Content-Type": "application/json"}})
+
+    for (let i of parsedDemographics) {
+      console.log(`[DEBUG] Processing demographic profile`, i);
+      let demoAge = i.age;
+      let demoGender = i.gender;
+      let demoLocation = i.location;
+      let demoEducationLevel = i.educationLevel;
+      let demoEmploymentStatus = i.employmentStatus;
+      let demoHouseholdIncome = i.householdIncome;
+      let demoMaritalStatus = i.maritalStatus;
+      let demoNumberOfDependents = i.numberOfDependents;
+      let demoEthnicity = i.ethnicity;
+      let demoIndustryAndJobRole = i.industryAndJobRole;
+
+      const feedback = await getInitialFeedback(
+        title,
+        description,
+        category,
+        goal,
+        links,
+        demoAge,
+        demoGender,
+        demoLocation,
+        demoEducationLevel,
+        demoEmploymentStatus,
+        demoHouseholdIncome,
+        demoMaritalStatus,
+        demoNumberOfDependents,
+        demoEthnicity,
+        demoIndustryAndJobRole,
+        files
+      );
+
+      console.log(`[DEBUG] Received feedback for demographic ${i}`);
+      const parsedFeedback = JSON.parse(feedback);
+
+      aggregatedSentiment.push(parsedFeedback.sentiment);
+      aggregatedgoodfitforMarket.push(parsedFeedback.goodFitForMarket);
+      aggregatedWhatUsersLike.push(parsedFeedback.whatUsersLike);
+      aggregatedPainPoints.push(parsedFeedback.painPoints);
+      aggregatedWillingnessToPay.push(parsedFeedback.willingnessToPay);
+      aggregatedWouldBuy.push(parsedFeedback.wouldBuy);
+      aggregatedReason.push(parsedFeedback.reason);
+      aggregatedBarrierForAdoption.push(parsedFeedback.barrierForAdoption);
+      aggregatedSuggestedImprovements.push(parsedFeedback.suggestedImprovements);
+      aggregatedAdditionalFeedback.push(parsedFeedback.additionalFeedback);
     }
-    
-    // Streaming API Response
-    const stream = new ReadableStream({
-      async start (controller) {
-        try {
-          // Send demographics first
-          controller.enqueue(JSON.stringify({ demographicProfiles: parsedDemographics}));
 
-          console.log("[DEBUG] Fetching feedback in parallel...");
-          const feedbackPromises = parsedDemographics.map(async(i: any) => {
-            try {
-              const feedback = await getInitialFeedback(title, description, category, goal, links, i.age, gender, i.location, i.educationLevel, i.employmentStatus, i.householdIncome, maritalStatus, i.numberOfDependents, i.ethnicity, i.industryAndJobRole, files);
-              controller.enqueue(JSON.stringify({ feedback: JSON.parse(feedback) }));
-            } catch(error) {
-              console.error("[ERROR] Failed to fetch feedbak for:", i, error);
-              controller.enqueue(JSON.stringify({ feedback: { error: "Failed to generate feedback" } }));
-            }  
-          });
+    const finalAggregatedResults = {
+      demographicProfiles: parsedDemographics,
+      sentiment: aggregatedSentiment,
+      goodFitForMarket: aggregatedgoodfitforMarket,
+      whatUsersLike: aggregatedWhatUsersLike,
+      painPoints: aggregatedPainPoints,
+      willingnessToPay: aggregatedWillingnessToPay,
+      wouldBuy: aggregatedWouldBuy,
+      reason: aggregatedReason,
+      barrierForAdoption: aggregatedBarrierForAdoption,
+      suggestedImprovements: aggregatedSuggestedImprovements,
+      additionalFeedback: aggregatedAdditionalFeedback,
+    };
 
-          await Promise.all(feedbackPromises);
-          controller.close();
-        } catch(error) {
-          controller.error();
-        }
-      },
+    //generate synthetic demographic data
+    return new Response(JSON.stringify(finalAggregatedResults), {
+      headers: { "Content-Type": "application/json" },
     });
-
-    return new Response(stream, { headers: { "Content-Type": "application/json" } });
-
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("[ERROR] Processing request failed:", e);
     if (e instanceof Error) {
       console.error("[ERROR] Stack trace:", e.stack);
-    } else {
-      console.error("[ERROR] Unexpected error:", JSON.stringify(e));
     }
-    return new Response(JSON.stringify({ 
-      error: "An error occurred while processing your request",
-      details: e.message || "Unknown error"
-     }), {
+    return new Response(JSON.stringify({ error: "An error occurred while processing your request" }), {
       status: e instanceof Error ? 500 : 400,
       headers: { "Content-Type": "application/json" },
     });
@@ -170,11 +183,10 @@ async function getTargetMarket(
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
-      maxOutputTokens: 100,
     },
   });
 
-  const result = await model.generateContentStream(
+  const result = await model.generateContent(
     `Generate an array of ${numberOfProfiles} unique demographic profiles, each containing id, age, gender, location, education level, employment status, 
    household income, marital status, number of dependents, ethnicity, and industry/job role. 
    The demographics should be representative of those who would realistically be selected for market research based on the following product, 
@@ -191,15 +203,14 @@ async function getTargetMarket(
   If any of these are unclear or not filled out, you are allowed to use the full range of that demographic.`
   );
   console.log("[DEBUG] Generated target market data");
-  
-  // Allow for streaming output (Text Generation) for faster interactions with the API
-  let response = "";
-  for await (const chunk of result.stream) {
-    response += chunk.text();
-    console.log("[STREAM] Chunk received: ", chunk.text());
-  }
-  console.log("[DEBUG] Full demographics response:", response);
-  return response;
+  return result.response.text();
+
+
+
+
+
+
+
 }
 
 async function getInitialFeedback(
@@ -287,11 +298,10 @@ async function getInitialFeedback(
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
-      maxOutputTokens: 100,
     },
   });
 
-  const result = await model.generateContentStream(`
+  const result = await model.generateContent(`
     
 Your task is to generate a structured market feedback report by fully adopting the 
 perspective of a given demographic. You will be provided with details about a product, service, or idea, along with demographic information 
@@ -320,12 +330,5 @@ Instructions:
 	•	Provide both quantitative and qualitative insights where specified in the schema.
 	•	Keep responses concise yet engaging, following the provided schema.`);
   console.log("[DEBUG] Generated initial feedback");
-  
-  // Allow for streaming output (Text Generation) for faster interactions with the API
-  let response = ""
-  for await (const chunk of result.stream) {
-    response += chunk.text();
-    console.log("[STREAM] Chunk received: ", chunk.text());
-  }
-  return response;
+  return result.response.text();
 }

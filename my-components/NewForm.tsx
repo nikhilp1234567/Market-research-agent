@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { blue } from "@mui/material/colors";
 import { useRouter } from 'next/navigation';
+import axios from "axios";
 
 export default function NewForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,25 +20,20 @@ export default function NewForm() {
     handleSubmit(async (data) => {
       console.log(data);
       try {
-        const response = await fetch("/api/generate", {
-          method: 'POST',
+        const response = await axios.post("/api/generate", data, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
         });
 
-        const responseData = await response.json();
-        
-        console.log("Raw API Response:", response);
-        console.log("parsed API Response", responseData);
+        const responseData = response.data;
 
-        if (response.ok) {
+        if (response.status === 200) {
           console.log(responseData);
           setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
         } else {
-          throw new Error(responseData.error || "Failed to get feedback");
+          throw new Error(data.error || "Failed to get feedback");
         }
       } catch (error: any) {
         console.error("Submission failed:", error);
