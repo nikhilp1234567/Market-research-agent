@@ -30,12 +30,13 @@ export default function NewForm() {
 
         if (response.status === 200) {
           console.log(responseData);
-            if (responseData.profilesProcessed >= 5) {
+          if (responseData.profilesProcessed >= 5) {
             console.log("All profiles have been processed.");
             return;
-            }
-            setVisible(true);
+          }
+          setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
+          router.push('/result');
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
@@ -275,7 +276,6 @@ export default function NewForm() {
           </div>
           <button
             onClick={async () => {
-              router.push('/result');
               setVisible(false);
               await finalSubmit();
             }}

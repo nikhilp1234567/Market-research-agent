@@ -2,13 +2,14 @@
 
 import DemoSlider from "@/my-components/DemoSlider";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SentimentGraph from "@/my-components/SentimentGraph";
 import PricingLineGraph from "@/my-components/PricingLineGraph";
 import WouldBuyPieChart from "@/my-components/WouldBuyPieChart";
 import MarketFitRadialPieChart from "@/my-components/MarketFitRadialPieChart";
+import { useRouter } from "next/navigation";
 
 interface Result {
   demographicProfiles: {
@@ -45,16 +46,20 @@ export default function ResultPage() {
   const [summarisedAdditionalFeedback, setSummarisedAdditionalFeedback] = useState("");
   const [selectedData, setSelectedData] = useState<string | null>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
     
     if (!processedData || typeof processedData !== "object"){
       console.warn("Invalid or missing data in localStorage:", processedData);
+      router.push("/");
       return;
     }
 
     if (!processedData.whatUsersLike) {
       console.warn("Missing 'whatUsersLike' field in data:", processedData);
+      router.push("/");
       return;
     }
     
@@ -79,7 +84,7 @@ export default function ResultPage() {
         }
       })
     }
-  }, []);
+  }, [router]);
 
   if (!result) {
     return <div>Loading results...</div>;
