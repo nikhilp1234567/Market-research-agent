@@ -7,7 +7,6 @@ import AgeSlider from "./AgeSlider";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { blue } from "@mui/material/colors";
-import axios from "axios";
 import { useRouter } from 'next/navigation';
 
 export default function NewForm() {
@@ -20,33 +19,28 @@ export default function NewForm() {
     handleSubmit(async (data) => {
       console.log(data);
       try {
-        const response = await axios.post("/api/generate", data, {
+        const response = await fetch("/api/generate", {
+          method: 'POST',
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(data),
         });
 
-        const responseData = response.data;
+        const responseData = await response.json();
         
         console.log("Raw API Response:", response);
         console.log("parsed API Response", responseData);
 
-        if (response.status === 200) {
+        if (response.ok) {
           console.log(responseData);
           setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
         } else {
-          throw new Error(data.error || "Failed to get feedback");
+          throw new Error(responseData.error || "Failed to get feedback");
         }
       } catch (error: any) {
         console.error("Submission failed:", error);
-        if (error.response) {
-          console.error("Server Error: ", error.response.status, error.response.data); 
-        } else if (error.request) {
-          console.error("No response from server: ", error.request);
-        } else {
-          console.error("Error in request setup: ", error.message);
-        }
         setVisible(true);
       }
     })();
