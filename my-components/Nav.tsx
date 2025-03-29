@@ -21,7 +21,7 @@ export default function Nav() {
               <span className='font-extralight text-white'>Mind</span>
             </h1>
           </Link>
-          <CheckoutForm />
+          {/* <CheckoutForm /> */}
         </div>
         <div id='nav-right'>{!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}</div>
       </div>

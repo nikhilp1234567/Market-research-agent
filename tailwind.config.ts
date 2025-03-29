@@ -86,9 +86,11 @@ const config = {
         },
       },
       animation: {
-        typing: "typing 2s steps(20) forwards, blink .7s infinite ease-in-out",
-        "accordion-down": "accordion-down 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        "accordion-up": "accordion-up 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        // Typing animation that simulates text being typed out over 10 seconds
+        // with a blinking cursor effect
+        typing: "typing 7s steps(10000)",
+
+        // Infinite gradient background animation that cycles colors over 3 seconds
         gradient: "gradient 3s ease infinite",
       },
       backgroundSize: {

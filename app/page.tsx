@@ -8,6 +8,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import ReferenceCard from "@/my-components/ReferenceCard";
 import { CheckoutForm } from "@/my-components/CheckoutForm";
+import { motion } from "motion/react";
 
 export default function Home() {
   return (
