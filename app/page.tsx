@@ -198,8 +198,8 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id='footer' style={{ backgroundColor: "#070F2B" }} className='w-full pb-8 animate-fade-up animate-once animate-ease-in-out'>
-        <div className='border-t border-gray-700 pt-8 text-center'>
+      <footer id='footer' style={{ backgroundColor: "#070F2B" }} className='max-w-full rounded-lg m-6 pb-8 border'>
+        <div className=' pt-8 text-center'>
           <p className='text-gray-400'>&copy; 2025 MarketMind. All rights reserved.</p>
         </div>
       </footer>
