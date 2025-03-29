@@ -8,14 +8,17 @@ import { CheckoutForm } from "./CheckoutForm";
 
 export default function Nav() {
   return (
-    <nav id='main-navigation' className='w-full bg-gray-900 flex justify-center items-center shadow-lg sticky py-4 top-0 z-50 h-20 border-b border-gray-700'>
+    <nav
+      id='main-navigation'
+      style={{ backgroundColor: "#070F2B" }}
+      className='w-full flex justify-center items-center sticky py-4 top-0 z-50 h-20 border-b border-gray-700'>
       <div className='w-full max-w-7xl flex justify-between items-center'>
-        <div id='nav-left' className='flex gap-8 items-center'>
+        <div id='nav-left' className='flex gap-8 items-center transition-all duration-300'>
           <Link href={"/"} id='home-link' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
             <img src='/icon.ico' alt='MarketMind Logo' className='h-10 w-10' />
             <h1 className='text-2xl font-bold text-white tracking-tight'>
-              <span className='text-blue-400'>Market</span>
-              <span className='text-white'>Mind</span>
+              <span className='font-extralight text-blue-800'>Market</span>
+              <span className='font-extralight text-white'>Mind</span>
             </h1>
           </Link>
           <CheckoutForm />
