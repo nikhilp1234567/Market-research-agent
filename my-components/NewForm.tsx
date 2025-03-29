@@ -75,7 +75,7 @@ export default function NewForm() {
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300'>Type of Campaign</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
-                <select {...register("campaignCategory")} className='bg-transparent w-full outline-none cursor-pointer'>
+                <select {...register("campaignCategory")} className='bg-[#070F2B] text-white w-full outline-none cursor-pointer'>
                   <option value=' '>Choose your campaign type</option>
                   <option value='product'>Product</option>
                   <option value='idea'>Idea</option>
@@ -153,7 +153,7 @@ export default function NewForm() {
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300'>Gender</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
-                <select {...register("gender")} className='bg-transparent w-full outline-none cursor-pointer'>
+                <select {...register("gender")} className='bg-[#070F2B] text-white w-full outline-none cursor-pointer'>
                   <option value=' '>Select Gender</option>
                   <option value='Male'>Male</option>
                   <option value='Female'>Female</option>
@@ -201,7 +201,7 @@ export default function NewForm() {
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300'>Household Income</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
-                <select {...register("householdIncome")} className='bg-transparent w-full outline-none cursor-pointer'>
+                <select {...register("householdIncome")} className='bg-[#070F2B] text-white w-full outline-none cursor-pointer'>
                   <option value=' '>Select Income Range</option>
                   <option value='0 - 19,999'>$0 - $19,999</option>
                   <option value='20,000 - 39,999'>$20,000 - $39,999</option>
