@@ -1,22 +1,27 @@
 To - Do:
-make back end faster.
 
-Fix the apple login or remove it
-Redirect to sign up rather than sign in – sign up free and add benefits
+Nikhil -
+Fix the form fields coming up with data
+Prompt engineer so the results are a little more realistic
+Results demographics buttons are getting cut off
 Swap password and email fields in the sign up page
-Sign up doesn’t work – fix it
-Add optional fields where stuff is not needed (eg for media field, people are looking to add files even if they don’t have anything relevant)
-Probably need different form layouts for marketing and branding and the core idea etc
-The description takes a little while to do
+Redirect to sign up rather than sign in – sign up free and add benefits
+Add optional tags in brackets where stuff is not needed (eg for media field, people are looking to add files even if they don’t have anything relevant)
+change the household income to
 Definitely make the supporting media section easier to understand, what is it and what does it do etc
+Fix the “results loading” on the results page, so you can resend the info after 20 seconds or smthn. Also just restyle it.
+
+Engombe -
+sentiment and would buy improvements
 Could add tooltips to explain what each section of the form does.
 Employment and history still autofills from location, so does interests and behaviours from title. Need to fix these.
+Need to de register the final submit button once clicked once as well, as i noticed my users were clicking it multiple times.
+Also the layout is not responsive properly, need to fix this (in the form section itself)
+
+for later -
+Probably need different form layouts for marketing and branding and the core idea etc
 This is also not well understood by the user, they think it is more their employment and history rather than the user’s
-The results page doesn’t work at all on vercel
 The results page is not useful - Might be better to use a framework, or just highlight tips for improvement instead of giving all of the other info. Need to add in a section which describes the idea as well, as I am not even sure if it is registering the idea properly.
-Need to de register the submit button once clicked once as well.
-Fix the “results loading” on the results page, so you can resend the info after 20 seconds or smthn. Also just restyle it.
-Also the layout is not responsive properly, need to fix this
 
 Step 1: Testing and Validating Your Idea (In-Depth Guide)
 
