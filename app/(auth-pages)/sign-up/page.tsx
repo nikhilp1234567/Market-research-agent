@@ -40,24 +40,6 @@ export default async function SignUp(props: { searchParams: any }) {
                 </div>
 
                 <div className='space-y-2'>
-                  <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
-                    Email
-                  </Label>
-                  <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
-                    <Input
-                      name='email'
-                      type='email'
-                      placeholder='you@example.com'
-                      required
-                      className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column - Password Fields */}
-              <div className='space-y-6'>
-                <div className='space-y-2'>
                   <Label htmlFor='password' className='text-lg font-medium text-blue-300'>
                     Password
                   </Label>
@@ -66,6 +48,24 @@ export default async function SignUp(props: { searchParams: any }) {
                       type='password'
                       name='password'
                       placeholder='Create a password'
+                      required
+                      className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Email and Confirm Password */}
+              <div className='space-y-6'>
+                <div className='space-y-2'>
+                  <Label htmlFor='email' className='text-lg font-medium text-blue-300'>
+                    Email
+                  </Label>
+                  <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] rounded-xl hover:border-blue-700 transition-colors'>
+                    <Input
+                      name='email'
+                      type='email'
+                      placeholder='you@example.com'
                       required
                       className='bg-transparent border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
                     />
@@ -91,12 +91,11 @@ export default async function SignUp(props: { searchParams: any }) {
             <SubmitButton
               pendingText='Creating Account...'
               formAction={signUpAction}
-              className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-full font-medium mt-2'>
+              className='bg-blue-600 px-8 transition-all hover:bg-blue-500 py-3 rounded-lg w-full font-medium mt-6'>
               Create Account
             </SubmitButton>
           </form>
 
-          
           <div className='relative'>
             <div className='absolute inset-0 flex items-center'>
               <div className='w-full border-t border-gray-600'></div>
@@ -117,7 +116,7 @@ export default async function SignUp(props: { searchParams: any }) {
               </SubmitButton>
             </div>
           </form>
-          
+
           <FormMessage message={{ message: searchParams.message || "" }} />
         </div>
       </div>

@@ -1,7 +1,6 @@
 To - Do:
 
 Nikhil -
-Fix the form fields coming up with data
 Prompt engineer so the results are a little more realistic
 Results demographics buttons are getting cut off
 Swap password and email fields in the sign up page
