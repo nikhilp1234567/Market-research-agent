@@ -3,7 +3,7 @@ import React from "react";
 import { PieChart, Pie, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 
 interface WouldBuyPieChartProps {
-  data: boolean[] | undefined;
+  data: string[] | undefined;
 }
 function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
   const numWouldBuy = data!.filter((i) => String(i) == "true").length;

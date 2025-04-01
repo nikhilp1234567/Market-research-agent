@@ -2,7 +2,7 @@ import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 interface MarketFitRadialPieChartProps {
-  data: boolean[] | undefined;
+  data: string[] | undefined;
 }
 
 const COLORS = ["#0088FE", "#00C49F"];
@@ -10,8 +10,8 @@ const COLORS = ["#0088FE", "#00C49F"];
 export default function MarketFitRadialPieChart({ data }: MarketFitRadialPieChartProps) {
   const processedData = data
     ? [
-        { name: "Good Fit", value: data.filter((val) => val === true).length },
-        { name: "Poor Fit", value: data.filter((val) => val === false).length },
+        { name: "Good Fit", value: data.filter((val) => val == "true")},
+        { name: "Poor Fit", value: data.filter((val) => val == "false")},
       ]
     : [];
 
