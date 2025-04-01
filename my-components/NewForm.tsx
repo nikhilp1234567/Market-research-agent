@@ -7,7 +7,7 @@ import AgeSlider from "./AgeSlider";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { blue } from "@mui/material/colors";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function NewForm() {
@@ -36,7 +36,7 @@ export default function NewForm() {
           }
           setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
-          router.push('/result');
+          router.push("/result");
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
@@ -97,14 +97,14 @@ export default function NewForm() {
             </div>
 
             <div className='space-y-2'>
-              <label className='text-lg font-medium text-blue-300'>Supporting Media</label>
+              <label className='text-lg font-medium text-blue-300'>Supporting Media (Optional)</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <input type='file' {...register("files")} multiple className='w-full outline-none bg-transparent cursor-pointer' />
               </div>
             </div>
 
             <div className='space-y-2'>
-              <label className='text-lg font-medium text-blue-300'>Related Links</label>
+              <label className='text-lg font-medium text-blue-300'>Related Links (Optional)</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <textarea
                   {...register("relevantLinks")}
