@@ -26,11 +26,11 @@ interface DemoSliderProps {
   }[];
   responseData: {
     sentiment: string[];
-    goodFitForMarket: boolean[];
+    goodFitForMarket: string[];
     whatUsersLike: string[];
     painPoints: string[];
     willingnessToPay: number[];
-    wouldBuy: boolean[];
+    wouldBuy: string[];
     reason: string[];
     barrierForAdoption: string[];
     suggestedImprovements: string[];

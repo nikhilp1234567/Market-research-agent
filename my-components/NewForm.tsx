@@ -91,7 +91,7 @@ export default function NewForm() {
                   {...register("campaignDescription")}
                   className='w-full outline-none bg-transparent min-h-[100px]'
                   placeholder='Describe your offering, including pricing and key features'
-                  name=''
+                  name="campaignDescription"
                   id=''></textarea>
               </div>
             </div>
@@ -169,7 +169,8 @@ export default function NewForm() {
                   {...register("interests")}
                   className='w-full outline-none bg-transparent min-h-[50px]'
                   placeholder='Enter interests separated by commas (e.g., backpacking, web development)'
-                  name='interests'
+                  name="interests"
+                  key={''}
                   id=''></textarea>
               </div>
             </div>
@@ -203,12 +204,12 @@ export default function NewForm() {
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <select {...register("householdIncome")} className='bg-[#070F2B] text-white w-full outline-none cursor-pointer'>
                   <option value=' '>Select Income Range</option>
-                  <option value='0 - 19,999'>$0 - $19,999</option>
-                  <option value='20,000 - 39,999'>$20,000 - $39,999</option>
-                  <option value='40,000 - 59,999'>$40,000 - $59,999</option>
-                  <option value='60,000 - 79,999'>$60,000 - $79,999</option>
-                  <option value='80,000 - 99,999'>$80,000 - $99,999</option>
-                  <option value='100,000+'>$100,000+</option>
+                  <option value='0 - 19,999'>£0 - £19,999</option>
+                  <option value='20,000 - 39,999'>£20,000 - £39,999</option>
+                  <option value='40,000 - 59,999'>£40,000 - £59,999</option>
+                  <option value='60,000 - 79,999'>£60,000 - £79,999</option>
+                  <option value='80,000 - 99,999'>£80,000 - £99,999</option>
+                  <option value='100,000+'>£100,000+</option>
                 </select>
               </div>
             </div>

@@ -8,14 +8,14 @@ interface sentimentGraphProps {
 }
 
 function SentimentGraph({ data }: sentimentGraphProps) {
-  const numNegative = data!.filter((i) => i == "negative").length;
+  const badOption = data!.filter((i) => i == "bad").length;
   const numNeutral = data!.filter((i) => i == "neutral").length;
-  const numPositive = data!.filter((i) => i == "positive").length;
+  const goodOption = data!.filter((i) => i == "good").length;
 
   const processedSentimentData = [
-    { name: "negative", value: numNegative },
+    { name: "bad", value: badOption },
     { name: "neutral", value: numNeutral },
-    { name: "positive", value: numPositive },
+    { name: "good", value: goodOption },
   ];
   return (
     <ResponsiveContainer width='100%' height='100%'>
