@@ -1,15 +1,10 @@
 To - Do:
 
 Nikhil -
-Fix the form fields coming up with data
 Prompt engineer so the results are a little more realistic
 Results demographics buttons are getting cut off
-Swap password and email fields in the sign up page
-Redirect to sign up rather than sign in – sign up free and add benefits
-Add optional tags in brackets where stuff is not needed (eg for media field, people are looking to add files even if they don’t have anything relevant)
-change the household income to
+change the household income to a slider
 Definitely make the supporting media section easier to understand, what is it and what does it do etc
-Fix the “results loading” on the results page, so you can resend the info after 20 seconds or smthn. Also just restyle it.
 
 Engombe -
 sentiment and would buy improvements

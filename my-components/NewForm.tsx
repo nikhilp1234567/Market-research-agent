@@ -7,7 +7,7 @@ import AgeSlider from "./AgeSlider";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { blue } from "@mui/material/colors";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function NewForm() {
@@ -36,7 +36,7 @@ export default function NewForm() {
           }
           setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
-          router.push('/result');
+          router.push("/result");
         } else {
           throw new Error(data.error || "Failed to get feedback");
         }
@@ -97,14 +97,14 @@ export default function NewForm() {
             </div>
 
             <div className='space-y-2'>
-              <label className='text-lg font-medium text-blue-300'>Supporting Media</label>
+              <label className='text-lg font-medium text-blue-300'>Supporting Media (Optional)</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <input type='file' {...register("files")} multiple className='w-full outline-none bg-transparent cursor-pointer' />
               </div>
             </div>
 
             <div className='space-y-2'>
-              <label className='text-lg font-medium text-blue-300'>Related Links</label>
+              <label className='text-lg font-medium text-blue-300'>Related Links (Optional)</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <textarea
                   {...register("relevantLinks")}
@@ -198,8 +198,39 @@ export default function NewForm() {
                   id=''></textarea>
               </div>
             </div>
-
             <div className='space-y-2'>
+              <label className='text-lg font-medium text-blue-300'>Household Income</label>
+              <div className='flex flex-row gap-6 w-[100%] p-3'>
+                {[
+                  { value: "0 - 19,999", label: "£0-19,999" },
+                  { value: "20,000 - 39,999", label: "£20,000-£39,999" },
+                  { value: "40,000 - 59,999", label: "£40,000-£59,999" },
+                  { value: "60,000 - 79,999", label: "£60,000-£79,999" },
+                  { value: "80,000 - 99,999", label: "£80,000-£99,999" },
+                  { value: "100,000+", label: "£100,000+" },
+                ].map((income) => (
+                  <FormControlLabel
+                    key={income.value}
+                    control={
+                      <Checkbox
+                        {...register("householdIncome")}
+                        value={income.value}
+                        defaultChecked
+                        sx={{
+                          color: blue[800],
+                          "&.Mui-checked": {
+                            color: blue[600],
+                          },
+                        }}
+                      />
+                    }
+                    label={income.label}
+                    className='text-blue-300'
+                  />
+                ))}
+              </div>
+            </div>
+            {/* <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300'>Household Income</label>
               <div className='flex justify-center items-center p-3 !border-solid !border-blue-900 border-[2px] w-[70%] rounded-xl hover:border-blue-700 transition-colors'>
                 <select {...register("householdIncome")} className='bg-[#070F2B] text-white w-full outline-none cursor-pointer'>
@@ -212,7 +243,7 @@ export default function NewForm() {
                   <option value='100,000+'>£100,000+</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300'>Marital Status</label>

@@ -50,8 +50,8 @@ export default function ResultPage() {
 
   useEffect(() => {
     const processedData = JSON.parse(localStorage.getItem("searchData") || "null");
-    
-    if (!processedData || typeof processedData !== "object"){
+
+    if (!processedData || typeof processedData !== "object") {
       console.warn("Invalid or missing data in localStorage:", processedData);
       router.push("/");
       return;
@@ -62,32 +62,37 @@ export default function ResultPage() {
       router.push("/");
       return;
     }
-    
+
     if (processedData != "null") {
       setResult(processedData as Result);
 
       // Make POST request for all summaries
       const summaryFields = [
-        {data: processedData.whatUsersLike, setter: setSummarisedwhatUsersLike},
-        {data: processedData.painPoints, setter: setSummarisedPainPoints},
-        {data: processedData.reason, setter: setSummarisedReason},
-        {data: processedData.suggestedImprovements, setter: setSummarisedSuggestedImprovements},
-        {data: processedData.additionalFeedback, setter: setSummarisedAdditionalFeedback}
+        { data: processedData.whatUsersLike, setter: setSummarisedwhatUsersLike },
+        { data: processedData.painPoints, setter: setSummarisedPainPoints },
+        { data: processedData.reason, setter: setSummarisedReason },
+        { data: processedData.suggestedImprovements, setter: setSummarisedSuggestedImprovements },
+        { data: processedData.additionalFeedback, setter: setSummarisedAdditionalFeedback },
       ];
 
       summaryFields.forEach(async (field) => {
         try {
-          const response = await axios.post("/api/summarise", {data: field.data});
+          const response = await axios.post("/api/summarise", { data: field.data });
           field.setter(String(response.data));
-        } catch(error) {
+        } catch (error) {
           console.error("Error aggregating data:", error);
         }
-      })
+      });
     }
   }, [router]);
 
   if (!result) {
-    return <div>Loading results...</div>;
+    return (
+      <div id='black-background' className='flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden justify-center items-center bg-black pb-6 px-6 pt-3'>
+        <p className='mb-4'>Loading results...</p>
+        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400'></div>
+      </div>
+    );
   }
 
   return (
@@ -157,7 +162,7 @@ export default function ResultPage() {
                         onClick={async () => {
                           try {
                             const response = await axios.get("/api/summarise", {
-                              params: {data: JSON.stringify(result.whatUsersLike)}
+                              params: { data: JSON.stringify(result.whatUsersLike) },
                             });
                             setSummarisedwhatUsersLike(String(response.data));
                           } catch (error) {
@@ -187,7 +192,7 @@ export default function ResultPage() {
                         onClick={async () => {
                           try {
                             const response = await axios.get("/api/summarise", {
-                              params: {data: JSON.stringify(result.painPoints)}
+                              params: { data: JSON.stringify(result.painPoints) },
                             });
                             setSummarisedPainPoints(String(response.data));
                           } catch (error) {
@@ -231,7 +236,7 @@ export default function ResultPage() {
                         onClick={async () => {
                           try {
                             const response = await axios.get("/api/summarise", {
-                              params: {data: JSON.stringify(result.reason)}
+                              params: { data: JSON.stringify(result.reason) },
                             });
                             setSummarisedReason(String(response.data));
                           } catch (error) {
@@ -261,7 +266,7 @@ export default function ResultPage() {
                         onClick={async () => {
                           try {
                             const response = await axios.get("/api/summarise", {
-                              params: {data: JSON.stringify(result.suggestedImprovements)}
+                              params: { data: JSON.stringify(result.suggestedImprovements) },
                             });
                             setSummarisedSuggestedImprovements(String(response.data));
                           } catch (error) {
@@ -291,7 +296,7 @@ export default function ResultPage() {
                         onClick={async () => {
                           try {
                             const response = await axios.get("/api/summarise", {
-                              params: {data: JSON.stringify(result.additionalFeedback)}
+                              params: { data: JSON.stringify(result.additionalFeedback) },
                             });
                             setSummarisedAdditionalFeedback(String(response.data));
                           } catch (error) {

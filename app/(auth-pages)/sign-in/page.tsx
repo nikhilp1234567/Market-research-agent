@@ -9,7 +9,7 @@ export default async function Login(props: { searchParams: any }) {
   const searchParams = await props.searchParams;
   return (
     <div className='flex items-center justify-center min-h-[calc(100vh-6rem)] h-auto w-full bg-black'>
-      <div id='blue-background-holder' style={{ backgroundColor: "#070F2B" }} className='flex flex-col py-8 px-12 rounded-xl w-[35%] min-w-[400px] mx-4'>
+      <div id='blue-background-holder' style={{ backgroundColor: "#070F2B" }} className='flex flex-col border py-8 px-12 rounded-xl w-[35%] min-w-[400px] mx-4'>
         <div className='border-b border-gray-600 pb-4'>
           <h1 className='text-4xl font-semibold text-blue-400'>Sign In</h1>
           <p className='text-gray-400 mt-2 text-sm'>

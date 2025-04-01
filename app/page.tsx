@@ -38,7 +38,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id='about-section' style={{ backgroundColor: "#070F2B" }} className='max-w-full mx-6 py-16 md:py-24 border rounded-xl border-blue-900/50'>
+      <section id='about-section' style={{ backgroundColor: "#070F2B" }} className='max-w-full mx-6 py-16 md:py-24 border rounded-xl border'>
         <div className='max-w-6xl mx-auto px-4'>
           <h2 className='text-3xl md:text-4xl font-light text-center mb-12 text-white animate-fade-up animate-once animate-ease-in-out'>
             Your Agentic Market Research Platform
@@ -60,7 +60,7 @@ export default function Home() {
             ].map((item, index) => (
               <div
                 key={index}
-                className='p-8 bg-gray-900 rounded-xl hover:bg-blue-900/20 transition-all duration-200 cursor-pointer hover:scale-105 animate-fade-up animate-once animate-ease-in-out'
+                className='p-8 border bg-gray-900 rounded-xl hover:bg-blue-900/20 transition-all duration-200 cursor-pointer hover:scale-105 animate-fade-up animate-once animate-ease-in-out'
                 style={{ animationDelay: `${index * 100}ms` }}>
                 <h3 className='text-2xl font-light mb-4 text-white'>{item.title}</h3>
                 <p className='text-gray-400'>{item.description}</p>
@@ -92,14 +92,16 @@ export default function Home() {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className='p-6 bg-gray-900 rounded-xl hover:bg-gray-800 transition-all duration-200 cursor-pointer animate-fade-up animate-once animate-ease-in-out'
+                  className='p-6 border bg-gray-900 rounded-xl hover:bg-gray-800 transition-all duration-200 cursor-pointer animate-fade-up animate-once animate-ease-in-out'
                   style={{ animationDelay: `${index * 100}ms` }}>
                   <h3 className='text-2xl font-light text-white mb-4'>{feature.title}</h3>
                   <p className='text-gray-400'>{feature.description}</p>
                 </div>
               ))}
             </div>
-            <div className='lg:col-span-2 bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors duration-200 min-h-full md:h-[500px] animate-fade-up animate-once animate-ease-in-out'></div>
+            <div className='lg:col-span-2 border bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors duration-200 min-h-full md:h-[500px] animate-fade-up animate-once animate-ease-in-out'>
+              <img src='/images/example.png' className='w-full border h-full rounded-xl' alt='' />
+            </div>
           </div>
         </div>
       </section>
@@ -128,14 +130,11 @@ export default function Home() {
             ].map((useCase, index) => (
               <div
                 key={index}
-                className='bg-gray-900 rounded-xl p-8 flex flex-col justify-between text-center hover:bg-gray-800 transition-all duration-200 hover:scale-105 cursor-pointer animate-fade-up animate-once animate-ease-in-out'
+                className='bg-gray-900 rounded-xl border p-8 flex flex-col justify-between text-center hover:bg-gray-800 transition-all duration-200 hover:scale-105 cursor-pointer animate-fade-up animate-once animate-ease-in-out'
                 style={{ animationDelay: `${index * 100}ms` }}>
                 <div className='text-4xl mb-4 hover:scale-110 transition-transform duration-200'>{useCase.icon}</div>
                 <h4 className='text-2xl font-light text-white mb-4'>{useCase.title}</h4>
                 <p className='text-gray-400'>{useCase.description}</p>
-                <button className='mt-6 w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg transition-all duration-200 hover:scale-105'>
-                  Learn More
-                </button>
               </div>
             ))}
           </div>
@@ -187,7 +186,7 @@ export default function Home() {
             ].map((review, index) => (
               <SwiperSlide
                 key={index}
-                className='bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors duration-200 h-full animate-fade-up animate-once animate-ease-in-out'
+                className='bg-gray-900 rounded-xl border hover:bg-gray-800 transition-colors duration-200 h-full animate-fade-up animate-once animate-ease-in-out'
                 style={{ animationDelay: `${index * 100}ms` }}>
                 <ReferenceCard name={review.name} reference={review.reference} />
               </SwiperSlide>
@@ -197,10 +196,8 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id='footer' style={{ backgroundColor: "#070F2B" }} className='max-w-full rounded-lg m-6 pb-8 border'>
-        <div className=' pt-8 text-center'>
-          <p className='text-gray-400'>&copy; 2025 MarketMind. All rights reserved.</p>
-        </div>
+      <footer id='footer' style={{ backgroundColor: "#070F2B" }} className='max-w-full h-20 flex justify-center items-center rounded-lg m-6 border'>
+        <p className='text-gray-400'>&copy; 2025 MarketMind. All rights reserved.</p>
       </footer>
     </div>
   );
