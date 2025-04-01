@@ -7,8 +7,6 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import ReferenceCard from "@/my-components/ReferenceCard";
-import { CheckoutForm } from "@/my-components/CheckoutForm";
-import { motion } from "motion/react";
 
 export default function Home() {
   return (
@@ -32,7 +30,7 @@ export default function Home() {
         </p>
         <div className='flex my-8 flex-row gap-6'>
           <Link
-            href='/sign-in'
+            href='/sign-up'
             className='bg-black border-2  border-white hover:bg-white hover:text-black text-white font-medium py-3 px-8 rounded-xl text-lg md:text-xl transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-lg hover:shadow-xl active:shadow-md'>
             Try It Now
           </Link>
