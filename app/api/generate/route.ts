@@ -204,13 +204,6 @@ async function getTargetMarket(
   );
   console.log("[DEBUG] Generated target market data");
   return result.response.text();
-
-
-
-
-
-
-
 }
 
 async function getInitialFeedback(
@@ -239,11 +232,11 @@ async function getInitialFeedback(
     properties: {
       sentiment: {
         type: SchemaType.STRING,
-        description: "One word overall sentiment towards the product/service/idea (one from either positive, neutral, or negative)",
+        description: "One word overall sentiment towards the product/service/idea (one from either good, neutral, or bad)",
         nullable: false,
       },
       goodFitForMarket: {
-        type: SchemaType.BOOLEAN,
+        type: SchemaType.STRING,
         description: "Does the demographic consider themselves a good fit for market research of this product/idea/service?",
         nullable: false,
       },
@@ -264,7 +257,7 @@ async function getInitialFeedback(
         nullable: false,
       },
       wouldBuy: {
-        type: SchemaType.BOOLEAN,
+        type: SchemaType.STRING,
         description: "Would the user purchase the product/service? if free, would they use the product/service/idea",
         nullable: false,
       },
