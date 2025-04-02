@@ -7,11 +7,7 @@ change the household income to a slider
 Definitely make the supporting media section easier to understand, what is it and what does it do etc
 
 Engombe -
-sentiment and would buy improvements
-Could add tooltips to explain what each section of the form does.
-Employment and history still autofills from location, so does interests and behaviours from title. Need to fix these.
 Need to de register the final submit button once clicked once as well, as i noticed my users were clicking it multiple times.
-Also the layout is not responsive properly, need to fix this (in the form section itself)
 
 for later -
 Probably need different form layouts for marketing and branding and the core idea etc
