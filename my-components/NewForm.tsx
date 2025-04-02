@@ -55,7 +55,7 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[95%] md:max-w-[95%] lg:max-w-[95%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
           <div className='w-full border-b border-gray-600 pb-4 text-center'>
             <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Campaign Overview</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 1 of 3: Basic Information</p>
@@ -163,7 +163,7 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-80 sm:mt-88 md:mt-[28rem] mb-4 sm:mb-6 md:mb-8'>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[95%] md:max-w-[95%] lg:max-w-[95%] mx-auto mt-80 sm:mt-88 md:mt-[28rem] mb-4 sm:mb-6 md:mb-8'>
           <div className='w-full border-b border-gray-600 pb-4 text-center'>
             <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Target Demographics</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 2 of 3: Audience Definition</p>
@@ -359,7 +359,7 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[95%] md:max-w-[95%] lg:max-w-[95%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
           <div className='w-full border-b border-gray-600 pb-4 text-center'>
             <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Review & Submit</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 3 of 3: Final Confirmation</p>
