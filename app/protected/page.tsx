@@ -16,7 +16,7 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-4rem)] bg-black pb-6 pl-6 pr-6 pt-3'>
+    <div className='flex flex-col justify-center w-full items-center min-h-screen bg-black mt-32 pt-8 pb-6 pl-6 pr-6'>
       <NewForm />
     </div>
   );

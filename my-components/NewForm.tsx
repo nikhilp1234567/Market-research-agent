@@ -55,13 +55,13 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-8 justify-between overflow-auto flex-col w-full max-h-full h-full'>
-          <div className='border-b border-gray-600 pb-4'>
-            <h1 className='text-4xl font-semibold text-blue-400'>Campaign Overview</h1>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
+          <div className='w-full border-b border-gray-600 pb-4 text-center'>
+            <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Campaign Overview</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 1 of 3: Basic Information</p>
           </div>
 
-          <div className='space-y-6'>
+          <div className='w-full space-y-4 sm:space-y-6'>
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300 flex items-center gap-2'>
                 Campaign Name
@@ -143,7 +143,7 @@ export default function NewForm() {
             </div>
           </div>
 
-          <div className='pt-4 border-t border-gray-600'>
+          <div className='w-full pt-4 border-t border-gray-600 flex justify-center sm:justify-end'>
             <button
               onClick={() => {
                 handleSubmit((data) => {
@@ -163,13 +163,13 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-8 justify-between overflow-auto flex-col w-full max-h-full h-full'>
-          <div className='border-b border-gray-600 pb-4'>
-            <h1 className='text-4xl font-semibold text-blue-400'>Target Demographics</h1>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-80 sm:mt-88 md:mt-[28rem] mb-4 sm:mb-6 md:mb-8'>
+          <div className='w-full border-b border-gray-600 pb-4 text-center'>
+            <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Target Demographics</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 2 of 3: Audience Definition</p>
           </div>
 
-          <div className='space-y-6'>
+          <div className='w-full space-y-4 sm:space-y-6'>
             <div className='space-y-2'>
               <label className='text-lg font-medium text-blue-300 flex items-center gap-2'>
                 Age Range
@@ -257,7 +257,7 @@ export default function NewForm() {
                   <InfoIcon className="text-blue-400 cursor-help" fontSize="small" />
                 </Tooltip>
               </label>
-              <div className='flex flex-row gap-6 w-[100%] p-3'>
+              <div className='flex flex-wrap justify-center gap-4 sm:gap-6 w-[70%] p-3'>
                 {[
                   { value: "0 - 19,999", label: "£0-19,999" },
                   { value: "20,000 - 39,999", label: "£20,000-£39,999" },
@@ -282,7 +282,7 @@ export default function NewForm() {
                       />
                     }
                     label={income.label}
-                    className='text-blue-300'
+                    className='text-blue-300 text-sm sm:text-base'
                   />
                 ))}
               </div>
@@ -309,7 +309,7 @@ export default function NewForm() {
                   <InfoIcon className="text-blue-400 cursor-help" fontSize="small" />
                 </Tooltip>
               </label>
-              <div className='flex flex-row gap-6 w-[70%] p-3'>
+              <div className='flex flex-wrap justify-center gap-4 sm:gap-6 w-[70%] p-3'>
                 {["Single", "Married", "Widowed", "Divorced"].map((status) => (
                   <FormControlLabel
                     key={status}
@@ -327,14 +327,14 @@ export default function NewForm() {
                       />
                     }
                     label={status}
-                    className='text-blue-300'
+                    className='text-blue-300 text-sm sm:text-base'
                   />
                 ))}
               </div>
             </div>
           </div>
 
-          <div className='pt-4 border-t border-gray-600 flex gap-3'>
+          <div className='w-full pt-4 border-t border-gray-600 flex justify-center sm:justify-end gap-3'>
             <button
               onClick={() => setCurrentStep(currentStep - 1)}
               className='bg-gray-700 px-8 transition-all hover:bg-gray-600 py-3 rounded-lg w-fit font-medium'>
@@ -359,12 +359,12 @@ export default function NewForm() {
         <div
           id='blue-background-holder'
           style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }}
-          className='px-32 py-16 flex flex-1 gap-8 justify-center items-center overflow-hidden flex-col w-full max-h-full h-full'>
-          <div className='border-b border-gray-600 pb-4 w-full text-center'>
-            <h1 className='text-4xl font-semibold text-blue-400'>Review & Submit</h1>
+          className='px-4 sm:px-8 md:px-16 lg:px-32 py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto mt-16 sm:mt-24 md:mt-32 mb-4 sm:mb-6 md:mb-8'>
+          <div className='w-full border-b border-gray-600 pb-4 text-center'>
+            <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-400'>Review & Submit</h1>
             <p className='text-gray-400 mt-2 text-sm'>Step 3 of 3: Final Confirmation</p>
           </div>
-          <div className='flex flex-col text-center gap-6 my-12'>
+          <div className='w-full flex flex-col text-center gap-4 sm:gap-6 my-8 sm:my-12'>
             <h1 className='text-5xl duration-1000 font-bold text-blue-300'>Your Campaign is Ready for Analysis</h1>
             <h3 className='text-2xl font-light text-gray-300'>Click submit to generate your market research report with actionable insights</h3>
           </div>
