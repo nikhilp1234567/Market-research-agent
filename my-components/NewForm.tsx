@@ -33,10 +33,6 @@ export default function NewForm() {
 
         if (response.status === 200) {
           console.log(responseData);
-          if (responseData.profilesProcessed >= 5) {
-            console.log("All profiles have been processed.");
-            return;
-          }
           setVisible(true);
           localStorage.setItem("searchData", JSON.stringify(responseData));
           router.push("/result");
