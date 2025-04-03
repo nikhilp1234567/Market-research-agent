@@ -5,9 +5,23 @@ import { PieChart, Pie, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 interface WouldBuyPieChartProps {
   data: string[] | undefined;
 }
+
 function WouldBuyPieChart({ data }: WouldBuyPieChartProps) {
-  const numWouldBuy = data!.filter((i) => String(i) == "true").length;
-  const numWouldntBuy = data!.filter((i) => String(i) == "false").length;
+  const numWouldBuy = data!.filter((i) => 
+    String(i).toLowerCase().includes("yes") || 
+    String(i).toLowerCase().includes("would") || 
+    String(i).toLowerCase().includes("true") ||
+    String(i).toLowerCase().includes("definitely") ||
+    String(i).toLowerCase().includes("absolutely")
+  ).length;
+  
+  const numWouldntBuy = data!.filter((i) => 
+    String(i).toLowerCase().includes("no") || 
+    String(i).toLowerCase().includes("wouldn't") || 
+    String(i).toLowerCase().includes("false") ||
+    String(i).toLowerCase().includes("not") ||
+    String(i).toLowerCase().includes("never")
+  ).length;
 
   const processedSentimentData = [
     { name: "Would Use", value: numWouldBuy },
