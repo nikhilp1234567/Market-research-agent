@@ -6,8 +6,6 @@ Results demographics buttons are getting cut off
 change the household income to a slider
 Definitely make the supporting media section easier to understand, what is it and what does it do etc
 
-Engombe -
-Need to de register the final submit button once clicked once as well, as i noticed my users were clicking it multiple times.
 
 for later -
 Probably need different form layouts for marketing and branding and the core idea etc
