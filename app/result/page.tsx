@@ -2,7 +2,7 @@
 
 import DemoSlider from "@/my-components/DemoSlider";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SentimentGraph from "@/my-components/SentimentGraph";
@@ -10,6 +10,8 @@ import PricingLineGraph from "@/my-components/PricingLineGraph";
 import WouldBuyPieChart from "@/my-components/WouldBuyPieChart";
 import MarketFitRadialPieChart from "@/my-components/MarketFitRadialPieChart";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { duration } from "@mui/material";
 
 interface Result {
   demographicProfiles: {
@@ -88,7 +90,7 @@ export default function ResultPage() {
 
   if (!result) {
     return (
-      <div id='black-background' className='flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden justify-center items-center bg-black pb-6 px-6 pt-3'>
+      <div id='black-background' className='flex flex-col w-full h-[calc(100vh-5rem)] justify-center items-center bg-black p-3'>
         <p className='mb-4'>Loading results...</p>
         <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400'></div>
       </div>
@@ -96,11 +98,16 @@ export default function ResultPage() {
   }
 
   return (
-    <div id='black-background' className='flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden bg-black pb-6 px-6 pt-3'>
+    <div id='black-background' className='flex flex-col w-full h-[calc(100vh-5rem)] bg-black p-3'>
       <div id='blue-holder' style={{ backgroundColor: "#070F2B", borderRadius: "0.75rem" }} className='p-6 flex gap-6 overflow-hidden flex-col w-full h-full'>
         <h1 className='text-2xl text-center font-bold'>Feedback Results</h1>
         <div id='content-holder' className='flex gap-3 flex-row w-full h-[calc(100%-3rem)]'>
-          <div id='left' className='flex flex-col p-3 w-[50%] h-full border border-white rounded-[2rem]'>
+          <motion.div
+            id='left'
+            className='flex flex-col p-3 w-[50%] h-full border border-white rounded-[2rem]'
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}>
             <div className='w-full h-1/2'>
               <DemoSlider
                 demographicData={result.demographicProfiles}
@@ -129,10 +136,21 @@ export default function ResultPage() {
                 <p className='text-white text-center'>Click any button above to view the data</p>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <div id='right' className='flex flex-col rounded-[2rem] h-full p-3 border border-white w-[50%]'>
-            <Swiper slidesPerView={1} navigation className='w-full h-full flex' loop={true} modules={[Navigation, Pagination]}>
+          <motion.div
+            id='right'
+            className='flex flex-col rounded-[2rem] h-full p-3 border justify-center items-center border-white w-[50%]'
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}>
+            <Swiper
+              slidesPerView={1}
+              navigation
+              className='w-full h-full flex'
+              loop={true}
+              modules={[Navigation, Autoplay, Pagination]}
+              autoplay={{ delay: 5000 }}>
               <SwiperSlide className='flex w-full h-full items-center justify-center'>
                 <div className='flex flex-col h-full items-center px-6 w-full'>
                   <h2 className='text-xl text-center font-semibold mb-4'>Overall Sentiment</h2>
@@ -311,7 +329,7 @@ export default function ResultPage() {
                 </div>
               </SwiperSlide>
             </Swiper>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

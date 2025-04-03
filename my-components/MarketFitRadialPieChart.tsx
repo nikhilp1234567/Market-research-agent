@@ -10,8 +10,8 @@ const COLORS = ["#0088FE", "#00C49F"];
 export default function MarketFitRadialPieChart({ data }: MarketFitRadialPieChartProps) {
   const processedData = data
     ? [
-        { name: "Good Fit", value: data.filter((val) => val == "true")},
-        { name: "Poor Fit", value: data.filter((val) => val == "false")},
+        { name: "Good Fit", value: data.filter((val) => val == "true") },
+        { name: "Poor Fit", value: data.filter((val) => val == "false") },
       ]
     : [];
 

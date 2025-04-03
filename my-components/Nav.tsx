@@ -8,8 +8,8 @@ import { CheckoutForm } from "./CheckoutForm";
 
 export default function Nav() {
   return (
-    <nav id='main-navigation' className='w-full flex justify-center items-center sticky top-0 z-1 h-20 '>
-      <div className='w-full m-6 mt-12 p-3 bg-[#070F2B] border !border-gray-700 rounded-lg flex justify-between items-center'>
+    <nav id='main-navigation' className='w-full flex justify-center items-center sticky top-0 z-1 h-20 p-3 '>
+      <div className='w-full p-3 bg-[#070F2B] border !border-gray-700 rounded-lg flex justify-between items-center'>
         <div id='nav-left' className='flex gap-8 items-center transition-all duration-300'>
           <Link href={"/"} id='home-link' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
             <img src='/icon.ico' alt='MarketMind Logo' className='h-10 w-10' />

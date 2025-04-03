@@ -56,7 +56,7 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ demographicData, responseData, 
           ) => (
             <SwiperSlide key={id} className='h-full'>
               <div className='h-full flex flex-col items-center text-center'>
-                <p className='text-md sm:text-xl lg:text-xl font-semibold text-white mb-2'>Demographic Profile #{id}</p>
+                <p className='text-md sm:text-xl lg:text-xl font-semibold text-white mb-2'> Demographic Profile #{id} </p>
                 <div className='grid grid-cols-4 gap-1 w-full flex-1'>
                   <div className='flex flex-col gap-1'>
                     <DemoSliderButton text='Age' onClick={() => handleButtonClick(age)} data={age} />
