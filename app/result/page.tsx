@@ -77,13 +77,18 @@ export default function ResultPage() {
         { data: processedData.additionalFeedback, setter: setSummarisedAdditionalFeedback },
       ];
 
-      summaryFields.forEach(async (field) => {
-        try {
-          const response = await axios.post("/api/summarise", { data: field.data });
-          field.setter(String(response.data));
-        } catch (error) {
-          console.error("Error aggregating data:", error);
-        }
+      Promise.all(
+        summaryFields.map(async (field): Promise<void> => {
+          try {
+            const response = await axios.post<string>("/api/summarise", { data: field.data });
+            field.setter(response.data);
+          } catch (error) {
+            console.error("Error aggregating data:", error);
+            field.setter("Error: Failed to summarize data");
+          }
+        })
+      ).catch((error: Error) => {
+        console.error("Error in summary requests:", error);
       });
     }
   }, [router]);
